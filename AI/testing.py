@@ -1,5 +1,7 @@
 import os
 
+
+
 parent_folder = '/media/cameron/76E8-CACF'  # Replace this with the path to your parent folder
 
 needToBeRemoved = []

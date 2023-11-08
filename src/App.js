@@ -19,7 +19,7 @@ function App() {
       //console.log(imageSrc);
       //fetch("https://c927-107-185-101-105.ngrok-free.app/testing")
       let img_bin = atob(webcamRef.current.getScreenshot())
-      fetch("http://192.168.1.69:3030/predict", {
+      fetch("http://23.241.17.98:3030/predict", {
         mode:'cors',
         method: 'POST',
         body: img_bin

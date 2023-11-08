@@ -47,7 +47,7 @@ function App() {
   return (
     <div className="App">
       <Webcam ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-      <button onClick={capture}>click me!!</button> 
+      <button onClick={capture}>!!click me!!</button> 
       <p>{imageSrc}</p>
       <Card make="Ferrari" rarity={100} model="250 Testa Rossa" generation="1957-1961"/>
     </div>

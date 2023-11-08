@@ -19,7 +19,7 @@ function App() {
       //console.log(imageSrc);
       //fetch("https://c927-107-185-101-105.ngrok-free.app/testing")
       let img_bin = atob(webcamRef.current.getScreenshot())
-      fetch("http://23.241.17.98:3030/", {
+      fetch("23.241.17.98:3030/", {
         mode:'cors',
       })
       .then(response => {
@@ -45,7 +45,7 @@ function App() {
   return (
     <div className="App">
       <Webcam ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-      <button onClick={capture}>!!click me!!</button> 
+      <button onClick={capture}>:3 pls work</button> 
       <p>{imageSrc}</p>
       <Card make="Ferrari" rarity={100} model="250 Testa Rossa" generation="1957-1961"/>
     </div>

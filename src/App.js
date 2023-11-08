@@ -19,16 +19,14 @@ function App() {
       //console.log(imageSrc);
       //fetch("https://c927-107-185-101-105.ngrok-free.app/testing")
       let img_bin = atob(webcamRef.current.getScreenshot())
-      fetch("http://23.241.17.98:3030/predict", {
+      fetch("http://23.241.17.98:3030/", {
         mode:'cors',
-        method: 'POST',
-        body: img_bin
       })
       .then(response => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
-    return response.json(); 
+    return response.text(); 
   })
   .then(data => {
     // Log the entire data object to the console for debugging

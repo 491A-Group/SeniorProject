@@ -15,17 +15,29 @@ function App() {
   const [imageSrc, setImageSource] = useState("result");
 
   const fetchString = (base64String) => {
-    // Create a FormData object to send the base64 image as a string in the POST request.
-    const formData = new FormData();
-    formData.append('image', base64String);
+    // Remove the data URI prefix, if it exists
+    const base64WithoutPrefix = base64String.replace(/^data:image\/\w+;base64,/, '');
   
-    // Send the POST request with the base64 image data.
-    fetch('https://sc-prediction-model.brian2002.com/predict', {
+    // Convert the modified base64 string to binary data.
+    const binaryData = atob(base64WithoutPrefix);
+  
+    // Create an array to store the binary data.
+    const byteArray = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
+      byteArray[i] = binaryData.charCodeAt(i);
+    }
+  
+    // Create a Blob from the binary data.
+    const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Adjust the 'type' as needed
+  
+    // Create a FormData object to send the Blob as a file in the POST request.
+    const formData = new FormData();
+    formData.append('image', blob, 'image.jpg'); // You can adjust the file name and type as needed
+  
+    // Send the POST request with the image data.
+    fetch('https://sc-prediction-model.brian2002.com/', {
       method: 'POST',
       body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data', // You may need to adjust the content type based on your server's requirements
-      },
     })
       .then((response) => response.text())
       .then((data) => {
@@ -36,6 +48,7 @@ function App() {
         console.error('Error fetching data:', error);
       });
   };
+  
   
   
 

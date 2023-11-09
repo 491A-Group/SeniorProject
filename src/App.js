@@ -1,9 +1,11 @@
-import React from 'react';
-import { useState, useCallback} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Card from './components/Card';
+import React from 'react';
 import Webcam from 'react-webcam';
+import { useState, useCallback} from 'react';
+import {Buffer} from 'buffer';
+import logo from './logo.svg';
+import Card from './components/Card';
+
 
 function App() {
 

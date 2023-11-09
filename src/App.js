@@ -13,7 +13,7 @@ function App() {
 
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("");
-  const [predictionResult, setPrediction] = userState("");
+  const [predictionResult, setPrediction] = useState("");
 
   const fetchString = (base64String) => {
     // Remove the data URI prefix, if it exists

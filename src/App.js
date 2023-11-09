@@ -17,7 +17,7 @@ function App() {
 
   const fetchPrediction = () => {
     let fetch_res = fetch(
-      "http://192.168.1.69:3030/predict",
+      "https://sc-prediction-model.brian2002.com/predict",
       {
         method: 'POST',
         data: imageSrc,

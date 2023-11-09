@@ -12,7 +12,8 @@ function App() {
   }
 
   const webcamRef = React.useRef(null);
-  const [imageSrc, setImageSource] = useState("result");
+  const [imageSrc, setImageSource] = useState("");
+  const [predictionResult, setPrediction] = userState("");
 
   const fetchString = (base64String) => {
     // Remove the data URI prefix, if it exists
@@ -35,8 +36,7 @@ function App() {
     })
       .then((response) => response.text())
       .then((data) => {
-        setImageSource(data);
-        console.log(data);
+        setPrediction(data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -58,12 +58,13 @@ function App() {
 
   return (
     <div className="App">
-      <Webcam ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-      <button onClick={capture}>:3....pls work!!</button> 
-      <p>{imageSrc}</p>
-      <Card make="Ferrari" rarity={100} model="250 Testa Rossa" generation="1957-1961"/>
+      <Webcam width="244" height="244" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
+      <button onClick={capture}>Take Photo</button> 
+      <p>{predictionResult}</p>
     </div>
   );
 }
+
+//<Card make="Ferrari" rarity={100} model="250 Testa Rossa" generation="1957-1961"/>
 
 export default App;

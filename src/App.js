@@ -16,7 +16,7 @@ function App() {
 
   const fetchString = (base64String) => {
     // Remove the data URI prefix, if it exists
-    const base64WithoutPrefix = base64String.replace(/^data:image\/\w+;base64,/, '');
+    const base64WithoutPrefix = base64String.replace("data:image/jpeg;base64,", '');
   
     // Convert the modified base64 string to binary data.
     const binaryData = atob(base64WithoutPrefix);
@@ -30,14 +30,10 @@ function App() {
     // Create a Blob from the binary data.
     const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Adjust the 'type' as needed
   
-    // Create a FormData object to send the Blob as a file in the POST request.
-    const formData = new FormData();
-    formData.append('image', blob, 'image.jpg'); // You can adjust the file name and type as needed
-  
     // Send the POST request with the image data.
-    fetch('https://sc-prediction-model.brian2002.com/', {
+    fetch('https://sc-prediction-model.brian2002.com/predict', {
       method: 'POST',
-      body: formData,
+      body: blob,
     })
       .then((response) => response.text())
       .then((data) => {

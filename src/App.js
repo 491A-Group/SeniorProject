@@ -13,29 +13,26 @@ function App() {
 
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("result");
+
+  const fetchString = () => {
+    fetch('https://sc-prediction-model.brian2002.com/')
+      .then((response) => response.text()) // Convert the response to text
+      .then((data) => {
+        setImageSource(data); // Update the state with the response data
+        console.log(data); // Print the response data to the console
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
+
   const capture = useCallback(
     () => {
-      //setImageSource(webcamRef.current.getScreenshot());
-      //console.log(imageSrc);
-      //fetch("https://c927-107-185-101-105.ngrok-free.app/testing")
-      let img_bin = atob(webcamRef.current.getScreenshot())
-      fetch("23.241.17.98:3030/")
-      .then(response => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.text(); 
-  })
-  .then(data => {
-    // Log the entire data object to the console for debugging
-    console.log(55, data);
-    setImageSource(data);
-  })
-  .catch(error => {
-    console.error("There was a problem with the fetch operation:", error);
-  });
+      setImageSource(webcamRef.current.getScreenshot());
+      fetchString();
+      
     },
-    [webcamRef]
+    [webcamRef, fetchString]
   );
 
 

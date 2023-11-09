@@ -4,7 +4,6 @@ import logo from './logo.svg';
 import './App.css';
 import Card from './components/Card';
 import Webcam from 'react-webcam';
-import { METHODS } from 'http';
 
 function App() {
 

@@ -16,24 +16,22 @@ function App() {
 
   const fetchString = (base64String) => {
     // Remove the data URI prefix, if it exists
-    const base64WithoutPrefix = base64String.replace("data:image/jpeg;base64,", '');
-  
-    // Convert the modified base64 string to binary data.
-    const binaryData = atob(base64WithoutPrefix);
-  
-    // Create an array to store the binary data.
-    const byteArray = new Uint8Array(binaryData.length);
+    const base64Data = base64String.split(',')[1];
+
+    // Decode the Base64 string into a Uint8Array
+    const binaryData = atob(base64Data);
+
+    // Create an ArrayBuffer from the Uint8Array
+    const arrayBuffer = new ArrayBuffer(binaryData.length);
+    const view = new Uint8Array(arrayBuffer);
+
     for (let i = 0; i < binaryData.length; i++) {
-      byteArray[i] = binaryData.charCodeAt(i);
+      view[i] = binaryData.charCodeAt(i);
     }
-  
-    // Create a Blob from the binary data.
-    const blob = new Blob([byteArray], { type: 'image/jpeg' }); // Adjust the 'type' as needed
-  
     // Send the POST request with the image data.
     fetch('https://sc-prediction-model.brian2002.com/predict', {
       method: 'POST',
-      body: blob,
+      body: view,
     })
       .then((response) => response.text())
       .then((data) => {
@@ -61,7 +59,7 @@ function App() {
   return (
     <div className="App">
       <Webcam ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-      <button onClick={capture}>:3 pls work!!</button> 
+      <button onClick={capture}>:3....pls work!!</button> 
       <p>{imageSrc}</p>
       <Card make="Ferrari" rarity={100} model="250 Testa Rossa" generation="1957-1961"/>
     </div>

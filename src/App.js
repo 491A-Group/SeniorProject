@@ -20,19 +20,22 @@ function App() {
     const base64Data = base64String.split(',')[1];
 
     // Decode the Base64 string into a Uint8Array
-    const binaryData = atob(base64Data);
+    //const binaryData = atob(base64Data);
+    const binaryData = Buffer.from(base64Data, 'base64');
 
     // Create an ArrayBuffer from the Uint8Array
-    const arrayBuffer = new ArrayBuffer(binaryData.length);
-    const view = new Uint8Array(arrayBuffer);
+    //const arrayBuffer = new ArrayBuffer(binaryData.length);
+    //const view = new Uint8Array(arrayBuffer);
 
-    for (let i = 0; i < binaryData.length; i++) {
-      view[i] = binaryData.charCodeAt(i);
-    }
+    // for (let i = 0; i < binaryData.length; i++) {
+    //   view[i] = binaryData.charCodeAt(i);
+    // }
+
     // Send the POST request with the image data.
     fetch('https://sc-prediction-model.brian2002.com/predict', {
       method: 'POST',
-      body: view,
+      //body: view,
+      body: binaryData,
     })
       .then((response) => response.text())
       .then((data) => {
@@ -42,10 +45,8 @@ function App() {
         console.error('Error fetching data:', error);
       });
   };
-  
-  
-  
 
+  
   const capture = useCallback(
     () => {
       setImageSource(webcamRef.current.getScreenshot());
@@ -53,7 +54,6 @@ function App() {
     },
     [webcamRef, fetchString]
   );
-
 
 
   return (

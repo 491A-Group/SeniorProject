@@ -14,24 +14,32 @@ function App() {
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("result");
 
-  const fetchPrediction = () => {
-    let fetch_res = fetch(
-      "https://sc-prediction-model.brian2002.com/predict",
-      {
-        method: 'POST',
-        data: imageSrc,
+  const fetchString = (imageData) => {
+    fetch('https://sc-prediction-model.brian2002.com/predict', {
+      method: 'POST',
+      body: imageData, // This should be the image data to send to the server
+      headers: {
+        // You may need to set appropriate headers based on your server's requirements
+        // For example, 'Content-Type': 'image/jpeg' or 'Content-Type': 'multipart/form-data'
+      },
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        setImageSource(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
       });
-
-      setImageSource(fetch_res);
   };
+  
 
   const capture = useCallback(
     () => {
       setImageSource(webcamRef.current.getScreenshot());
-      fetchPrediction();
-      
+      fetchString(imageSrc);      
     },
-    [webcamRef, fetchPrediction]
+    [webcamRef, fetchString]
   );
 
 

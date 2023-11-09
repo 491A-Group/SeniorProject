@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Card from './components/Card';
 import Webcam from 'react-webcam';
+import { METHODS } from 'http';
 
 function App() {
 
@@ -14,16 +15,15 @@ function App() {
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("result");
 
-  const fetchString = () => {
-    fetch('https://sc-prediction-model.brian2002.com/')
-      .then((response) => response.text()) // Convert the response to text
-      .then((data) => {
-        setImageSource(data); // Update the state with the response data
-        console.log(data); // Print the response data to the console
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
+  const fetchPrediction = () => {
+    let fetch_res = fetch(
+      "http://192.168.1.69:3030/predict",
+      {
+        method: 'POST',
+        data: imageSrc,
       });
+
+      setImageSource(fetch_res);
   };
 
   const capture = useCallback(

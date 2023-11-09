@@ -28,10 +28,10 @@ function App() {
   const capture = useCallback(
     () => {
       setImageSource(webcamRef.current.getScreenshot());
-      fetchString();
+      fetchPrediction();
       
     },
-    [webcamRef, fetchString]
+    [webcamRef, fetchPrediction]
   );
 
 

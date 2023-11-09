@@ -20,14 +20,14 @@ function App() {
   const fetchString = (base64String) => {
     // Convert base64 to binary, which will later become a uint8 array
     const binaryData = Buffer.from(
-      base64String,
+      base64String.slice(22), //drop the first characters //
       'base64'
     );
 
     // Send the POST request with the image data.
     fetch('https://sc-prediction-model.brian2002.com/predict', {
       method: 'POST',
-      body: new Uint8Array(binaryData).binaryData,
+      body: binaryData,
     })
       .then((response) => response.text())
       .then((data) => {

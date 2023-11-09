@@ -14,14 +14,27 @@ function App() {
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("result");
 
-  const fetchString = (imageData) => {
+  const fetchString = (base64String) => {
+    // Remove the data URI prefix and decode the base64 string.
+    const binaryData = atob(base64String);
+  
+    // Create an array to store the binary data.
+    const byteArray = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
+      byteArray[i] = binaryData.charCodeAt(i);
+    }
+  
+    // Create a Blob from the binary data.
+    const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+  
+    // Create a FormData object to send the Blob as a file in the POST request.
+    const formData = new FormData();
+    formData.append('image', blob, 'image.jpg'); // You can adjust the file name as needed
+  
+    // Send the POST request with the image data.
     fetch('https://sc-prediction-model.brian2002.com/predict', {
       method: 'POST',
-      body: imageData, // This should be the image data to send to the server
-      headers: {
-        // You may need to set appropriate headers based on your server's requirements
-        // For example, 'Content-Type': 'image/jpeg' or 'Content-Type': 'multipart/form-data'
-      },
+      body: formData,
     })
       .then((response) => response.text())
       .then((data) => {
@@ -32,6 +45,7 @@ function App() {
         console.error('Error fetching data:', error);
       });
   };
+  
   
 
   const capture = useCallback(

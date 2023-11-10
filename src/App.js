@@ -1,24 +1,23 @@
 import './App.css';
-import CameraPage from './pages/CameraPage';
 import HomePage from './pages/HomePage';
 import React from 'react';
 import { useState } from 'react';
 
 function App() {
 
+  //active page variable
+  //allows only one section of page to be rendered at a time
   const [activePage, setActivePage] = useState(<HomePage/>)
 
-  const setPage = () => {
-    setActivePage(<CameraPage clientID={123}/>);
-  };
 
-
+  //main app return
+  //just renders the activePage and navbar
   return (
     <div>
       {activePage}
       <div>
-        <p>This is the navBar</p>
-        <button onClick={setPage}>Camera</button>
+            <p>This is the navBar</p>
+            <button onClick={() => setActivePage(<CameraPage clientID={123}/>)}>Camera</button>
       </div>
     </div>
   );

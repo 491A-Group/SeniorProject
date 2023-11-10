@@ -15,18 +15,16 @@ export default function CameraPage({clientID}) {
       const [imageSrc, setImageSource] = useState("");
       const [predictionResult, setPrediction] = useState("");
     
+      //main function for prediction communication
+      //sends image data over to server
+      //gets string prediction back
       const fetchString = (base64String) => {
         // Convert base64 to binary, which will later become a uint8 array
         const binaryData = Buffer.from(
           base64String.slice(22), //drop the first characters //
           'base64'
         );
-    
-        if (imageSrc.length < 5)
-        {
-            capture();
-            return;
-        }
+
         // Send the POST request with the image data.
         fetch('https://sc-prediction-model.brian2002.com/predict', {
           method: 'POST',
@@ -34,6 +32,7 @@ export default function CameraPage({clientID}) {
         })
           .then((response) => response.text())
           .then((data) => {
+            //get the prediction from the server, set the variable
             setPrediction(data);
           })
           .catch((error) => {
@@ -41,19 +40,28 @@ export default function CameraPage({clientID}) {
           });
       };
     
-      
+      //function for getting the screenshot
+      //automatically sends prediction to the server
       const capture = useCallback(
         () => {
+
+          //get screenshot
           setImageSource(webcamRef.current.getScreenshot());
+
+          //send screenshot, get prediction
           fetchString(imageSrc);      
         },
+
+        //references used in callback
+        //anything that the callback needs to "pay attention" to needs to be here
         [webcamRef, fetchString]
       );
     
     
+      //returns the main camera page to be displayed
       return (
         <div className="CameraPage">
-          <Webcam width="1920" height="1080" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
+          <Webcam width="500" height="500" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
           <button onClick={capture}>Take Photo</button> 
           <p>{predictionResult}</p>
         </div>

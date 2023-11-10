@@ -1,5 +1,6 @@
 import './App.css';
 import HomePage from './pages/HomePage';
+import CameraPage from './pages/CameraPage';
 import React from 'react';
 import { useState } from 'react';
 

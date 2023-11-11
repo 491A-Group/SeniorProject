@@ -1,28 +1,26 @@
 # Sportscar Hunter
 A Car Social Media app using React Native
 
-test
 ## LINK
-https://ceweiss42.github.io/SportscarHunter/
+https://github.com/491A-Group/SeniorProject
 
-test test
 # Dependencies
  - pip
  - selenium
 
  
 # Back End
-## NGROK
+### NGROK
 Ngrok is a third party ssh tunneling framework that creates public access to private/localhost ports. This will only be necessary on the backend, so if you are working on the front-end, dont install it.
 
 To install ngrok, please use: https://ngrok.com/.
 
-## Flask
+### Flask
 Flask is probably our best way to expose a port for ngrok to use, so server should run via that
 
 
 # Front End
-## React
+### React
 React is our front-end library. If you are solely working on the server, do not install it! It is really simple and easy to use, just follow the installation found here: https://legacy.reactjs.org/docs/getting-started.html
 
 # Next steps

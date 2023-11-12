@@ -4,6 +4,10 @@ import CameraPage from './pages/CameraPage';
 import React from 'react';
 import { useState } from 'react';
 
+import Camera from "./images/camera.png";
+import Garage from "./images/garage.png";
+import Home from "./images/home.png";
+
 function App() {
 
   //active page variable
@@ -15,10 +19,21 @@ function App() {
   //just renders the activePage and navbar
   return (
     <div>
-      {activePage}
-      <div>
-            <p>This is the navBar</p>
-            <button onClick={() => setActivePage(<CameraPage clientID={123}/>)}>Camera</button>
+      <div className="topDisplay">
+        <h1>Sportscar Spotter</h1>
+      </div>
+      <div className="content">
+        {activePage}
+      </div>
+      
+      <div className="nav">
+            <button className="navButton"> <img className="navIcon" src={Home}/></button>
+            <button className="navButton" onClick={() => setActivePage(<CameraPage clientID={123}/>)}>
+              <img className="navIcon" src={Camera}/>
+            </button>
+            <button className="navButton">
+              <img className="navIcon" src={Garage}/>
+            </button>
       </div>
     </div>
   );

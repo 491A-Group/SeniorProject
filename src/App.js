@@ -18,7 +18,7 @@ function App() {
   //main app return
   //just renders the activePage and navbar
   return (
-    <div>
+    <div class="app">
       <div className="topDisplay">
         <h1>Sportscar Spotter</h1>
       </div>
@@ -27,7 +27,9 @@ function App() {
       </div>
       
       <div className="nav">
-            <button className="navButton"> <img className="navIcon" src={Home}/></button>
+            <button className="navButton" onClick={() => setActivePage(<HomePage/>)}>
+              <img className="navIcon" src={Home}/>
+            </button>
             <button className="navButton" onClick={() => setActivePage(<CameraPage clientID={123}/>)}>
               <img className="navIcon" src={Camera}/>
             </button>

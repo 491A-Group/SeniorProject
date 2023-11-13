@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/SeniorProject/static/css/main.0b48e7fe.css",
-    "main.js": "/SeniorProject/static/js/main.5912bef6.js",
+    "main.css": "/SeniorProject/static/css/main.0daa687a.css",
+    "main.js": "/SeniorProject/static/js/main.963a5d9f.js",
     "static/js/787.d4aba7ab.chunk.js": "/SeniorProject/static/js/787.d4aba7ab.chunk.js",
     "static/media/testa_rossa.jpeg": "/SeniorProject/static/media/testa_rossa.16b757903f6a472fe035.jpeg",
     "static/media/ford-gt40.jpg": "/SeniorProject/static/media/ford-gt40.a953af2ad0ecd2f2ac42.jpg",
@@ -11,12 +11,12 @@
     "static/media/ferrari.png": "/SeniorProject/static/media/ferrari.4023a0fd8b0bc27f4c8c.png",
     "service-worker.js": "/SeniorProject/service-worker.js",
     "index.html": "/SeniorProject/index.html",
-    "main.0b48e7fe.css.map": "/SeniorProject/static/css/main.0b48e7fe.css.map",
-    "main.5912bef6.js.map": "/SeniorProject/static/js/main.5912bef6.js.map",
+    "main.0daa687a.css.map": "/SeniorProject/static/css/main.0daa687a.css.map",
+    "main.963a5d9f.js.map": "/SeniorProject/static/js/main.963a5d9f.js.map",
     "787.d4aba7ab.chunk.js.map": "/SeniorProject/static/js/787.d4aba7ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b48e7fe.css",
-    "static/js/main.5912bef6.js"
+    "static/css/main.0daa687a.css",
+    "static/js/main.963a5d9f.js"
   ]
 }

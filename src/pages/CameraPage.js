@@ -60,9 +60,9 @@ export default function CameraPage({clientID}) {
     
       //returns the main camera page to be displayed
       return (
-        <div className="content CameraPage">
+        <div className="CameraPage">
           <Webcam margin-left="-20px"width="100%" height="100%" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-          <button onClick={capture}>Take Photo</button> 
+          <button  onClick={capture}>Take Photo</button> 
           <p>{predictionResult}</p>
           <div className='spacer'/>
         </div>

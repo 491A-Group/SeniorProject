@@ -79,3 +79,8 @@
 .spacer {
     height: 30px;
 }
+
+.content ul {
+    overflow: hidden;
+    overflow-y: scroll;
+}

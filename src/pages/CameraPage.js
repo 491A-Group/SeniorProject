@@ -13,7 +13,7 @@ export default function CameraPage({clientID}) {
     
       const webcamRef = React.useRef(null);
       const [imageSrc, setImageSource] = useState("");
-      const [predictionResult, setPrediction] = useState("");
+      const [predictionResult, setPrediction] = useState("Please take a photo...");
     
       //main function for prediction communication
       //sends image data over to server

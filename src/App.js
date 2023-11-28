@@ -27,14 +27,14 @@ function App() {
       </div>
       
       <div className="nav">
-            <button className="navButton" onClick={() => setActivePage(<HomePage/>)}>
-              <img className="navIcon" src={Home}/>
+            <button onClick={() => setActivePage(<HomePage/>)}>
+              <img src={Home}/>
             </button>
-            <button className="navButton" onClick={() => setActivePage(<CameraPage clientID={123}/>)}>
-              <img className="navIcon" src={Camera}/>
+            <button onClick={() => setActivePage(<CameraPage clientID={123}/>)}>
+              <img src={Camera}/>
             </button>
-            <button className="navButton">
-              <img className="navIcon" src={Garage}/>
+            <button>
+              <img src={Garage}/>
             </button>
       </div>
     </div>

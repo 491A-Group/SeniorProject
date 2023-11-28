@@ -33,13 +33,13 @@
   display: flex;
 }
 
-.navButton {
+.nav > button {
   width: 40%;
   height: 100px;
   background-color: darkslateblue;
 }
 
-.navIcon {
+.nav > button > img {
   height: 50px;
   width: 50px;
 }

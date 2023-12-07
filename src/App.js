@@ -1,6 +1,7 @@
 import './App.css';
 import HomePage from './pages/HomePage';
 import CameraPage from './pages/CameraPage';
+import GaragePage from './pages/GaragePage';
 import React from 'react';
 import { useState } from 'react';
 
@@ -33,7 +34,7 @@ function App() {
             <button onClick={() => setActivePage(<CameraPage clientID={123}/>)}>
               <img src={Camera}/>
             </button>
-            <button>
+            <button onClick={() => setActivePage(<GaragePage/>)}>
               <img src={Garage}/>
             </button>
       </div>

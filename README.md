@@ -10,8 +10,6 @@ https://github.com/491A-Group/SeniorProject
 
  
 # Back End
-### NGROK
-Ngrok is a third party ssh tunneling framework that creates public access to private/localhost ports. This will only be necessary on the backend, so if you are working on the front-end, dont install it.
 
 To install ngrok, please use: https://ngrok.com/.
 

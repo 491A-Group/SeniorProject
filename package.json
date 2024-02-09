@@ -11,6 +11,7 @@
     "expo": "^49.0.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
     "react-scripts": "^5.0.1",
     "react-webcam": "^7.1.1",
     "web-vitals": "^2.1.4",
@@ -37,8 +38,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -55,5 +55,16 @@
   },
   "devDependencies": {
     "gh-pages": "^6.0.0"
+  },
+  "description": "A Car Social Media app using React Native",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/491A-Group/SeniorProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/491A-Group/SeniorProject/issues"
   }
 }

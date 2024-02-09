@@ -4,6 +4,10 @@ import Webcam from 'react-webcam';
 import { useState, useCallback} from 'react';
 import {Buffer} from 'buffer';
 
+import Camera from "../images/camera.png";
+import Garage from "../images/garage.png";
+import Home from "../images/home.png";
+
 
 export default function CameraPage({clientID}) {
 
@@ -65,6 +69,17 @@ export default function CameraPage({clientID}) {
           <button  onClick={capture}>Take Photo</button> 
           <p>{predictionResult}</p>
           <div className='spacer'/>
+          <div className="nav">
+            <button onClick={null}>
+              <img src={Home}/>
+            </button>
+            <button onClick={null}>
+              <img src={Camera}/>
+            </button>
+            <button onClick={null}>
+              <img src={Garage}/>
+            </button>
+          </div>
         </div>
       );
 };

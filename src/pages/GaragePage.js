@@ -1,6 +1,9 @@
 import './HomePage.css';
 import React, { useState } from 'react';
 
+import Camera from "../images/camera.png";
+import Garage from "../images/garage.png";
+import Home from "../images/home.png";
 
 export default function GaragePage(){
     
@@ -81,6 +84,18 @@ export default function GaragePage(){
                     <button type="submit">Submit</button>
                 </form>
             </div>
+
+            <div className="nav">
+            <button onClick={null}>
+              <img src={Home}/>
+            </button>
+            <button onClick={null}>
+              <img src={Camera}/>
+            </button>
+            <button onClick={null}>
+              <img src={Garage}/>
+            </button>
+          </div>
         </>
     )
 };

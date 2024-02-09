@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 import {Link} from "react-router-dom";
+import TestPage from './TestPage';
   
 
 
-function LoginPage() {
+export default function LoginPage({setAppPage}) {
     const [isSignIn, setIsSignIn] = useState(true); 
     const [email, setEmail] = useState('');
 
@@ -15,6 +16,11 @@ function LoginPage() {
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
+
+    const changePage = () =>
+    {
+        setAppPage(<TestPage setAppPage={setAppPage}/>)
+    }
 
     return (
         <div className="container">
@@ -59,11 +65,7 @@ function LoginPage() {
                </button>
             </p>
 
-            <Link to="/home">
-                <button  className="signin" onClick={null}>Access Site</button>
-            </Link>
+            <button onClick={changePage}>Go to Test Page</button>
         </div>
     );
-}
-
-export default LoginPage;
+};

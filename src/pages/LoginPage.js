@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import {Link} from "react-router-dom";
+  
+
 
 function LoginPage() {
     const [isSignIn, setIsSignIn] = useState(true); 
@@ -55,6 +58,10 @@ function LoginPage() {
                    {isSignIn ? 'Create Account' : 'Sign In'}
                </button>
             </p>
+
+            <Link to="/home">
+                <button  className="signin" onClick={null}>Access Site</button>
+            </Link>
         </div>
     );
 }

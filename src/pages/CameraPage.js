@@ -9,77 +9,76 @@ import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 
 
-export default function CameraPage({clientID}) {
+export default function CameraPage() {
 
-    const vc = {
-        facingMode: { exact: "environment" }
-      }
-    
-      const webcamRef = React.useRef(null);
-      const [imageSrc, setImageSource] = useState("");
-      const [predictionResult, setPrediction] = useState("Please take a photo...");
-    
-      //main function for prediction communication
-      //sends image data over to server
-      //gets string prediction back
-      const fetchString = (base64String) => {
-        // Convert base64 to binary, which will later become a uint8 array
-        const binaryData = Buffer.from(
-          base64String.slice(22), //drop the first characters //
-          'base64'
-        );
+  const vc = {
+      facingMode: { exact: "environment" }
+  }
+  
+  const webcamRef = React.useRef(null);
+  const [imageSrc, setImageSource] = useState("");
+  const [predictionResult, setPrediction] = useState("Please take a photo...");
 
-        // Send the POST request with the image data.
-        fetch('https://sc-prediction-model.brian2002.com/predict', {
-          method: 'POST',
-          body: binaryData
-        })
-          .then((response) => response.text())
-          .then((data) => {
-            //get the prediction from the server, set the variable
-            setPrediction(data);
-          })
-          .catch((error) => {
-            console.error('Error fetching data:', error);
-          });
-      };
-    
-      //function for getting the screenshot
-      //automatically sends prediction to the server
-      const capture = useCallback(
-        () => {
+  //main function for prediction communication
+  //sends image data over to server
+  //gets string prediction back
+  const fetchString = (base64String) => {
+    // Convert base64 to binary, which will later become a uint8 array
+    const binaryData = Buffer.from(
+      base64String.slice(22), //drop the first characters
+      'base64'
+    );
 
-          //get screenshot
-          setImageSource(webcamRef.current.getScreenshot());
+    // Send the POST request with the image data.
+    fetch('https://sc-backend.brian2002.com/predict', {
+      method: 'POST',
+      body: binaryData
+    })
+    .then((response) => response.text())
+    .then((data) => {
+      //get the prediction from the server, set the variable
+      setPrediction(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+  };
 
-          //send screenshot, get prediction
-          fetchString(imageSrc);      
-        },
+  //function for getting the screenshot
+  //automatically sends prediction to the server
+  const capture = useCallback(
+    () => {
+      //get screenshot
+      setImageSource(webcamRef.current.getScreenshot());
 
-        //references used in callback
-        //anything that the callback needs to "pay attention" to needs to be here
-        [webcamRef, fetchString]
-      );
-    
-    
-      //returns the main camera page to be displayed
-      return (
-        <div className="CameraPage">
-          <Webcam margin-left="-20px"width="100%" height="100%" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-          <button  onClick={capture}>Take Photo</button> 
-          <p>{predictionResult}</p>
-          <div className='spacer'/>
-          <div className="nav">
-            <button onClick={null}>
-              <img src={Home}/>
-            </button>
-            <button onClick={null}>
-              <img src={Camera}/>
-            </button>
-            <button onClick={null}>
-              <img src={Garage}/>
-            </button>
-          </div>
-        </div>
-      );
+      //send screenshot, get prediction
+      fetchString(imageSrc);      
+    },
+
+    //references used in callback
+    //anything that the callback needs to "pay attention" to needs to be here
+    [webcamRef, fetchString]
+  );
+
+
+  //returns the main camera page to be displayed
+  return (
+    <div className="CameraPage">
+      <Webcam margin-left="-20px"width="100%" height="100%" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
+      <button onClick={capture}>Take Photo</button> 
+      <p>{predictionResult}</p>
+      <div className='spacer'/>
+      <div className="nav">
+        <button onClick={null}>
+          <img src={Home}/>
+        </button>
+        <button onClick={null}>
+          <img src={Camera}/>
+        </button>
+        <button onClick={null}>
+          <img src={Garage}/>
+        </button>
+      </div>
+    </div>
+  );
 };

@@ -8,6 +8,7 @@ export default function TestPage({changePage}) {
         <button onClick={changePage("Login")}>Login Page!</button>
         <button onClick={changePage("Garage")}>Garage Page!</button>
         <button onClick={changePage("Home")}>Home Page!</button>
+        <button onClick={changePage("Camera")}>Camera Page!</button>
     </div>
   );
   

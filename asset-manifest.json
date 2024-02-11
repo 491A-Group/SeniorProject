@@ -1,16 +1,30 @@
 {
   "files": {
-    "main.css": "/SeniorProject/static/css/main.4917fea9.css",
-    "main.js": "/SeniorProject/static/js/main.2575b8d0.js",
-    "static/js/787.d4aba7ab.chunk.js": "/SeniorProject/static/js/787.d4aba7ab.chunk.js",
-    "service-worker.js": "/SeniorProject/service-worker.js",
-    "index.html": "/SeniorProject/index.html",
-    "main.4917fea9.css.map": "/SeniorProject/static/css/main.4917fea9.css.map",
-    "main.2575b8d0.js.map": "/SeniorProject/static/js/main.2575b8d0.js.map",
-    "787.d4aba7ab.chunk.js.map": "/SeniorProject/static/js/787.d4aba7ab.chunk.js.map"
+    "main.css": "./static/css/main.a7066a5e.css",
+    "main.js": "./static/js/main.c888cf5f.js",
+    "static/js/592.7f72a991.chunk.js": "./static/js/592.7f72a991.chunk.js",
+    "static/media/BMWLogo.png": "./static/media/BMWLogo.0692192ae981b4618ead.png",
+    "static/media/testa_rossa.jpeg": "./static/media/testa_rossa.16b757903f6a472fe035.jpeg",
+    "static/media/ford-gt40.jpg": "./static/media/ford-gt40.a953af2ad0ecd2f2ac42.jpg",
+    "static/media/VWLogo.png": "./static/media/VWLogo.818e7dff5bdc6b95d9b8.png",
+    "static/media/VolvoLogo.png": "./static/media/VolvoLogo.e5b94f424aef97e67f39.png",
+    "static/media/porsche-_car.jpg": "./static/media/porsche-_car.8aa782b36826cb8ba628.jpg",
+    "static/media/porsche.png": "./static/media/porsche.57abc1464e519c7a29dd.png",
+    "static/media/InfinitiLogo.png": "./static/media/InfinitiLogo.d5bc7cc2946e63164261.png",
+    "static/media/ToyotaLogo.jpg": "./static/media/ToyotaLogo.e98d9688df7ab4a4baba.jpg",
+    "static/media/AudiLogo.jpg": "./static/media/AudiLogo.1be9585591e6a443290d.jpg",
+    "static/media/PorscheLogo.jpg": "./static/media/PorscheLogo.eb6b539332667b6ebf97.jpg",
+    "static/media/TeslaLogo.png": "./static/media/TeslaLogo.a7f4d496b3479a3231bc.png",
+    "static/media/ford.png": "./static/media/ford.961266a37860ab780051.png",
+    "static/media/ferrari.png": "./static/media/ferrari.4023a0fd8b0bc27f4c8c.png",
+    "service-worker.js": "./service-worker.js",
+    "index.html": "./index.html",
+    "main.a7066a5e.css.map": "./static/css/main.a7066a5e.css.map",
+    "main.c888cf5f.js.map": "./static/js/main.c888cf5f.js.map",
+    "592.7f72a991.chunk.js.map": "./static/js/592.7f72a991.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4917fea9.css",
-    "static/js/main.2575b8d0.js"
+    "static/css/main.a7066a5e.css",
+    "static/js/main.c888cf5f.js"
   ]
 }

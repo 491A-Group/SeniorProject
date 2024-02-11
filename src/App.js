@@ -19,7 +19,6 @@ function App() {
   return (
     <div class="app">
       {activePage ? activePage : <TestPage setAppPage={setActivePage} />}
-      <p>Testing</p>
     </div>
   );
   

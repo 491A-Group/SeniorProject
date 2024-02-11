@@ -5,7 +5,10 @@ import Camera from "../images/camera.png";
 import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 
-export default function GaragePage(){
+import TestPage from './TestPage';
+
+
+export default function GaragePage({setAppPage}){
     
     const [getResult, setGetResult] = useState([]);
     const [postInputValue, setPostInputValue] = useState('');
@@ -62,6 +65,11 @@ export default function GaragePage(){
         // Clear the input field after submission (optional)
       };
 
+      const changePage = () =>
+    {
+        setAppPage(<TestPage setAppPage={setAppPage}/>)
+    }
+
     return (
         <>
             <div>
@@ -95,6 +103,8 @@ export default function GaragePage(){
             <button onClick={null}>
               <img src={Garage}/>
             </button>
+
+            <button onClick={changePage}>Go to Test Page</button>
           </div>
         </>
     )

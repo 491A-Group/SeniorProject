@@ -8,16 +8,22 @@ import Filter  from "../images/filter.png";
 import Porsche from "../images/porsche-_car.jpg";
 import PorLogo from "../images/porsche.png";
 
-export default function HomePage(){
+import TestPage from './TestPage';
 
+export default function HomePage({setAppPage}){
+
+
+    const changePage = () =>
+    {
+        setAppPage(<TestPage setAppPage={setAppPage}/>)
+    }
     //the main return to display the home page or main feed
     return (
         <div>
             <div className="searchPad">
                 <img src={Filter}/>
                 <p> Filters: Only the coolest cars (Not objective at all)</p>
-                <img src={Search}/>
-                
+                <img src={Search}/>  
             </div>
             <ul className="content">
                 <div className="post">
@@ -165,7 +171,7 @@ export default function HomePage(){
                     
                 </div>
             </ul>
-            
+            <button onClick={changePage}>Go to Test Page</button>
         </div>
         
     )

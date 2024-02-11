@@ -8,8 +8,9 @@ import Camera from "../images/camera.png";
 import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 
+import TestPage from './TestPage';
 
-export default function CameraPage({clientID}) {
+export default function CameraPage({setAppPage, clientID}) {
 
     const vc = {
         facingMode: { exact: "environment" }
@@ -60,6 +61,11 @@ export default function CameraPage({clientID}) {
         //anything that the callback needs to "pay attention" to needs to be here
         [webcamRef, fetchString]
       );
+
+      const changePage = () =>
+    {
+        setAppPage(<TestPage setAppPage={setAppPage}/>)
+    }
     
     
       //returns the main camera page to be displayed
@@ -80,6 +86,8 @@ export default function CameraPage({clientID}) {
               <img src={Garage}/>
             </button>
           </div>
+
+          <button onClick={changePage}>Go to Test Page</button>
         </div>
       );
 };

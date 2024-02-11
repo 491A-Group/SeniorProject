@@ -17,12 +17,12 @@ export default function CameraPage({changePage, clientID}) {
 
 
   //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
-  /*  useEffect(() => {
+    useEffect(() => {
       document.body.style.overflow = "hidden";
       return () => {
           document.body.style.overflow = "scroll"
       };
-  }, []);*/
+  }, []);
     
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("");

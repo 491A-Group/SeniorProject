@@ -1,31 +1,23 @@
-# Sportscar Hunter
-A Car Social Media app using React Native
-
-## LINK
-https://github.com/491A-Group/SeniorProject
-
-# Dependencies
- - pip
- - selenium
-
+# CarModelServer
+ - flask server for ml. takes a request and returns predictions  
+ - request should be to :3030/predict with data in the body that's bytes of image
  
-# Back End
+## file structure
+ - as of 11/07/23: the model folder is /ACURA  
+ - main.py and model.py are for the server
+ - any client can run make_request to get predictions from running servers
 
-To install ngrok, please use: https://ngrok.com/.
-
-### Flask
-Flask is probably our best way to expose a port for ngrok to use, so server should run via that
-
-
-# Front End
-### React
-React is our front-end library. If you are solely working on the server, do not install it! It is really simple and easy to use, just follow the installation found here: https://legacy.reactjs.org/docs/getting-started.html
-
-# Next steps
-With the necessary packages installed, try running the project! Make sure all changes are committed to GitHub first!. Then, just navigate to the website on your phone! The link can be found here: (link needs to be created first)
-
-# How to build
-Deploying to the site is fairly easy, as long as you have the required dependencies... <br>
-First, what you want to do is commit your changes to github.
-Then, you can run "npm run deploy"
-This will deploy the site to the website, as long as you log in!
+## running
+ recommended to do a venv
+ - python -m venv venvname
+ - source venvname/bin/activate
+ - install required libraries with pip
+   - untested, however try 'pip install -r requirements.txt'
+   - otherwise try old fashioned way with 'pip install tensorflow numpy flask gunicorn pillow flask-cors flask-login argon2-cffi'
+   -    ..etc you'll see the next missing library each time it fails to run
+ - make a valid config file or get one from brian ~ config.ini (need to do ssh tunnel in python first)
+ 
+ to serve:
+ - have gunicorn installed 'pip install gunicorn'
+ - gunicorn --workers 2 --bind 0.0.0.0:3030 main:app
+   - i've copied the gunicorn command into run.sh

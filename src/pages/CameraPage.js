@@ -53,6 +53,9 @@ export default function CameraPage({changePage, clientID}) {
         //anything that the callback needs to "pay attention" to needs to be here
         [webcamRef, fetchString]
     });*/
+    function capture() {
+      console.log("capture button pressed, will fit. this function needed to compile")
+    }
     
     
       //returns the main camera page to be displayed

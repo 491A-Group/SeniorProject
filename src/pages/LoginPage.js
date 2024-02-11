@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-
-import TestPage from './TestPage';
   
 
-export default function LoginPage({setAppPage}) {
+export default function LoginPage({changePage}) {
     const [isSignIn, setIsSignIn] = useState(true); 
     const [email, setEmail] = useState('');
 
@@ -14,10 +12,6 @@ export default function LoginPage({setAppPage}) {
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
-
-    const changePage = () => {
-        setAppPage(<TestPage setAppPage={setAppPage}/>)
-    }
 
     return (
         <div className="container">
@@ -62,7 +56,7 @@ export default function LoginPage({setAppPage}) {
                </button>
             </p>
 
-            <button onClick={changePage}>Go to Test Page</button>
+            <button onClick={changePage("Test")}>Go to Test Page</button>
         </div>
     );
 };

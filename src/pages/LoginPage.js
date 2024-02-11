@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
-import {Link} from "react-router-dom";
 import TestPage from './TestPage';
   
-
 
 export default function LoginPage({setAppPage}) {
     const [isSignIn, setIsSignIn] = useState(true); 
@@ -17,8 +15,7 @@ export default function LoginPage({setAppPage}) {
         setEmail(e.target.value);
     };
 
-    const changePage = () =>
-    {
+    const changePage = () => {
         setAppPage(<TestPage setAppPage={setAppPage}/>)
     }
 

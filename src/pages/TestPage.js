@@ -3,6 +3,8 @@ import CameraPage from './CameraPage';
 import GaragePage from './GaragePage';
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
+import GaragePage from './GaragePage';
+import CameraPage from './CameraPage';
 
 
 export default function TestPage({setAppPage}) {

@@ -1,12 +1,6 @@
 import './App.css';
-import HomePage from './pages/HomePage';
-import CameraPage from './pages/CameraPage';
-import GaragePage from './pages/GaragePage';
 import React from 'react';
-
 import { useState } from 'react';
-
-import LoginPage from './pages/LoginPage';
 
 import TestPage from './pages/TestPage';
 

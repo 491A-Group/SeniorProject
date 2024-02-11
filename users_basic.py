@@ -14,19 +14,8 @@ def login():
             login_user(user)
             return redirect(url_for('blueprint_users_basic.garage'))
         return Response("Invalid Credentials", status=401)
-    
-    #TODO replace get with 405 not allowed after frontend is all working?
-    return """
-    <form method="post">
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <button type="submit">Login</button>
-    </form>
-    """
+    # TODO make sure to correctly handle get requests in case login_manager.login_view = 'blueprint_users_basic.login' in main.py
+    return Response("Status not allowed. Post login forms here.", status=405)
 
 @blueprint_users_basic.route('/register', methods=['GET', 'POST'])
 def register():

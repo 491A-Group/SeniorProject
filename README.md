@@ -40,4 +40,4 @@ I always recommend to do a venv
  2. `python main.py`
 ### npm development server
  1. Navigate to 'frontend'
- 2. `npm run`
+ 2. `npm run start`

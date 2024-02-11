@@ -46,7 +46,7 @@ function App() {
   
 
   return (
-    <div class="app">
+    <div className="app">
       {activePage ? activePage : <TestPage changePage={changePage} />}
     </div>
   );

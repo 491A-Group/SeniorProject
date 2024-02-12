@@ -13,7 +13,7 @@ import VolvoLogo from '../images/CarLogos/VolvoLogo.png';
 import VWLogo from '../images/CarLogos/VWLogo.png';
 import ProfilePic from '../images/DefaultProfilePicture.png';
 
-export default function Garage() {
+export default function Garage({changePage}) {
     return (
         <div className="garageContainer">
             <div className="userInfo">
@@ -81,6 +81,8 @@ export default function Garage() {
                 <li>Car Brand 3</li>
                 // Add more list items as needed
             </ul> */}
+
+<button onClick={changePage("Test")}>Go to Test Page</button>
         </div>
     );
 }

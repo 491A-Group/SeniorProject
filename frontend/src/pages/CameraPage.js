@@ -1,19 +1,29 @@
 import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
-import { useState, useCallback} from 'react';
+import { useState, useCallback, useEffect} from 'react';
 import {Buffer} from 'buffer';
 
 import Camera from "../images/camera.png";
 import Garage from "../images/garage.png";
 import Home from "../images/home.png";
+import Circle from "../images/circle-100.png";
 
 export default function CameraPage({changePage, clientID}) {
 
   const vc = {
       facingMode: { exact: "environment" }
   }
-  
+
+
+  //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => {
+          document.body.style.overflow = "scroll"
+      };
+  }, []);
+    
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("");
   const [predictionResult, setPrediction] = useState("Please take a photo...");
@@ -45,39 +55,32 @@ export default function CameraPage({changePage, clientID}) {
 
   //function for getting the screenshot
   //automatically sends prediction to the server
-  /*const capture = useCallback(
+  const capture = useCallback(
     () => {
       //get screenshot
       setImageSource(webcamRef.current.getScreenshot());
         //references used in callback
         //anything that the callback needs to "pay attention" to needs to be here
-        [webcamRef, fetchString]
-    });*/
-    function capture() {
-      console.log("capture button pressed, will fit. this function needed to compile")
-    }
+    },
+    [webcamRef, fetchString]
+    );
     
     
       //returns the main camera page to be displayed
-      return (
-        <div className="CameraPage">
-          <Webcam margin-left="-20px"width="100%" height="100%" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-          <button  onClick={capture}>Take Photo</button> 
-          <p>{predictionResult}</p>
-          <div className='spacer'/>
-          <div className="nav">
-            <button onClick={null}>
-              <img src={Home}/>
-            </button>
-            <button onClick={null}>
-              <img src={Camera}/>
-            </button>
-            <button onClick={null}>
-              <img src={Garage}/>
-            </button>
-          </div>
 
-          <button onClick={changePage("Test")}>Go to Test Page</button>
+      //<Webcam width="100%" height="100%" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
+
+
+      return (
+        <div>
+          <div className="Camera">
+            <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
+            <div className="navBar">
+              <button onClick={changePage("Home")} className="navButton"><img width="50vw" src={Home}/></button>
+              <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>
+              <button onClick={changePage("Garage")} className="navButton"><img width="50vw" src={Garage}/></button>
+            </div>
+          </div>
         </div>
       );
 

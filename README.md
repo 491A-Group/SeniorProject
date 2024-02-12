@@ -1,3 +1,5 @@
+# [Live Deployment](https://sc-backend.brian2002.com)
+
 ## File Structure
  - As of 11/07/23:
    - /frontend is the entire npm project

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 export default function LoginPage({changePage}) {
     //When isLogIn is false, assume the user wants to create an account
     const [isLogIn, setIsLogIn] = useState(true); 
-
+    
     //These states have the strings of user input in the forms. 
     //The Login and Register portions share these states so switching between them doesn't clear fields
     const [input_username, setUsername] = useState('');

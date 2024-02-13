@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './HomePage.css';
 import './GaragePage.css';
@@ -14,25 +14,54 @@ import VWLogo from '../images/CarLogos/VWLogo.png';
 import ProfilePic from '../images/DefaultProfilePicture.png';
 
 export default function Garage({changePage}) {
+
+    const [followers, setFollowers] = useState(-1)
+    const [following, setFollowing] = useState(-1)
+    const [catches, setCatches] = useState(-1)
+    const [displayname, setDisplayname] = useState("")
+
+    useEffect(() => {
+        //this functions dependencies is [] so it only runs when this module is loaded
+        const fetchData = async () => {
+            try {
+                const response = await fetch(window.location.origin + '/garage');
+                if (!response.ok) {
+                    console.log("network error")
+                    throw new Error('Network response was not ok');
+                }
+                const jsonData = await response.json();
+                
+                setFollowers(jsonData["followers"])
+                setFollowing(jsonData["following"])
+                setCatches(jsonData["catches"])
+                setDisplayname(jsonData["displayname"])
+                
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
     return (
         <div className="garageContainer">
             <div className="userInfo">
                 <div className="userProfile">
                     <img src={ProfilePic} />
-                    <div className="username" >Username</div>
+                    <div className="displayname">{displayname}</div>
                 </div>
                 <div className="userStats">
                     <div className="userStatsItem">
                         <div>Followers</div>
-                        <div>100</div>
+                        <div>{followers}</div>
                     </div>
                     <div className="userStatsItem">
                         <div>Following</div>
-                        <div>50</div>
+                        <div>{following}</div>
                     </div>
                     <div className="userStatsItem">
                         <div>Catches</div>
-                        <div>25</div>
+                        <div>{catches}</div>
                     </div>
                 </div>
             </div>

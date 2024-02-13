@@ -1,7 +1,5 @@
-import os
-from flask import Flask, render_template, send_from_directory, jsonify
+from flask import Flask, render_template, jsonify
 from flask_login import LoginManager
-# from werkzeug.utils import secure_filename
 import configparser
 
 
@@ -29,18 +27,9 @@ def load_user(user_id):
 from users_basic import blueprint_users_basic
 app.register_blueprint(blueprint_users_basic)
 
-# @app.route("/", defaults={'path': ''})
-# @app.route('/<path:path>')
-# def serve_react(path):
-#     path = secure_filename(path) # SANITIZING INPUT TO PREVENT DIRECTORY TRAVERSAL
-#     print(app.static_folder + '/' + path)
-#     if path != "" and os.path.exists(app.static_folder + '/' + path):
-#         return send_from_directory(app.static_folder, path)
-#     else:
-#         return send_from_directory(app.static_folder, 'index.html')
-
 @app.route("/")
 def index():
+    # This is the main entry point for React. Other entry points in the project are for fetch/restful api
     return render_template("index.html")
 
 @app.route('/api/home_1')

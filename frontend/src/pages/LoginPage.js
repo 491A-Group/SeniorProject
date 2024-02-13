@@ -7,11 +7,11 @@ export default function LoginPage({changePage}) {
     
     //These states have the strings of user input in the forms. 
     //The Login and Register portions share these states so switching between them doesn't clear fields
-    const [input_username, setUsername] = useState('');
+    const [input_displayname, setDisplayname] = useState('');
     const [input_email, setEmail] = useState('');
     const [input_password, setPassword] = useState('');
     //Handlers for the states - updates changes when users type
-    const handleUsernameChange = (event) => {setUsername(event.target.value)}
+    const handleDisplaynameChange = (event) => {setDisplayname(event.target.value)}
     const handleEmailChange = (event) => {setEmail(event.target.value)}
     const handlePasswordChange = (event) => {setPassword(event.target.value)}
 
@@ -20,7 +20,7 @@ export default function LoginPage({changePage}) {
         login_form.append("email", input_email)
         login_form.append("password", input_password)
 
-        console.log(input_email, input_password)
+        //console.log(input_email, input_password)
         fetch(window.location.origin + "/login", {
             method: 'POST',
             body: login_form
@@ -35,17 +35,22 @@ export default function LoginPage({changePage}) {
     }
 
     const handleSubmitRegister = (event) => {
-        console.log(input_username, input_email, input_password)
-        fetch(window.location.origin + "/login", {
+        let signup_form = new FormData()
+        signup_form.append("displayname", input_displayname)
+        signup_form.append("email", input_email)
+        signup_form.append("password", input_password)
+        
+        //console.log(input_displayname, input_email, input_password)
+        fetch(window.location.origin + "/register", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-
-                }
-            )
+            body: signup_form
+        })
+        .then (response => {
+            if (response.ok) {
+                console.log("signup response received ", response)
+            } else {
+                console.log("signup error")
+            }
         })
     }
 
@@ -70,7 +75,7 @@ export default function LoginPage({changePage}) {
             ) : (
                 <>
                     <h2>Register</h2>
-                    <input type="text" value={input_username} onChange={handleUsernameChange} placeholder="Username"/>
+                    <input type="text" value={input_displayname} onChange={handleDisplaynameChange} placeholder="Displayname"/>
                     <br />
                     <input type="email" value={input_email} onChange={handleEmailChange} placeholder="Email" />
                     <br />

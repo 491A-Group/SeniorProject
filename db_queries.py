@@ -39,14 +39,14 @@ def verify_credentials(email, raw_password):
                 try:
                     ph.verify(hash, raw_password)
                     print("\nuser " + str(id) + " successfully logged in\n")
-                    return True, id
+                    return "Log In Success", 202, id
                 except Exception as e:
                     print("\nfailed\n", e)
     finally:
         print("returning a thread to the pool")
         db_connection_pool.putconn(connection)
 
-    return False,
+    return "Log In Rejected", 401
 
 def register_credentials(email, displayname, raw_password):
     # TODO FIX EXCEPTIONS IE DUPLICATE EMAIL, DUPLICATE DISPLAYNAME
@@ -62,12 +62,14 @@ def register_credentials(email, displayname, raw_password):
                                ph.hash(raw_password)
                                )
             )
+            # Since the query says 'returning id;' this fetchone() returns a tuple that represents a row.
+            #    This row has exactly one column that is the id
             query_result = cursor.fetchone()
-
+            #print("SIGNUP QUERY RESULT: ", query_result)
             if query_result is not None:
                 connection.commit()
-                return True, query_result
-            return False,
+                return 'Registration Success', 201, query_result[0]
+            return 'Registration Failed', 409
     finally:
         print("returning a thread to the pool")
         db_connection_pool.putconn(connection)

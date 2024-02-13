@@ -5,47 +5,28 @@ import db_queries
 
 blueprint_users_basic = Blueprint("blueprint_users_basic", __name__)
 
-@blueprint_users_basic.route('/login', methods=['GET', 'POST'])
+@blueprint_users_basic.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        auth = db_queries.verify_credentials(request.form['email'], request.form['password'])
-        if auth[0]:
-            user = User(auth[1])
-            login_user(user)
-            return redirect(url_for('blueprint_users_basic.garage'))
-        return Response("Invalid Credentials", status=401)
-    # TODO make sure to correctly handle get requests in case login_manager.login_view = 'blueprint_users_basic.login' in main.py
-    return Response("Status not allowed. Post login forms here.", status=405)
+    # TODO MAKE SURE THIS WORKS WITH login_manager.login_view = 'blueprint_users_basic.login'
+    auth = db_queries.verify_credentials(request.form['email'], request.form['password'])
+    if auth[1] == 202:
+        login_user(User(auth[2]))
+    return auth[0], auth[1]
 
-@blueprint_users_basic.route('/register', methods=['GET', 'POST'])
+@blueprint_users_basic.route('/register', methods=['POST'])
 def register():
     # TODO FIX THIS FUNCTION THAT CURRENTLY DOES NO ERROR CHECKING
-    if request.method == 'POST':
-        email = request.form["email"]
-        displayname = request.form["displayname"]
-        password = request.form["password"]
-        
-        print(email, displayname, password)
+    displayname = request.form["displayname"]
+    email = request.form["email"]
+    password = request.form["password"]
+    
+    print(email, displayname, password)
+    result = db_queries.register_credentials(email, displayname, password)
 
-        db_queries.register_credentials(email, displayname, password)
-        return "<p>test</p>"
-    return """
-    <form method="post">
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required>
-        <br>
-        <label for="displayname">Displayname:</label>
-        <input type="text" id="displayname" name="displayname" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
-        <label for="password_conf">Confirm Password:</label>
-        <input type="password" id="password_conf" name="password_conf" required>
-        <br>
-        <button type="submit">Register</button>
-    </form>
-    """
+    if result[1] == 201:
+        login_user(User(result[2]))
+
+    return result[0], result[1]
 
 
 @blueprint_users_basic.route('/logout')

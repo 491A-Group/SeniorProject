@@ -2,30 +2,17 @@
 A Car Social Media app using React Native
 
 ## LINK
+https://sc-backend.brian2002.com  
 https://github.com/491A-Group/SeniorProject
-
-# Dependencies
- - pip
- - selenium
-
- 
-# Back End
-
-To install ngrok, please use: https://ngrok.com/.
-
-### Flask
-Flask is probably our best way to expose a port for ngrok to use, so server should run via that
-
 
 # Front End
 ### React
-React is our front-end library. If you are solely working on the server, do not install it! It is really simple and easy to use, just follow the installation found here: https://legacy.reactjs.org/docs/getting-started.html
+React is our front-end library. We make lots of fetch requests to the backend, minimizing server-side rendering. 
 
-# Next steps
-With the necessary packages installed, try running the project! Make sure all changes are committed to GitHub first!. Then, just navigate to the website on your phone! The link can be found here: (link needs to be created first)
+#### Running
+You can write for the frontend and see most changes by navigating to this /frontend folder and running `npm run start` which will start a development server you can see in your browser, and even your phone if you're at home. 
 
-# How to build
-Deploying to the site is fairly easy, as long as you have the required dependencies... <br>
-First, what you want to do is commit your changes to github.
-Then, you can run "npm run deploy"
-This will deploy the site to the website, as long as you log in!
+#### Deploying
+Deploying is tedious since the server needs to pull changes, compile the frontend project, and may need to restart. The closest-to-streamline workflow we have is the 5-line python script that asks the server to do the process: senior_project_ci.py
+
+Run the script and wait for it to output the servers' output. It may take a few seconds for the server to fully start however shortly after receiving output you should be able to access https://sc-backend.brian2002.com  

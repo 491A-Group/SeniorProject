@@ -38,11 +38,12 @@ def logout():
 @blueprint_users_basic.route('/garage')
 @login_required
 def garage():
+    followers, following = db_queries.follows(current_user.id)
     return jsonify(
         {
             "displayname": "displayname",
-            "followers": 100,
-            "following": 200,
+            "followers": followers,
+            "following": following,
             "catches": 25
         }
     ), 200

@@ -73,3 +73,23 @@ def register_credentials(email, displayname, raw_password):
     finally:
         print("returning a thread to the pool")
         db_connection_pool.putconn(connection)
+
+def follows(user_id):
+    connection = db_connection_pool.getconn()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""  SELECT
+                                    (SELECT COUNT(*) FROM follows WHERE follower = %s),
+                                    (SELECT COUNT(*) FROM follows WHERE followed = %s)"""
+                , (user_id, user_id)
+            )
+            # Since the query says 'returning id;' this fetchone() returns a tuple that represents a row.
+            #    This row has exactly one column that is the id
+            query_result = cursor.fetchone()
+            print(query_result)
+            if query_result is not None:
+                return query_result
+            return -2, -2
+    finally:
+        print("returning a thread to the pool")
+        db_connection_pool.putconn(connection)

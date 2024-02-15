@@ -75,7 +75,7 @@ export default function CameraPage({changePage, clientID}) {
         <div>
           <div className="Camera">
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-            {catchWindow}
+            {/*catchWindow*/}
             <div className="navBar">
               <button onClick={changePage("Home")} className="navButton"><img width="50vw" src={Home}/></button>
               <button onClick={/*capture*/ changePage("Catch")} className="navButton"><img width="100vw" src={Circle}/></button>

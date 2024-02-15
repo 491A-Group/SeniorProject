@@ -9,18 +9,10 @@ import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 import Circle from "../images/circle-100.png";
 
-import { useWindowSize } from "@uidotdev/usehooks";
-
 export default function CameraPage({changePage, clientID}) {
-
-  const size = useWindowSize();
-  const w = size.width;
-  const h = size.height;
 
   const vc = {
       facingMode: { exact: "environment" },
-      width: {w},
-      height: {h}
   }
 
 

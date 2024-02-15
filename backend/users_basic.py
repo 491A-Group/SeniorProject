@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, url_for, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
-from user import User
-import db_queries
+from backend.user import User
+from . import db_queries
 
 blueprint_users_basic = Blueprint("blueprint_users_basic", __name__)
 

@@ -15,16 +15,16 @@ app = Flask(
 app.config['SECRET_KEY'] = config["SECRET_KEY"]["key"]
 
 # FOR INCREMENTAL DEVELOPMENT I TURN THIS OFF SINCE ITS SLOW ON STARTUP, UNCOMMENT TO DEPLOY
-from model import blueprint_model
+from backend.model import blueprint_model
 app.register_blueprint(blueprint_model)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'blueprint_users_basic.login'
-from user import User
+from backend.user import User
 @login_manager.user_loader
 def load_user(user_id):
     return User(user_id)
-from users_basic import blueprint_users_basic
+from backend.users_basic import blueprint_users_basic
 app.register_blueprint(blueprint_users_basic)
 
 @app.route("/")

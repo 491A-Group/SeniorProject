@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import GaragePage from './pages/GaragePage';
 import CameraPage from './pages/CameraPage';
+import CatchPage from './pages/CatchPage';
 
 function App() {
 

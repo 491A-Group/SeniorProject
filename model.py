@@ -65,3 +65,13 @@ def predict():
                 'TSX Sport Wagon (2010-2014)' ,
                 'ZDX (2009-2013)']
     return "Predicted classes:" + str([labels[i] for i in top3_classes])
+
+
+
+'''
+from ultralyrics import YOLO
+
+model = YOLO("PATH/TO/FILE")
+
+model.predict("PATH/TO/IMAGE")[0].tojson()
+'''

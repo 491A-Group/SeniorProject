@@ -37,6 +37,10 @@ function App() {
           setActivePage(<TestPage changePage={changePage}/>)
           break;
 
+        case "Catch":
+          setActivePage(<CatchPage changePage={changePage}/>)
+          break;
+
         default:
           setActivePage(<TestPage changePage={changePage}/>)
           break;

@@ -9,10 +9,18 @@ import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 import Circle from "../images/circle-100.png";
 
+import { useWindowSize } from "@uidotdev/usehooks";
+
 export default function CameraPage({changePage, clientID}) {
 
+  const size = useWindowSize();
+  const w = size.width;
+  const h = size.height;
+
   const vc = {
-      facingMode: { exact: "environment" }
+      facingMode: { exact: "environment" },
+      width: {w},
+      height: {h}
   }
 
 
@@ -75,9 +83,10 @@ export default function CameraPage({changePage, clientID}) {
         <div>
           <div className="Camera">
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
+            {catchWindow}
             <div className="navBar">
               <button onClick={changePage("Home")} className="navButton"><img width="50vw" src={Home}/></button>
-              <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>
+              <button onClick={/*capture*/ changePage("Catch")} className="navButton"><img width="100vw" src={Circle}/></button>
               <button onClick={changePage("Garage")} className="navButton"><img width="50vw" src={Garage}/></button>
             </div>
           </div>

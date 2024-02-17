@@ -35,9 +35,16 @@ export default function CatchPage({changePage}) {
     });
   };
 
+  const getString = useEffect(() => {
+    return localStorage.getItem("imageBase")
+
+  }, []);
+
   useEffect(() => {
     let imageString = localStorage.getItem("imageBase");
-    fetchString(imageString);
+    if (imageString && imageString.length > 10) {
+      fetchString(imageString);
+    }
   }, []);
 
     //the main return to display the home page or main feed

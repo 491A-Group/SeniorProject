@@ -38,11 +38,11 @@ export default function CameraPage({changePage, clientID}) {
   const capture = useCallback(
     () => {
       //get screenshot
+      console.log("you hit the button");
       setImageSource(webcamRef.current.getScreenshot());
         //references used in callback
         //anything that the callback needs to "pay attention" to needs to be here
         localStorage.setItem("imageBase", imageSrc);
-
       changePage("Catch");
     },
     [webcamRef]

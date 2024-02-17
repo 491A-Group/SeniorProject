@@ -29,6 +29,7 @@ export default function CatchPage({changePage}) {
   };
 
   useEffect(() => {
+    console.log(localStorage.getItem("imageBase"));
     fetchString(localStorage.getItem("imageBase"));
   }, []);
 

@@ -23,26 +23,30 @@ def predict():
     This endpoint takes a POST request with the body being bytes of a jpg
     It just returns json with the results
     """
-    # BytesIO outputs a file-like object from the binary. 
-    picture = BytesIO(request.data)
 
-    # DEBUG
-    print(str(datetime.now()) + "\n", str(request.data), "\n\n\n")
+    print(request.get_data(as_text=True))
 
-    img = image.load_img(picture, target_size=(224,224))
-    img = image.img_to_array(img)
-    img = np.expand_dims(img, axis=0)
-    img = img / 255.0
+    return "hello"
+    # # BytesIO outputs a file-like object from the binary. 
+    # picture = BytesIO(request.data)
 
-    # Make predictions
-    predictions = model.predict(img)
+    # # DEBUG
+    # print(str(datetime.now()) + "\n", str(request.data), "\n\n\n")
 
-    # Post-process the predictions (e.g., get the predicted class)
-    top3_classes = np.argsort(predictions[0])[::-1][:3]
-    top3_probabilities = predictions[0][top3_classes]
+    # img = image.load_img(picture, target_size=(224,224))
+    # img = image.img_to_array(img)
+    # img = np.expand_dims(img, axis=0)
+    # img = img / 255.0
 
-    # DEBUG
-    print(str(top3_probabilities) + "\n")
+    # # Make predictions
+    # predictions = model.predict(img)
+
+    # # Post-process the predictions (e.g., get the predicted class)
+    # top3_classes = np.argsort(predictions[0])[::-1][:3]
+    # top3_probabilities = predictions[0][top3_classes]
+
+    # # DEBUG
+    # print(str(top3_probabilities) + "\n")
 
     labels = [  'CSX (2005-2009)',
                 'CSX (2009-2011)',
@@ -80,7 +84,7 @@ def predict():
                 'TSX (2008-2014)',
                 'TSX Sport Wagon (2010-2014)' ,
                 'ZDX (2009-2013)']
-    return "Predicted classes:" + str([labels[i] for i in top3_classes])
+    #return "Predicted classes:" + str([labels[i] for i in top3_classes])
 
 
 

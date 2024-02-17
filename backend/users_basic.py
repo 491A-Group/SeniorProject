@@ -1,3 +1,8 @@
+"""
+Brian wrote this unless portions are denoted otherwise
+
+This file is for API endpoints - BACKEND
+"""
 from flask import Blueprint, request, redirect, url_for, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from backend.user import User
@@ -7,7 +12,10 @@ blueprint_users_basic = Blueprint("blueprint_users_basic", __name__)
 
 @blueprint_users_basic.route('/login', methods=['POST'])
 def login():
+    """ BRIAN
+    Takes in a form and responds so React can act accordingly
     # TODO MAKE SURE THIS WORKS WITH login_manager.login_view = 'blueprint_users_basic.login'
+    """
     auth = db_queries.verify_credentials(request.form['email'], request.form['password'])
     if auth[1] == 202:
         login_user(User(auth[2]))
@@ -15,7 +23,10 @@ def login():
 
 @blueprint_users_basic.route('/register', methods=['POST'])
 def register():
-    # TODO FIX THIS FUNCTION THAT CURRENTLY DOES NO ERROR CHECKING
+    """ BRIAN
+    Takes in a form and responds so React can act accordingly
+    TODO FIX THIS FUNCTION THAT CURRENTLY DOES NO ERROR CHECKING
+    """
     displayname = request.form["displayname"]
     email = request.form["email"]
     password = request.form["password"]
@@ -32,12 +43,19 @@ def register():
 @blueprint_users_basic.route('/logout')
 @login_required
 def logout():
+    """ BRIAN:
+    logout_user() interfaces with flask_login
+    TODO fix return redirect to work with fetch api
+    """
     logout_user()
     return redirect(url_for('index'))
 
 @blueprint_users_basic.route('/garage')
 @login_required
 def garage():
+    """ BRIAN:
+    Basic fields for a user viewing their own profile
+    """
     followers, following = db_queries.follows(current_user.id)
     return jsonify(
         {
@@ -52,4 +70,7 @@ def garage():
 @blueprint_users_basic.route('/test4')
 @login_required
 def test4():
+    """BRIAN:
+    This endpoint can safely be deleted. It is occasionally useful to determine if cookies are useful. 
+    """
     return "<h3>COOKIES WORKING " + current_user.id + "</h3>"

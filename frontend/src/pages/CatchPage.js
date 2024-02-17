@@ -45,7 +45,7 @@ export default function CatchPage({changePage}) {
       fetchString(imageSrc);
     }
     else {
-      getString();
+      setTimeout(fetchString(imageSrc), 100);
     }
 
   }, []);

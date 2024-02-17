@@ -50,7 +50,7 @@ export default function CameraPage({changePage}) {
       toCatch();
     }
     else {
-      capture();
+      setTimeout(capture, 100);
     }
   }, [webcamRef, imageSrc, toCatch]);
 

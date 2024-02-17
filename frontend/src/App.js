@@ -20,6 +20,8 @@ function App() {
   //setActivePage changes the variable activaPage via react's useState
   const [activePage, setActivePage] = useState(null);
 
+  const [imageSrc, setImageSource] = useState("");
+
   //cameron
   //the navigation function
   //page = the string of the page you want to go to
@@ -45,7 +47,7 @@ function App() {
           break;
 
         case "Camera":
-          setActivePage(<CameraPage changePage={changePage}/>)
+          setActivePage(<CameraPage changePage={changePage} setSource={setImageSource}/>)
           break;
 
         case "Test":
@@ -53,7 +55,7 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage} />)
+          setActivePage(<CatchPage changePage={changePage} source={imageSrc} />)
           break;
 
         default:
@@ -74,6 +76,7 @@ function App() {
     //allows for it to NOT be set and still exit the page
     //this allows full navigation of the site while maintaining the same URL
     <div className="app">
+      {imageSrc}
       {activePage ? activePage : <TestPage changePage={changePage} />}
     </div>
   );

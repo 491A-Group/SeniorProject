@@ -2,11 +2,9 @@ import { useEffect , useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
-export default function CatchPage({changePage}) {
+export default function CatchPage({changePage, source}) {
 
   const [prediction, setPrediction] = useState("");
-
-  const [imageSrc, setImageSource] = useState("testing");
 
   const fetchString = (base64String) => {
     // const binaryData = Buffer.from(
@@ -39,10 +37,7 @@ export default function CatchPage({changePage}) {
   };
 
   useEffect(() => {
-    setImageSource(localStorage.getItem("imageBase"));
-    fetchString(imageSrc);
-    fetchString(imageSrc);
-    fetchString(imageSrc);
+    fetchString(source);
     
   }, []);
 

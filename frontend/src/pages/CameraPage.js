@@ -11,7 +11,7 @@ import Circle from "../images/circle-100.png";
 
 //cameron
 //overall camera page
-export default function CameraPage({changePage}) {
+export default function CameraPage({changePage, setSource}) {
 
   //cameron
   //specs for the webcam module, makes the camera be the forward facing camera
@@ -44,25 +44,9 @@ export default function CameraPage({changePage}) {
   //cameron
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
-    setImageSource(webcamRef.current.getScreenshot());
-    setTimeout(() => {
-      localStorage.setItem("imageBase", imageSrc);
-      fetch('https://sc-backend.brian2002.com/predict', {
-          method: 'POST',
-          body: imageSrc
-        })
-        .then((response) => response.text())
-        .then((data) => {
-          //get the prediction from the server, set the variable
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error('Error fetching data:', error);
-        });
-      toCatch();
-    }, 100);
-    
-  }, [webcamRef, imageSrc, toCatch]);
+    setSource(webcamRef.current.getScreenshot());
+    toCatch();
+  }, [webcamRef, setSource, toCatch]);
 
       //cameron
       //main camera page JSX

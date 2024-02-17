@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { useState } from 'react';
+import { useState, AuthContext} from 'react';
 
 import TestPage from './pages/TestPage';
 import HomePage from './pages/HomePage';
@@ -13,11 +13,11 @@ function App() {
 
   const [activePage, setActivePage] = useState(null);
 
-  const changePage = (page) => () =>
+  const  changePage = (page) =>
     {
 
       console.log("PAGE SENT: " + page);
-      setActivePage(<LoginPage changePage={changePage}/>)
+
       switch(page)
       {
         case "Login":

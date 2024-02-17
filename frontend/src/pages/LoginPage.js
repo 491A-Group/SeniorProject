@@ -54,6 +54,7 @@ export default function LoginPage({changePage}) {
         })
     }
 
+
     return (
         <div className="container">
             <h1>Welcome to SportsCar Spotter</h1>
@@ -88,7 +89,7 @@ export default function LoginPage({changePage}) {
                     </p>
                 </>
             )}
-            <button onClick={changePage("Test")}>Go to Test Page</button>
+            <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import { useEffect , useState} from 'react';
+import { Buffer } from 'buffer';
 import './HomePage.css';
 
 export default function CatchPage({changePage}) {
@@ -38,6 +39,8 @@ export default function CatchPage({changePage}) {
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
         {prediction}
+
+        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );
   }

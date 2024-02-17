@@ -33,6 +33,10 @@ export default function HomePage({changePage}) {
       fetchData();
     }, []);
 
+    const toTest = () => {
+      changePage("Test");
+    }
+  
     //the main return to display the home page or main feed
     return (
       <div>
@@ -59,7 +63,7 @@ export default function HomePage({changePage}) {
           ))}
         </ul>
 
- <button onClick={changePage("Test")}>Go to Test Page</button>
+        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );
   }

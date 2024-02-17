@@ -7,7 +7,7 @@ import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 import Circle from "../images/circle-100.png";
 
-export default function CameraPage({changePage, clientID}) {
+export default function CameraPage({changePage}) {
 
   const vc = {
       facingMode: { exact: "environment" },
@@ -21,36 +21,32 @@ export default function CameraPage({changePage, clientID}) {
           document.body.style.overflow = "scroll"
       };
   }, []);
+
+  const toCatch = () => {
+    changePage("Catch");
+  }
+
+
+  
     
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("");
 
+
   //main function for prediction communication
   //sends image data over to server
   //gets string prediction back
-  
 
   //function for getting the screenshot
   //automatically sends prediction to the server
   const capture = useCallback(
     () => {
-      //get screenshot
-      console.log("you hit the button");
       setImageSource(webcamRef.current.getScreenshot());
-        //references used in callback
-        //anything that the callback needs to "pay attention" to needs to be here
       localStorage.setItem("imageBase", imageSrc);
-
-      console.log(imageSrc);
-      changePage("Catch");
+      toCatch();
     },
     [webcamRef]
     );
-    
-    
-      //returns the main camera page to be displayed
-
-      //<Webcam width="100%" height="100%" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
 
 
       return (
@@ -59,9 +55,9 @@ export default function CameraPage({changePage, clientID}) {
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
             {/*catchWindow*/}
             <div className="navBar">
-              <button onClick={changePage("Home")} className="navButton"><img width="50vw" src={Home}/></button>
+              <button onClick={() => {changePage("Home")}} className="navButton"><img width="50vw" src={Home}/></button>
               <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>
-              <button onClick={changePage("Garage")} className="navButton"><img width="50vw" src={Garage}/></button>
+              <button onClick={() => {changePage("Garage")}} className="navButton"><img width="50vw" src={Garage}/></button>
             </div>
           </div>
         </div>

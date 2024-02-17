@@ -111,7 +111,7 @@ export default function Garage({changePage}) {
                 // Add more list items as needed
             </ul> */}
 
-<button onClick={changePage("Test")}>Go to Test Page</button>
+            <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
         </div>
     );
 }

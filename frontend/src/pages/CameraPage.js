@@ -48,7 +48,7 @@ export default function CameraPage({changePage}) {
   const capture = useCallback(
     () => {
       setImageSource(webcamRef.current.getScreenshot());
-      localStorage.setItem("imageBase", imageSrc);
+      localStorage.setItem("imageBase", webcamRef.current.getScreenshot());
       toCatch();
     },
     [webcamRef]

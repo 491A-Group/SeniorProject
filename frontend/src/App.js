@@ -15,6 +15,8 @@ function App() {
 
   const changePage = (page) => () =>
     {
+
+      console.log("PAGE SENT: " + page);
       setActivePage(<LoginPage changePage={changePage}/>)
       switch(page)
       {

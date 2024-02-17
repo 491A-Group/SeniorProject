@@ -2,13 +2,10 @@ import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
 import { useState, useCallback, useEffect} from 'react';
-import {Buffer} from 'buffer';
 
-import Camera from "../images/camera.png";
 import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 import Circle from "../images/circle-100.png";
-import CatchPage from './CatchPage';
 
 export default function CameraPage({changePage, clientID}) {
 
@@ -42,7 +39,9 @@ export default function CameraPage({changePage, clientID}) {
       setImageSource(webcamRef.current.getScreenshot());
         //references used in callback
         //anything that the callback needs to "pay attention" to needs to be here
-        localStorage.setItem("imageBase", imageSrc);
+      localStorage.setItem("imageBase", imageSrc);
+
+      console.log(imageSrc);
       changePage("Catch");
     },
     [webcamRef]

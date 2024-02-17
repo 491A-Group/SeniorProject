@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './LoginPage.css';
   
 
-export default function LoginPage({changePage}) {
-    //When isLogIn is false, assume the user wants to create an account
-    const [isLogIn, setIsLogIn] = useState(true); 
+export default function LoginPage({ changePage }) {
+
+  //When isLogIn is false, assume the user wants to create an account
+  const [isLogIn, setIsLogIn] = useState(true);
+
+  //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => {
+          document.body.style.overflow = "scroll"
+      };
+  }, []);
+  
     
     //These states have the strings of user input in the forms. 
     //The Login and Register portions share these states so switching between them doesn't clear fields

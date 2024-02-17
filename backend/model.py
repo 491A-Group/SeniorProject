@@ -4,7 +4,7 @@ from tensorflow.keras.preprocessing import image
 from io import BytesIO
 from flask import Blueprint, request
 
-import random # temp just to pick cars
+from datetime import datetime
 
 # Load the model
 model = tf.keras.models.load_model("ACURA/")
@@ -15,6 +15,9 @@ blueprint_model = Blueprint("blueprint_model", __name__)
 def predict():
     # BytesIO outputs a file-like object from the binary. 
     picture = BytesIO(request.data)
+
+    # DEBUG
+    print(str(datetime.now()))
 
     img = image.load_img(picture, target_size=(224,224))
     img = image.img_to_array(img)
@@ -27,6 +30,9 @@ def predict():
     # Post-process the predictions (e.g., get the predicted class)
     top3_classes = np.argsort(predictions[0])[::-1][:3]
     top3_probabilities = predictions[0][top3_classes]
+
+    # DEBUG
+    print(str(top3_probabilities) + "\n")
 
     labels = [  'CSX (2005-2009)',
                 'CSX (2009-2011)',

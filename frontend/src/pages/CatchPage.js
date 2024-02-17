@@ -45,9 +45,9 @@ export default function CatchPage({changePage, source}) {
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {localStorage.getItem("imageBase")}
+        <img src={source} alt="The photo" />
         {prediction}
-
+        <button onClick={() => {fetchString(source)}}>Confirm Photo</button>
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );

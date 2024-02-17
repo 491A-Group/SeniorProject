@@ -1,10 +1,15 @@
 # [Live Deployment](https://sc-backend.brian2002.com)
 
 ## File Structure
- - As of 11/07/23:
+ - updateTODO??:
    - /frontend is the entire npm project
+     - if you are ONLY doing frontend work it is appropriate to make that the folder you open in vscode
+     - run `npm run start` in that folder, not this root directory
+     - that directory may have its own readme
+     - still make commits normally even if you only work in /frontend
+     - write code primarily in /frontend/src
    - /ACURA has the folder for the only model 
-   - main.py and model.py are for the server
+   - main.py, model.py, other python files in root are for backend
 
 ## Routes
 ?? index, login, signup
@@ -13,7 +18,6 @@
  - flask server for ml. takes a request and returns predictions  
  - Request should be to :3000/predict with data in the body that's bytes of image
  
-
 ## Running
 I always recommend to do a venv
  - A certain version of python may be required for tensorflow ?? tbd

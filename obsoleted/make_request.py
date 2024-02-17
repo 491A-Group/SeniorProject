@@ -4,9 +4,9 @@
 
 import requests
 
-file_path = input("IMG FILE PATH [EX 99nsx.jpeg]: ")
+file_path = input("IMG FILE PATH [EX 99nsx.jpg]: ")
 if not file_path:
-    file_path = "99nsx.jpeg"
+    file_path = "99nsx.jpg"
 
 target_api = input("TARGET [EX http://192.168.1.69:3030/predict]: ")
 if not target_api:

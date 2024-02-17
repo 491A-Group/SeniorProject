@@ -38,6 +38,7 @@ export default function CatchPage({changePage}) {
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
+        {localStorage.getItem("imageBase")}
         {prediction}
 
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>

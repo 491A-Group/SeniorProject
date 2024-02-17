@@ -6,7 +6,7 @@ export default function CatchPage({changePage}) {
 
   const [prediction, setPrediction] = useState("");
 
-  const [imageSrc, setImageSource] = useState("");
+  const [imageSrc, setImageSource] = useState("testing");
 
   const fetchString = (base64String) => {
     // const binaryData = Buffer.from(
@@ -22,9 +22,10 @@ export default function CatchPage({changePage}) {
     // formData.append('file', blobData, 'filename.jpg'); // 'file' is the name of the form field
     
     // Send the POST request with the FormData object
+
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
-      body: base64String
+      body: localStorage.getItem("imageBase")
     })
     .then((response) => response.text())
     .then((data) => {
@@ -39,7 +40,7 @@ export default function CatchPage({changePage}) {
 
   useEffect(() => {
     setImageSource(localStorage.getItem("imageBase"));
-    setTimeout(fetchString(imageSrc), 100);
+    setTimeout(fetchString(imageSrc), 1000);
     
   }, []);
 
@@ -47,7 +48,7 @@ export default function CatchPage({changePage}) {
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {imageSrc}
+        {localStorage.getItem("imageBase")}
         {prediction}
 
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>

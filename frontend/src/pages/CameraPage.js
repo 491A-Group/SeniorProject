@@ -34,23 +34,6 @@ export default function CameraPage({changePage}) {
   const toCatch = () => {
     changePage("Catch");
   }
-
-  const fetchString = (base64String) => {
-    fetch('https://sc-backend.brian2002.com/predict', {
-      method: 'POST',
-      body: base64String
-    })
-    .then((response) => response.text())
-    .then((data) => {
-      //get the prediction from the server, set the variable
-      setImageSource(data);
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
-    });
-  };
-
-
   
   //cameron
   //webcam reference and imageSrc Reference to be seen later
@@ -63,9 +46,9 @@ export default function CameraPage({changePage}) {
   const capture = useCallback(async () => {
     setImageSource(webcamRef.current.getScreenshot());
     localStorage.setItem("imageBase", imageSrc);
-    // Now call toCatch()
-    fetchString(imageSrc);
-    toCatch();
+    if (imageSrc.length > 5) {
+      toCatch();
+    }
   }, [webcamRef, imageSrc, toCatch]);
 
       //cameron

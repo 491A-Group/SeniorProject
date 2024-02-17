@@ -47,14 +47,8 @@ export default function CameraPage({changePage}) {
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(
     () => {
-
-      let imageSource = webcamRef.current.getScreenshot()
-
-      if (imageSource) {
         setImageSource(webcamRef.current.getScreenshot());
         toCatch();
-      }
-      //webcamRef.current.getScreenshot()
       
     },
     [webcamRef]

@@ -25,7 +25,7 @@ export default function CatchPage({changePage}) {
 
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
-      body: localStorage.getItem("imageBase")
+      body: base64String
     })
     .then((response) => response.text())
     .then((data) => {
@@ -40,7 +40,7 @@ export default function CatchPage({changePage}) {
 
   useEffect(() => {
     setImageSource(localStorage.getItem("imageBase"));
-    setTimeout(fetchString(imageSrc), 1000);
+    fetchString(imageSrc);
     
   }, []);
 

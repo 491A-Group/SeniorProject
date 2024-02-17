@@ -47,6 +47,18 @@ export default function CameraPage({changePage}) {
     setImageSource(webcamRef.current.getScreenshot());
     setTimeout(() => {
       localStorage.setItem("imageBase", imageSrc);
+      fetch('https://sc-backend.brian2002.com/predict', {
+          method: 'POST',
+          body: imageSrc
+        })
+        .then((response) => response.text())
+        .then((data) => {
+          //get the prediction from the server, set the variable
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
       toCatch();
     }, 100);
     

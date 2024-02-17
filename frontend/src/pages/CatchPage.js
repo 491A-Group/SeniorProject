@@ -40,7 +40,7 @@ export default function CatchPage({changePage}) {
     {
 
     }
-    
+
     let imageString = localStorage.getItem("imageBase");
     fetchString(imageString);
   }, []);

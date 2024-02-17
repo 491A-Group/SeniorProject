@@ -17,7 +17,7 @@ def predict():
     picture = BytesIO(request.data)
 
     # DEBUG
-    print(str(datetime.now()))
+    print(str(datetime.now()) + "\n", str(request.data), "\n\n\n")
 
     img = image.load_img(picture, target_size=(224,224))
     img = image.img_to_array(img)

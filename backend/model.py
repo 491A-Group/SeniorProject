@@ -1,3 +1,8 @@
+"""
+Cameron produced code to simply run the model on his local machine to get a prediction
+
+Brian adapted it to work with Flask
+"""
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.preprocessing import image
@@ -7,12 +12,17 @@ from flask import Blueprint, request
 from datetime import datetime
 
 # Load the model
+"""Cameron's comment here"""
 model = tf.keras.models.load_model("ACURA/")
 
 blueprint_model = Blueprint("blueprint_model", __name__)
 
 @blueprint_model.route('/predict', methods=['POST'])
 def predict():
+    """BRIAN:
+    This endpoint takes a POST request with the body being bytes of a jpg
+    It just returns json with the results
+    """
     # BytesIO outputs a file-like object from the binary. 
     picture = BytesIO(request.data)
 
@@ -75,6 +85,8 @@ def predict():
 
 
 '''
+# CAMERON this is code we intend to change to into the future
+
 from ultralyrics import YOLO
 
 model = YOLO("PATH/TO/FILE")

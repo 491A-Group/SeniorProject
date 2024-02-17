@@ -1,40 +1,54 @@
+"""
+Brian wrote this unless portions are denoted otherwise
+"""
 from flask import Flask, render_template, jsonify
 from flask_login import LoginManager
 import configparser
 
-
+# BRIAN: config.ini
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+# BRIAN: Flask app. Some of these attributes help serve static folders - the entire React project is static
 app = Flask(
     __name__,
     static_url_path='',
     static_folder='frontend/build',
     template_folder='frontend/build'
 )
+# BRIAN: This helps flask_login, cookies, and some other secrets.
+# Perhaps a seed for random? Keeping this key the same often saves sessions between restarts
 app.config['SECRET_KEY'] = config["SECRET_KEY"]["key"]
 
+# BRIAN: Load the route for the ML model. Everything it needs is taken care of in that file
 # FOR INCREMENTAL DEVELOPMENT I TURN THIS OFF SINCE ITS SLOW ON STARTUP, UNCOMMENT TO DEPLOY
 from backend.model import blueprint_model
 app.register_blueprint(blueprint_model)
 
+# BRIAN: flask_login handles all the cookies since those can get complicated to handle
 login_manager = LoginManager(app)
 login_manager.login_view = 'blueprint_users_basic.login'
 from backend.user import User
 @login_manager.user_loader
 def load_user(user_id):
     return User(user_id)
+
+# BRIAN: users_basic has lots of endpoints. Examples login, register, logout, garage
 from backend.users_basic import blueprint_users_basic
 app.register_blueprint(blueprint_users_basic)
 
 @app.route("/")
 def index():
-    # This is the main entry point for React. Other entry points in the project are for fetch/restful api
+    # BRIAN: This is the main entry point for React. Other entry points in the project are for fetch/restful api
     return render_template("index.html")
 
 @app.route('/api/home_1')
 def home_1():
-    print("asdf")
+    """ BRIAN:
+    This temporary endpoint is to show posts in the home feed, necessary for others to complete their work.
+    When this is really implemented it will need some serious SQL statements
+    TODO this will be replaced with a different function in a different file later
+    """
     example = [
         {
             "name": "1990-1999 Mitsubishi 3000GT",
@@ -53,7 +67,6 @@ def home_1():
         }
     ]
     return jsonify(example)
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3030)

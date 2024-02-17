@@ -1,15 +1,21 @@
+#All work done by Cameron Weiss, unless stated otherwise
+
 import tensorflow as tf
 import numpy as np
 import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+#cameron
 # Load the ResNet50V2 model
 model = tf.keras.applications.ResNet50V2(weights='imagenet')
 
-# Load the image
+#cameron
+# Load the images
 folder = "C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/RoboFlow/Cars/TESLA2/"
 
+
+#loop through the folders
 for folderPath in os.listdir(folder):
     folderPath = folder + folderPath
     for file in os.listdir(folderPath):
@@ -17,6 +23,8 @@ for folderPath in os.listdir(folder):
         
         keep = False
 
+        #cameron
+        # Load the images
         image_path = folderPath + "/" + file
         try:
             img = tf.keras.utils.load_img(image_path, target_size=(224, 224))
@@ -26,7 +34,10 @@ for folderPath in os.listdir(folder):
             # Preprocess the image for the ResNet50V2 model
             img_array = tf.keras.applications.resnet_v2.preprocess_input(img_array)
 
+            # cameron
             # Make a prediction
+            #if a car label is one of the top 5, keep the image
+            #if not, delete the image
             predictions = model.predict(img_array)
 
             decoded_predictions = tf.keras.applications.resnet_v2.decode_predictions(predictions, top=5)  # Get the top prediction

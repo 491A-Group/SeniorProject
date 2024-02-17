@@ -1,6 +1,8 @@
+//All Work is Done by Cameron Weiss, unless stated otherwise
+
 import './App.css';
 import React from 'react';
-import { useState, AuthContext} from 'react';
+import { useState } from 'react';
 
 import TestPage from './pages/TestPage';
 import HomePage from './pages/HomePage';
@@ -9,15 +11,25 @@ import GaragePage from './pages/GaragePage';
 import CameraPage from './pages/CameraPage';
 import CatchPage from './pages/CatchPage';
 
+//cameron
+//the overall main app function
 function App() {
 
+  //cameron
+  //the active page is the variable we use to switch pages. The value is the page the user is viewing
+  //setActivePage changes the variable activaPage via react's useState
   const [activePage, setActivePage] = useState(null);
 
+  //cameron
+  //the navigation function
+  //page = the string of the page you want to go to
   const  changePage = (page) =>
     {
 
       console.log("PAGE SENT: " + page);
 
+      //cameron
+      //the overall page navigation logic
       switch(page)
       {
         case "Login":
@@ -52,7 +64,15 @@ function App() {
     }
   
 
+    //cameron
+    //the actual view of the app
   return (
+
+    //cameron
+    //the logic of the app. If activePage is null, we create a page. 
+    //This does not set the activePage variable, but no route out of there 
+    //allows for it to NOT be set and still exit the page
+    //this allows full navigation of the site while maintaining the same URL
     <div className="app">
       {activePage ? activePage : <TestPage changePage={changePage} />}
     </div>

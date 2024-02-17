@@ -26,6 +26,8 @@ export default function LoginPage({ changePage }) {
     const handleEmailChange = (event) => {setEmail(event.target.value)}
     const handlePasswordChange = (event) => {setPassword(event.target.value)}
 
+    //BRIAN: helped write this function to log in
+    // currently just works with cookies and does no re-routing logic
     const handleSubmitLogin = (event) => {
         let login_form = new FormData()
         login_form.append("email", input_email)
@@ -45,6 +47,8 @@ export default function LoginPage({ changePage }) {
         })
     }
 
+    //BRIAN: helped write this function to sign up
+    // currently just works with cookies and does no re-routing logic
     const handleSubmitRegister = (event) => {
         let signup_form = new FormData()
         signup_form.append("displayname", input_displayname)

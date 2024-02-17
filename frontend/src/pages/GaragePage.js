@@ -20,8 +20,10 @@ export default function Garage({changePage}) {
     const [catches, setCatches] = useState(-1)
     const [displayname, setDisplayname] = useState("")
 
+    //Brian helped work on this function to fetch data from the database
     useEffect(() => {
-        //this functions dependencies is [] so it only runs when this module is loaded
+        //GET INFORMATION ON THE PAGE WHEN THE PAGE LOADS
+        //This functions dependencies is [] so it only runs when this module is loaded
         const fetchData = async () => {
             try {
                 const response = await fetch(window.location.origin + '/garage');
@@ -31,6 +33,7 @@ export default function Garage({changePage}) {
                 }
                 const jsonData = await response.json();
                 
+                //The following 4 lines put the data from the Fetch response into React states
                 setFollowers(jsonData["followers"])
                 setFollowing(jsonData["following"])
                 setCatches(jsonData["catches"])

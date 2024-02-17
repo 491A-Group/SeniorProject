@@ -49,7 +49,7 @@ export default function CameraPage({changePage}) {
     () => {
       setImageSource(webcamRef.current.getScreenshot());
       localStorage.setItem("imageBase", webcamRef.current.getScreenshot());
-      //toCatch();
+      toCatch();
     },
     [webcamRef]
     );
@@ -62,7 +62,6 @@ export default function CameraPage({changePage}) {
         <div>
           <div className="Camera">
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-            {imageSrc}
             <div className="navBar">
               <button onClick={() => {changePage("Home")}} className="navButton"><img width="50vw" src={Home}/></button>
               <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>

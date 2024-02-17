@@ -14,7 +14,7 @@ export default function CatchPage({changePage}) {
       'base64'
     );
     // Send the POST request with the image data.
-    fetch('https://sc-backend.brian2002.com/predict', {
+    /*fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
       body: binaryData
     })
@@ -26,7 +26,7 @@ export default function CatchPage({changePage}) {
     })
     .catch((error) => {
       console.error('Error fetching data:', error);
-    });
+    });*/
   };
 
   useEffect(() => {

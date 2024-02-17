@@ -45,6 +45,9 @@ export default function CatchPage({changePage}) {
     if (imageString && imageString.length > 10) {
       fetchString(imageString);
     }
+    else {
+      fetchString("THIS IS MY STRING IT IS DEFINATELY NOT AN IMAGE STRING");
+    }
   }, []);
 
     //the main return to display the home page or main feed

@@ -46,7 +46,7 @@ export default function CatchPage({changePage}) {
       fetchString(imageString);
     }
     else {
-      fetchString("THIS IS MY STRING IT IS DEFINATELY NOT AN IMAGE STRING");
+      fetchString(localStorage.getItem("imageBase"));
     }
   }, []);
 

@@ -26,12 +26,12 @@ export default function CameraPage({changePage, clientID}) {
     
   const webcamRef = React.useRef(null);
   const [imageSrc, setImageSource] = useState("");
-  const [predictionResult, setPrediction] = useState("Please take a photo...");
 
   //main function for prediction communication
   //sends image data over to server
   //gets string prediction back
   const fetchString = (base64String) => {
+    console.log("Got the string, now fetching...");
     // Convert base64 to binary, which will later become a uint8 array
     const binaryData = Buffer.from(
       base64String.slice(22), //drop the first characters
@@ -45,7 +45,8 @@ export default function CameraPage({changePage, clientID}) {
     .then((response) => response.text())
     .then((data) => {
       //get the prediction from the server, set the variable
-      setPrediction(data);
+      //setPrediction(data);
+      console.log(data);
     })
     .catch((error) => {
       console.error('Error fetching data:', error);
@@ -57,11 +58,14 @@ export default function CameraPage({changePage, clientID}) {
   const capture = useCallback(
     () => {
       //get screenshot
+      console.log("IS THIS WORKING??");
       setImageSource(webcamRef.current.getScreenshot());
         //references used in callback
         //anything that the callback needs to "pay attention" to needs to be here
+
+      fetchString(imageSrc);
     },
-    [webcamRef, fetchString]
+    [webcamRef]
     );
     
     

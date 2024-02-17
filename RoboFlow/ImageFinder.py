@@ -1,3 +1,4 @@
+#All code written by Le Duong, unless stated otherwise 
 import time
 from selenium import webdriver
 from bs4 import BeautifulSoup
@@ -7,8 +8,8 @@ import base64
 import binascii
 import threading
 
-# Replace this URL with the website you want to scrape
-
+# Le Duong 
+# run script to run automated web scraper to pull images of specific car type from internet via a browser window
 
 def bingify(car):
     car.replace(" ", "%20")
@@ -19,6 +20,8 @@ def duckify(car):
     return car
 
 
+# Le Duong 
+# reads each line from a txt file, each line in txt file is a car make/model that is to be searched on the internet
 for car in open("C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/RoboFlow/cars.txt").readlines():
     
     car = car.strip()
@@ -32,16 +35,18 @@ for car in open("C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/R
         "https://www.google.com/search?tbm=isch&q="+googleCar,
         "https://duckduckgo.com/?q="+duckCar+"&iax=images&ia=images"]
 
-
+    # Le Duong
     # Create a Selenium WebDriver instance
     driver = webdriver.Edge()  # You need to have ChromeDriver installed
     
     with open("links.txt", "w+") as file:
         
         for url in urls:
+        # Le Duong
         # Navigate to the URL
             driver.get(url)
-
+            
+            # Le Duong
             # Scroll down the page to trigger lazy loading
             scroll_pause_time = 2  # Adjust this value as needed
             scroll_height = driver.execute_script("return document.body.scrollHeight")
@@ -54,14 +59,16 @@ for car in open("C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/R
                     break
                 scroll_height = new_scroll_height
 
+            # Le Duong
             # Parse the updated HTML content of the page
             soup = BeautifulSoup(driver.page_source, 'html.parser')
 
+            # Le Duong
             # Find all "img" tags in the updated HTML
             img_tags = soup.find_all('img')
 
+            # Le Duong
             # Extract and print the "src" attribute from each "img" tag
-            
             for img_tag in img_tags:
                 src = img_tag.get('src')
                 if src:
@@ -78,20 +85,25 @@ for car in open("C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/R
     
 
     def download_with_timeout(image_link, save_directory):
+        # Le Duong
         # Create a thread to run the download_image function
         download_thread = threading.Thread(target=download_image, args=(image_link, save_directory))
 
+        # Le Duong
         # Start the thread
         download_thread.start()
 
+        # Le Duong
         # Wait for the thread to finish or until the timeout
         download_thread.join(timeout=5)  # Wait for a maximum of 5 seconds
 
+        # Le Duong
         # Check if the thread is still alive (i.e., if it didn't finish within 5 seconds)
         if download_thread.is_alive():
             # If the thread is still running after 5 seconds, stop it
             download_thread.join()  # This might not work in all cases, depending on what the download_image function is doing
 
+    # Le Duong
     # Function to download an image from a URL
     def download_image(image_url, save_dir):
         try:
@@ -111,14 +123,16 @@ for car in open("C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/R
         except Exception as e:
             print(f"An error occurred: {str(e)}")
 
+    # Le Duong
     # Directory where you want to save the downloaded images
     save_directory = 'C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/RoboFlow/Cars/'+car
 
+    # Le Duong
     # Create the save directory if it doesn't exist
     os.makedirs(save_directory, exist_ok=True)
 
+    # Le Duong
     # Read the list of image links from "cleaned.txt"
-
     cleaned_file_path = 'links.txt'
     try:
         with open(cleaned_file_path, 'r') as file:
@@ -127,8 +141,8 @@ for car in open("C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/R
         print(f"File not found: {cleaned_file_path}")
         exit()
 
+    # Le Duong
     # Iterate through the image links and download each image
-
     for image_link in image_links:
         image_link = image_link.strip()
         

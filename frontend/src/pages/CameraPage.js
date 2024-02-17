@@ -35,6 +35,21 @@ export default function CameraPage({changePage}) {
     changePage("Catch");
   }
 
+  const fetchString = (base64String) => {
+    fetch('https://sc-backend.brian2002.com/predict', {
+      method: 'POST',
+      body: base64String
+    })
+    .then((response) => response.text())
+    .then((data) => {
+      //get the prediction from the server, set the variable
+      setImageSource(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+  };
+
 
   
   //cameron
@@ -48,11 +63,8 @@ export default function CameraPage({changePage}) {
   const capture = useCallback(async () => {
     setImageSource(webcamRef.current.getScreenshot());
     localStorage.setItem("imageBase", imageSrc);
-  
-    // Wait for localStorage.setItem() to finish
-    await new Promise(resolve => setTimeout(resolve, 0));
-  
     // Now call toCatch()
+    fetchString(imageSrc);
     toCatch();
   }, [webcamRef, imageSrc, toCatch]);
 

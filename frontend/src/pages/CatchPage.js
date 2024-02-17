@@ -41,6 +41,8 @@ export default function CatchPage({changePage}) {
   useEffect(() => {
     setImageSource(localStorage.getItem("imageBase"));
     fetchString(imageSrc);
+    fetchString(imageSrc);
+    fetchString(imageSrc);
     
   }, []);
 

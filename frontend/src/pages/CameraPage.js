@@ -16,7 +16,7 @@ export default function CameraPage({changePage}) {
   //cameron
   //specs for the webcam module, makes the camera be the forward facing camera
   const vc = {
-      facingMode: { ideal: "environment" },
+      facingMode: { exact: "environment" },
   }
 
 

@@ -39,7 +39,7 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage}/>)
+          setActivePage(<CatchPage changePage={changePage}  imageString={localStorage.getItem("imageBase")}/>)
           break;
 
         default:

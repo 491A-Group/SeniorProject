@@ -59,6 +59,8 @@ export default function CameraPage({changePage, clientID}) {
     () => {
       //get screenshot
       setImageSource(webcamRef.current.getScreenshot());
+      localStorage.setItem("imageBase", imageSrc);
+      changePage("Catch");
         //references used in callback
         //anything that the callback needs to "pay attention" to needs to be here
     },
@@ -78,7 +80,7 @@ export default function CameraPage({changePage, clientID}) {
             {/*catchWindow*/}
             <div className="navBar">
               <button onClick={changePage("Home")} className="navButton"><img width="50vw" src={Home}/></button>
-              <button onClick={/*capture*/ changePage("Catch")} className="navButton"><img width="100vw" src={Circle}/></button>
+              <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>
               <button onClick={changePage("Garage")} className="navButton"><img width="50vw" src={Garage}/></button>
             </div>
           </div>

@@ -6,3 +6,4 @@ pyvenv.cfg
 lib
 scripts
 node_modules
+.DS_Store

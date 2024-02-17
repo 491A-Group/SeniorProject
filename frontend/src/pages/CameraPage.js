@@ -49,6 +49,9 @@ export default function CameraPage({changePage}) {
     if (imageSrc.length > 5) {
       toCatch();
     }
+    else {
+      capture();
+    }
   }, [webcamRef, imageSrc, toCatch]);
 
       //cameron

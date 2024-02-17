@@ -38,13 +38,21 @@ export default function CatchPage({changePage}) {
   };
 
   const getString = useEffect(() => {
-    return localStorage.getItem("imageBase")
+    setImageSource(localStorage.getItem("imageBase"));
+
+    if (imageSrc)
+    {
+      fetchString(imageSrc);
+    }
+    else {
+      getString();
+    }
 
   }, []);
 
   useEffect(() => {
-    setImageSource(localStorage.getItem("imageBase"));
-    fetchString(imageSrc);
+    getString();
+    
   }, []);
 
     //the main return to display the home page or main feed

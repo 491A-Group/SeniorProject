@@ -49,7 +49,7 @@ export default function CameraPage({changePage}) {
     () => {
       setImageSource(webcamRef.current.getScreenshot());
       localStorage.setItem("imageBase", webcamRef.current.getScreenshot());
-      toCatch();
+      //toCatch();
     },
     [webcamRef]
     );

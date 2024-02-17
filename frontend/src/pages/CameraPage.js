@@ -45,13 +45,11 @@ export default function CameraPage({changePage}) {
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
     setImageSource(webcamRef.current.getScreenshot());
-    localStorage.setItem("imageBase", imageSrc);
-    if (imageSrc.length > 5) {
+    setTimeout(() => {
+      localStorage.setItem("imageBase", imageSrc);
       toCatch();
-    }
-    else {
-      setTimeout(capture, 100);
-    }
+    }, 100);
+    
   }, [webcamRef, imageSrc, toCatch]);
 
       //cameron

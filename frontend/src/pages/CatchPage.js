@@ -37,21 +37,9 @@ export default function CatchPage({changePage}) {
     });
   };
 
-  const getString = useEffect(() => {
-    setImageSource(localStorage.getItem("imageBase"));
-
-    if (imageSrc)
-    {
-      fetchString(imageSrc);
-    }
-    else {
-      setTimeout(fetchString(imageSrc), 100);
-    }
-
-  }, []);
-
   useEffect(() => {
-    getString();
+    setImageSource(localStorage.getItem("imageBase"));
+    setTimeout(fetchString(imageSrc), 100);
     
   }, []);
 

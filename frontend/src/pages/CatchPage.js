@@ -6,6 +6,8 @@ export default function CatchPage({changePage}) {
 
   const [prediction, setPrediction] = useState("");
 
+  const [imageSrc, setImageSource] = useState("");
+
   const fetchString = (base64String) => {
     // const binaryData = Buffer.from(
     //   base64String.slice(22), // Drop the first characters
@@ -41,20 +43,15 @@ export default function CatchPage({changePage}) {
   }, []);
 
   useEffect(() => {
-    let imageString = localStorage.getItem("imageBase");
-    if (imageString && imageString.length > 10) {
-      fetchString(imageString);
-    }
-    else {
-      fetchString(localStorage.getItem("imageBase"));
-    }
+    setImageSource(localStorage.getItem("imageBase"));
+    fetchString(imageSrc);
   }, []);
 
     //the main return to display the home page or main feed
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {localStorage.getItem("imageBase")}
+        {imageSrc}
         {prediction}
 
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>

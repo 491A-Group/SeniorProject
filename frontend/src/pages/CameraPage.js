@@ -37,7 +37,6 @@ export default function CameraPage({changePage, clientID}) {
       base64String.slice(22), //drop the first characters
       'base64'
     );
-
     // Send the POST request with the image data.
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
@@ -59,8 +58,6 @@ export default function CameraPage({changePage, clientID}) {
     () => {
       //get screenshot
       setImageSource(webcamRef.current.getScreenshot());
-      localStorage.setItem("imageBase", imageSrc);
-      changePage("Catch");
         //references used in callback
         //anything that the callback needs to "pay attention" to needs to be here
     },

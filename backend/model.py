@@ -5,7 +5,7 @@ Brian adapted it to work with Flask
 """
 from ultralytics import YOLO
 from io import BytesIO
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from PIL import Image
 
 from datetime import datetime
@@ -22,9 +22,9 @@ def predict():
     This endpoint takes a POST request with the body being bytes of a jpg
     It just returns json with the results
     """
-    result = model.predict(
+    response = jsonify(model.predict(
         Image.open(BytesIO(request.data))
-    )[0].tojson()
+    )[0])
 
-    print(result)
-    return result
+    print(response)
+    return response

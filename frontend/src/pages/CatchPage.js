@@ -2,12 +2,9 @@ import { useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
-export default function CatchPage({changePage, iSource, setSource}) {
+export default function CatchPage({changePage, prediction}) {
 
-
-  const [prediction, setPrediction] = useState("");
-
-  const fetchString = () => {
+  /*const fetchString = () => {
     // const binaryData = Buffer.from(
     //   base64String.slice(22), // Drop the first characters
     //   'base64'
@@ -35,21 +32,13 @@ export default function CatchPage({changePage, iSource, setSource}) {
     .catch((error) => {
       console.error('Error fetching data:', error);
     });
-  };
-
-  const setTheSource = () => {
-    setSource("THIS IS A TEST");
-  }
+  };*/
 
     //the main return to display the home page or main feed
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {iSource}
-        <img src={iSource} alt="The photo" />
         {prediction}
-        <button onClick={setTheSource}> CHANGE SOURCE</button>
-        <button onClick={fetchString}>Confirm Photo</button>
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );

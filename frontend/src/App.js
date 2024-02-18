@@ -23,12 +23,28 @@ function App() {
 
   const [imageSrc, setImageSource] = useState("");
 
+  const [prediction, setPrediction] = useState("NO PREDICTION");
+
 
   const [, updateState] = React.useState();
  const forceUpdate = React.useCallback(() => updateState({}), []);
   //cameron
   //the navigation function
   //page = the string of the page you want to go to
+
+  const sendImage = () => {
+    fetch('https://sc-backend.brian2002.com/predict', {
+            method: 'POST',
+            body: imageSrc
+            })
+            .then((response) => response.text())
+            .then((data) => {
+              setPrediction(data);
+            })
+            .catch((error) => {
+            console.error('Error fetching data:', error);
+            });
+  }
   const  changePage = (page) =>
     {
 
@@ -59,7 +75,7 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage} iSource={imageSrc} setSource={setImageSource} />)
+          setActivePage(<CatchPage changePage={changePage} prediction={prediction}/>)
           break;
 
         default:

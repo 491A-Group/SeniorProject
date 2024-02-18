@@ -4,6 +4,7 @@ function WorkTest({ changePage, iSource, setSource}) {
 
     const changeSource = () => {
         setSource(iSource + "A");
+        setSource(iSource);
         fetch('https://sc-backend.brian2002.com/predict', {
             method: 'POST',
             body: iSource

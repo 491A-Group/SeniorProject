@@ -22,10 +22,6 @@ function App() {
 
   const [imageSrc, setImageSource] = useState("");
 
-  function getImageSrc() {
-    return imageSrc;
-  }
-
   //cameron
   //the navigation function
   //page = the string of the page you want to go to
@@ -59,7 +55,7 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage} getSource={getImageSrc} />)
+          setActivePage(<CatchPage changePage={changePage} iSource={imageSrc} setSource={setImageSource} />)
           break;
 
         default:

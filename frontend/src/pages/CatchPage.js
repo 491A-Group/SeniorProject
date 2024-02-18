@@ -2,12 +2,12 @@ import { useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
-export default function CatchPage({changePage, getSource}) {
+export default function CatchPage({changePage, iSource, setSource}) {
 
 
   const [prediction, setPrediction] = useState("");
 
-  const fetchString = () => {
+  const fetchString = (base64String) => {
     // const binaryData = Buffer.from(
     //   base64String.slice(22), // Drop the first characters
     //   'base64'
@@ -24,7 +24,7 @@ export default function CatchPage({changePage, getSource}) {
 
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
-      body: getSource()
+      body: base64String
     })
     .then((response) => response.text())
     .then((data) => {
@@ -41,10 +41,11 @@ export default function CatchPage({changePage, getSource}) {
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {getSource()}
-        <img src={getSource()} alt="The photo" />
+        {iSource}
+        <img src={iSource} alt="The photo" />
         {prediction}
-        <button onClick={fetchString}>Confirm Photo</button>
+        <button onClick={setSource("THIS IS A TEST")}> CHANGE SOURCE</button>
+        <button onClick={fetchString(iSource)}>Confirm Photo</button>
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );

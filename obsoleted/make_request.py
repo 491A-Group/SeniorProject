@@ -8,9 +8,9 @@ file_path = input("IMG FILE PATH [EX 99nsx.jpg]: ")
 if not file_path:
     file_path = "99nsx.jpg"
 
-target_api = input("TARGET [EX http://192.168.1.69:3030/predict]: ")
+target_api = input("TARGET [EX https://sc-backend.brian2002.com/predict]: ")
 if not target_api:
-    target_api = "http://192.168.1.69:3030/predict"
+    target_api = "https://sc-backend.brian2002.com/predict"
 
 image_file = open(file_path, "rb")      #file
 image_data = image_file.read()          #bytes

@@ -75,7 +75,7 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage} prediction={prediction}/>)
+          setActivePage(<CatchPage changePage={changePage} prediction={prediction} send={sendImage}/>)
           break;
 
         default:

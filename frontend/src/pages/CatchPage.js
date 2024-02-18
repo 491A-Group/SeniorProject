@@ -2,7 +2,7 @@ import { useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
-export default function CatchPage({changePage, prediction}) {
+export default function CatchPage({changePage, prediction, send}) {
 
   /*const fetchString = () => {
     // const binaryData = Buffer.from(
@@ -39,6 +39,7 @@ export default function CatchPage({changePage, prediction}) {
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
         {prediction}
+        <button onClick={send}>SEND TO SERVER</button>
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );

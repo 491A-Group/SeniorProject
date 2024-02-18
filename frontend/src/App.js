@@ -58,7 +58,7 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage} prediction={prediction} iSource={imageSrc}/>)
+          setActivePage(<CatchPage changePage={changePage} prediction={prediction} />)
           break;
 
         default:

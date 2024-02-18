@@ -1,9 +1,9 @@
-import {useState} from 'react';
+import { useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
+export default function CatchPage({changePage, getSource}) {
 
-const CatchPage = (props) =>{
 
   const [prediction, setPrediction] = useState("");
 
@@ -24,7 +24,7 @@ const CatchPage = (props) =>{
 
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
-      body: props.source
+      body: getSource()
     })
     .then((response) => response.text())
     .then((data) => {
@@ -41,14 +41,12 @@ const CatchPage = (props) =>{
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {props.source}
-        <img src={props.source} alt="The photo" />
+        {getSource()}
+        <img src={getSource()} alt="The photo" />
         {prediction}
         <button onClick={fetchString}>Confirm Photo</button>
-        <button onClick={() => {props.changePage("Test")}}>Go to Test Page</button>
+        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );
   }
-
-  export default CatchPage;
   

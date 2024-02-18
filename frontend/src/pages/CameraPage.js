@@ -12,7 +12,7 @@ import Circle from "../images/circle-100.png";
 
 //cameron
 //overall camera page
-export default function CameraPage({changePage, setSource, source, setPredict}) {
+export default function CameraPage({changePage, setSource, source, setPredict, prediction}) {
 
   //cameron
   //specs for the webcam module, makes the camera be the forward facing camera
@@ -78,7 +78,7 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
             <div className="navBar">
               <button onClick={() => {changePage("Home")}} className="navButton"><img width="50vw" src={Home}/></button>
-              <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>
+              <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/>{prediction}</button>
               <button onClick={() => {changePage("Garage")}} className="navButton"><img width="50vw" src={Garage}/></button>
             </div>
           </div>

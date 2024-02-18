@@ -19,9 +19,7 @@ function App() {
   //the active page is the variable we use to switch pages. The value is the page the user is viewing
   //setActivePage changes the variable activaPage via react's useState
   const [activePage, setActivePage] = useState(null);
-
   const [imageSrc, setImageSource] = useState("");
-
   const [prediction, setPrediction] = useState("NO PREDICTION");
 
 
@@ -50,7 +48,7 @@ function App() {
           break;
 
         case "Camera":
-          setActivePage(<CameraPage changePage={changePage} setSource={setImageSource} setPredict={setPrediction}/>)
+          setActivePage(<CameraPage changePage={changePage} setSource={setImageSource} setPredict={setPrediction} prediction={prediction}/>)
           break;
 
         case "Test":

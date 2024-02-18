@@ -1,8 +1,11 @@
-import { useEffect , useState} from 'react';
+import {useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
-export default function CatchPage({changePage, source}) {
+import imageContext from './App.js';
+
+
+export default function CatchPage(props) {
 
   const [prediction, setPrediction] = useState("");
 
@@ -40,11 +43,11 @@ export default function CatchPage({changePage, source}) {
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {source}
+        {props.source}
         <img src={source} alt="The photo" />
         {prediction}
         <button onClick={fetchString}>Confirm Photo</button>
-        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
+        <button onClick={() => {props.changePage("Test")}}>Go to Test Page</button>
       </div>
     );
   }

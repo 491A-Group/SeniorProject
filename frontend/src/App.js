@@ -97,6 +97,7 @@ function App() {
     //this allows full navigation of the site while maintaining the same URL
     <div className="app">
       {imageSrc}
+      {prediction}
       {activePage ? activePage : <WorkTest changePage={changePage} iSource={imageSrc} setSource={setImageSource}/>}
     </div>
   );

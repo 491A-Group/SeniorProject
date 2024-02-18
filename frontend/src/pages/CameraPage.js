@@ -40,34 +40,37 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
   //webcam reference and imageSrc Reference to be seen later
   const webcamRef = React.useRef(null);
 
-  useEffect(() => {
-    const binaryData = Buffer.from(
-      source.slice(22),
-      'base64'
-    )
-    fetch(window.location.origin + '/predict', {
-      method: 'POST',
-      body: binaryData
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not OK")
-      }
-      return response.json();
-    })
-    .then(data => {
-      setPredict(JSON.stringify(data));
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
+  const changeSource = () => {
+    setSource(previousValue => {
+      const newValue = webcamRef.current.getScreenshot();
+      const binaryData = Buffer.from(
+        newValue.slice(22),
+        'base64'
+      )
+      fetch(window.location.origin + '/predict', {
+        method: 'POST',
+        body: binaryData
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not OK")
+        }
+        return response.json();
+      })
+      .then(data => {
+        setPredict(JSON.stringify(data));
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+      return newValue; // Return the updated value
     });
-  }, [source]);
-
+  };
   //cameron
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
-    setSource(webcamRef.current.getScreenshot);
-  }, [webcamRef]);
+    changeSource();
+  }, [webcamRef, setSource, changeSource]);
 
       //cameron
       //main camera page JSX

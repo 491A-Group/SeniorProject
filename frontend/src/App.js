@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import GaragePage from './pages/GaragePage';
 import CameraPage from './pages/CameraPage';
 import CatchPage from './pages/CatchPage';
+import WorkTest from './pages/WorkTest';
 
 //cameron
 //the overall main app function
@@ -22,6 +23,9 @@ function App() {
 
   const [imageSrc, setImageSource] = useState("");
 
+
+  const [, updateState] = React.useState();
+ const forceUpdate = React.useCallback(() => updateState({}), []);
   //cameron
   //the navigation function
   //page = the string of the page you want to go to
@@ -59,7 +63,7 @@ function App() {
           break;
 
         default:
-          setActivePage(<TestPage changePage={changePage}/>)
+          setActivePage(<WorkTest changePage={changePage} iSource={imageSrc} /*TestPage changePage={changePage}*/ />)
           break;
       }
         
@@ -77,7 +81,7 @@ function App() {
     //this allows full navigation of the site while maintaining the same URL
     <div className="app">
       {imageSrc}
-      {activePage ? activePage : <TestPage changePage={changePage} />}
+      {activePage ? activePage : <WorkTest changePage={changePage} iSource={imageSrc} setSource={setImageSource}/>}
     </div>
   );
   

@@ -2,7 +2,7 @@
 import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
-import { useState, useCallback, useEffect} from 'react';
+import { useState, useCallback, useEffect, useRef} from 'react';
 
 import Garage from "../images/garage.png";
 import Home from "../images/home.png";

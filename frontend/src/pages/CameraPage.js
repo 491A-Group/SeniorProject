@@ -53,7 +53,7 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
       })
       .then((response) => response.json())
       .then((data) => {
-        setPredict(data, toCatch);
+        setPredict(data, () => {toCatch()});
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -65,7 +65,7 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
     changeSource();
-  }, [webcamRef, setSource, toCatch, changeSource]);
+  }, [webcamRef, setSource, changeSource]);
 
       //cameron
       //main camera page JSX

@@ -11,7 +11,6 @@ from PIL import Image
 from datetime import datetime
 
 # Load the model
-"""Cameron's comment here"""
 model = YOLO("best.pt")
 
 blueprint_model = Blueprint("blueprint_model", __name__)

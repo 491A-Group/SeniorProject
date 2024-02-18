@@ -41,7 +41,7 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
 
   const changeSource = () => {
     setSource(previousValue => {
-        const newValue = previousValue + "A";
+        const newValue = webcamRef.current.getScreenshot();
         fetch(window.location.origin + '/predict', {
             method: 'POST',
             body: newValue

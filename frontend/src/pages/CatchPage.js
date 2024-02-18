@@ -2,8 +2,6 @@ import {useState} from 'react';
 import { Buffer } from 'buffer';
 import './HomePage.css';
 
-import imageContext from './App.js';
-
 
 export default function CatchPage(props) {
 

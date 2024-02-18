@@ -60,8 +60,9 @@ function App() {
           break;
 
         default:
-          setPrediction(page)
-          setActivePage(<CatchPage changePage={changePage} prediction={prediction} iSource={imageSrc}/>)
+          setPrediction(page, () => {
+            setActivePage(<CatchPage changePage={changePage} prediction={prediction} iSource={imageSrc}/>)
+          })
           break;
       }
         

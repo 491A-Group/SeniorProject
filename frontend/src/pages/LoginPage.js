@@ -3,10 +3,12 @@ import './LoginPage.css';
   
 
 export default function LoginPage({ changePage }) {
-
+  
+  //Le Duong
   //When isLogIn is false, assume the user wants to create an account
   const [isLogIn, setIsLogIn] = useState(true);
-
+  
+  //Le Duong 
   //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
     useEffect(() => {
       document.body.style.overflow = "hidden";
@@ -15,7 +17,7 @@ export default function LoginPage({ changePage }) {
       };
   }, []);
   
-    
+    //Le Duong
     //These states have the strings of user input in the forms. 
     //The Login and Register portions share these states so switching between them doesn't clear fields
     const [input_displayname, setDisplayname] = useState('');
@@ -69,7 +71,9 @@ export default function LoginPage({ changePage }) {
         })
     }
 
-
+    
+  //Le Duong
+  //creates HTML container that swaps between login page and registration page by calling setIsLogIn function
     return (
         <div className="container">
             <h1>Welcome to SportsCar Spotter</h1>
@@ -83,8 +87,7 @@ export default function LoginPage({ changePage }) {
                     <button className="btn">Forgot Password?</button>
                     <br />
                     <button className="btn" onClick={handleSubmitLogin}>Log In</button>
-                    <p>
-                        Don't have an account? 
+                    <p> 
                         <button className="btn" onClick={() => setIsLogIn(false)}>Register</button>
                     </p>
                 </>

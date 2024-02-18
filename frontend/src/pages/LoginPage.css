@@ -1,10 +1,12 @@
-
+/* code written by Le Duong, unless stated otherwise */
 
 .container {
     justify-content: center;
     align-items: center;
     max-width: 300%;
     width: 100%;
+    /* Le Duong */
+    /* highlights login form area on webpage ,will be removed later */
     background-color: #808080;
 }
 
@@ -14,6 +16,8 @@
     text-align: center;
 }
 
+/* Le Duong */
+/* formats all input fields on login form */
 .input-group input {
     width: 100%;
     padding: 10px;
@@ -24,7 +28,8 @@
     box-sizing: border-box;
 }
 
-
+/* Le Duong */
+/* formats all buttons on login form */
 .btn {
     background-color: #007bff;
     color: #fff;

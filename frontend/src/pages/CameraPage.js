@@ -3,6 +3,7 @@ import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
 import { useCallback, useEffect} from 'react';
+import { Buffer } from 'buffer';
 
 import Garage from "../images/garage.png";
 import Home from "../images/home.png";
@@ -42,9 +43,13 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
   const changeSource = () => {
     setSource(previousValue => {
         const newValue = webcamRef.current.getScreenshot();
+        const binaryData = Buffer.from(
+            newValue.slice(22),
+            'base64'
+        )
         fetch(window.location.origin + '/predict', {
             method: 'POST',
-            body: newValue
+            body: binaryData
         })
         .then((response) => response.text())
         .then((data) => {

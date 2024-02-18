@@ -22,9 +22,9 @@ def predict():
     This endpoint takes a POST request with the body being bytes of a jpg
     It just returns json with the results
     """
-    response = jsonify(model.predict(
+    result = model.predict(
         Image.open(BytesIO(request.data))
-    )[0])
+    )[0].tojson()
 
-    print(response)
-    return response
+    print(result)
+    return jsonify(result)

@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 import './HomePage.css';
 
 
-export default function CatchPage(props) {
+const CatchPage = (props) =>{
 
   const [prediction, setPrediction] = useState("");
 
@@ -49,4 +49,6 @@ export default function CatchPage(props) {
       </div>
     );
   }
+
+  export default CatchPage;
   

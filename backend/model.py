@@ -26,4 +26,5 @@ def predict():
         Image.open(BytesIO(request.data))
     )[0].tojson()
 
+    print(result)
     return result

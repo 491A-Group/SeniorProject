@@ -3,19 +3,24 @@ import React from 'react';
 function WorkTest({ changePage, iSource, setSource}) {
 
     const changeSource = () => {
-        setSource(iSource + "A");
-        setSource(iSource);
-        fetch('https://sc-backend.brian2002.com/predict', {
-            method: 'POST',
-            body: iSource
+        setSource(previousValue => {
+            const newValue = previousValue + "A";
+            fetch('https://sc-backend.brian2002.com/predict', {
+                method: 'POST',
+                body: newValue
             })
             .then((response) => response.text())
             .then((data) => {
+                // Handle response data if needed
             })
             .catch((error) => {
-            console.error('Error fetching data:', error);
+                console.error('Error fetching data:', error);
             });
-    }
+            return newValue; // Return the updated value
+        });
+    };
+
+
   return (
     <div>
       <p>Image Source: {iSource}</p>

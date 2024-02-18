@@ -38,13 +38,28 @@ export default function CameraPage({changePage, setSource, source}) {
   //cameron
   //webcam reference and imageSrc Reference to be seen later
   const webcamRef = React.useRef(null);
-  const [imageSrc, setImageSource] = useState("");
 
-
+  const changeSource = () => {
+    setSource(previousValue => {
+        const newValue = previousValue + "A";
+        fetch(window.location.origin + '/predict', {
+            method: 'POST',
+            body: newValue
+        })
+        .then((response) => response.text())
+        .then((data) => {
+            // Handle response data if needed
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+        });
+        return newValue; // Return the updated value
+    });
+};
   //cameron
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
-    setSource(webcamRef.current.getScreenshot());
+    changeSource();
     toCatch();
   }, [webcamRef, setSource, toCatch]);
 

@@ -10,7 +10,6 @@ import LoginPage from './pages/LoginPage';
 import GaragePage from './pages/GaragePage';
 import CameraPage from './pages/CameraPage';
 import CatchPage from './pages/CatchPage';
-import WorkTest from './pages/WorkTest';
 
 //cameron
 //the overall main app function

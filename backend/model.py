@@ -4,8 +4,6 @@ Cameron produced code to simply run the model on his local machine to get a pred
 Brian adapted it to work with Flask
 """
 from ultralytics import YOLO
-import numpy as np
-from tensorflow.keras.preprocessing import image
 from io import BytesIO
 from flask import Blueprint, request
 

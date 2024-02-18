@@ -7,7 +7,7 @@ export default function CatchPage({changePage, iSource, setSource}) {
 
   const [prediction, setPrediction] = useState("");
 
-  const fetchString = (base64String) => {
+  const fetchString = () => {
     // const binaryData = Buffer.from(
     //   base64String.slice(22), // Drop the first characters
     //   'base64'
@@ -24,7 +24,7 @@ export default function CatchPage({changePage, iSource, setSource}) {
 
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
-      body: base64String
+      body: iSource
     })
     .then((response) => response.text())
     .then((data) => {
@@ -37,6 +37,10 @@ export default function CatchPage({changePage, iSource, setSource}) {
     });
   };
 
+  const setTheSource = () => {
+    setSource("THIS IS A TEST");
+  }
+
     //the main return to display the home page or main feed
     return (
       <div>
@@ -44,8 +48,8 @@ export default function CatchPage({changePage, iSource, setSource}) {
         {iSource}
         <img src={iSource} alt="The photo" />
         {prediction}
-        <button onClick={setSource("THIS IS A TEST")}> CHANGE SOURCE</button>
-        <button onClick={fetchString(iSource)}>Confirm Photo</button>
+        <button onClick={setTheSource}> CHANGE SOURCE</button>
+        <button onClick={fetchString}>Confirm Photo</button>
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );

@@ -44,19 +44,8 @@ export default function CameraPage({changePage, setSource, source}) {
   //cameron
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
-    setSource(source + "A");
-    //webcamRef.current.getScreenshot()
-    fetch('https://sc-backend.brian2002.com/predict', {
-            method: 'POST',
-            body: source
-            })
-            .then((response) => response.text())
-            .then((data) => {
-            })
-            .catch((error) => {
-            console.error('Error fetching data:', error);
-            });
-    //toCatch();
+    setSource(webcamRef.current.getScreenshot());
+    toCatch();
   }, [webcamRef, setSource, toCatch]);
 
       //cameron

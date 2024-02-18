@@ -51,8 +51,13 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
         method: 'POST',
         body: binaryData
       })
-      .then((response) => response.json())
-      .then((data) => {
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not OK")
+        }
+        return response.json();
+      })
+      .then(data => {
         setPredict(data);
       })
       .catch((error) => {

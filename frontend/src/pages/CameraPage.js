@@ -23,11 +23,11 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
 
   //cameron
   //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "scroll"
-    };
+    useEffect(() => {
+      document.body.style.overflow = "hidden";
+      return () => {
+          document.body.style.overflow = "scroll"
+      };
   }, []);
 
   //cameron
@@ -40,32 +40,33 @@ export default function CameraPage({changePage, setSource, source, setPredict}) 
   //webcam reference and imageSrc Reference to be seen later
   const webcamRef = React.useRef(null);
 
-  useEffect(() => {
-    // This effect makes a fetch request and loads the catch page
-    // Its dependency is the source for the image
-    //   which is changed in the 'capture' function attached to the button
-    const binaryData = Buffer.from(
-      source.slice(22),
-      'base64'
-    )
-    fetch(window.location.origin + '/predict', {
-      method: 'POST',
-      body: binaryData
-    })
-    .then((response) => response.text())
-    .then((data) => {
-      setPredict(data, toCatch);
-    })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
+  const changeSource = () => {
+    setSource(previousValue => {
+        const newValue = webcamRef.current.getScreenshot();
+        const binaryData = Buffer.from(
+            newValue.slice(22),
+            'base64'
+        )
+        fetch(window.location.origin + '/predict', {
+            method: 'POST',
+            body: binaryData
+        })
+        .then((response) => response.text())
+        .then((data) => {
+            setPredict(data);
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
+        });
+        return newValue; // Return the updated value
     });
-  }, [source]);
-
+};
   //cameron
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
-    setSource(webcamRef.current.getScreenshot())
-  }, [webcamRef, setSource]);
+    changeSource();
+    toCatch();
+  }, [webcamRef, setSource, toCatch, changeSource]);
 
       //cameron
       //main camera page JSX

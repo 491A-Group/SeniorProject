@@ -60,7 +60,8 @@ function App() {
           break;
 
         default:
-          setActivePage(<TestPage changePage={changePage} />)
+          setPrediction(page)
+          setActivePage(<CatchPage changePage={changePage} prediction={prediction} iSource={imageSrc}/>)
           break;
       }
         

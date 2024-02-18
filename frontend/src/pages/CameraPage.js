@@ -58,7 +58,8 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
         return response.json();
       })
       .then(data => {
-        setPredict(JSON.stringify(data));
+        //setPredict(JSON.stringify(data));
+        changePage(JSON.stringify(data))
       })
       .catch((error) => {
         console.error('Error fetching data:', error);

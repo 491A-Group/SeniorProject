@@ -1,5 +1,3 @@
-import { useState} from 'react';
-import { Buffer } from 'buffer';
 import './HomePage.css';
 
 export default function CatchPage({changePage, iSource, prediction}) {

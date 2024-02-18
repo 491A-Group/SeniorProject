@@ -24,7 +24,7 @@ const CatchPage = (props) =>{
 
     fetch('https://sc-backend.brian2002.com/predict', {
       method: 'POST',
-      body: source
+      body: props.source
     })
     .then((response) => response.text())
     .then((data) => {
@@ -42,7 +42,7 @@ const CatchPage = (props) =>{
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
         {props.source}
-        <img src={source} alt="The photo" />
+        <img src={props.source} alt="The photo" />
         {prediction}
         <button onClick={fetchString}>Confirm Photo</button>
         <button onClick={() => {props.changePage("Test")}}>Go to Test Page</button>

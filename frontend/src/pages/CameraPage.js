@@ -42,12 +42,12 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
 
   const changeSource = () => {
     setSource(previousValue => {
-      const newValue = webcamRef.current.getScreenshot();
+      const newValue = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII="; //webcamRef.current.getScreenshot();
       const binaryData = Buffer.from(
         newValue.slice(22),
         'base64'
       )
-      fetch(window.location.origin + '/predict', {
+      fetch("https://sc-backend.brian2002.com/predict", {
         method: 'POST',
         body: binaryData
       })
@@ -59,6 +59,7 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
       })
       .then(data => {
         //setPredict(JSON.stringify(data));
+        console.log("DATA: " + data);
         changePage(JSON.stringify(data))
       })
       .catch((error) => {

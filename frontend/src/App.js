@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import GaragePage from './pages/GaragePage';
 import CameraPage from './pages/CameraPage';
 import CatchPage from './pages/CatchPage';
+import SearchPage from './pages/SearchPage';
 
 //cameron
 //the overall main app function
@@ -56,6 +57,10 @@ function App() {
 
         case "Catch":
           setActivePage(<CatchPage changePage={changePage} iSource={imageSrc}/>)
+          break;
+
+        case "Search":
+          setActivePage(<SearchPage changePage={changePage}/>)
           break;
 
         default:

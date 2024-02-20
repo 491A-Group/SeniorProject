@@ -94,7 +94,7 @@ export default function HomePage({changePage}) {
         </ul>
 
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
-        <button onClick={() => {changePage("Search")}}>Go to Test Page</button>
+        <button onClick={() => {changePage("Search")}}>Go to Search Page</button>
       </div>
     );
   }

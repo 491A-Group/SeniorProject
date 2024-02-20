@@ -47,7 +47,7 @@ function App() {
           break;
 
         case "Camera":
-          setActivePage(<CameraPage changePage={changePage} setSource={setImageSource} setPredict={setPrediction} prediction={prediction}/>)
+          setActivePage(<CameraPage changePage={changePage} setSource={setImageSource}/>)
           break;
 
         case "Test":

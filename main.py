@@ -2,7 +2,7 @@
 Brian wrote this unless portions are denoted otherwise
 """
 from flask import Flask, render_template, jsonify
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required, current_user
 import configparser
 
 # BRIAN: config.ini
@@ -68,11 +68,16 @@ def home_1():
     ]
     return jsonify(example)
 
+
+from backend.model import myPredictions
+
 @app.route('/api/my_user')
+@login_required
 def my_user():
+    myPredictions[current_user.id]
     my_info = [{
         "name": "ACUNSX91",
-        "conf": "0.88"
+        "conf": "0.89"
     }]
 
     return jsonify(my_info)

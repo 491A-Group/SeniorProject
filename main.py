@@ -68,6 +68,15 @@ def home_1():
     ]
     return jsonify(example)
 
+@app.route('/api/my_user')
+def my_user():
+    my_info = [{
+        "name": "ACUNSX91",
+        "conf": "0.88"
+    }]
+
+    return jsonify(my_info)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3030)
 print('main.py is finishing execution. see readme for gunicorn instructions instead')

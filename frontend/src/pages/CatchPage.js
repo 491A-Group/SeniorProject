@@ -34,16 +34,10 @@ export default function CatchPage({changePage, iSource}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const binaryData = Buffer.from(
-          iSource.slice(22),
-          'base64');
 
         // Jayvee
         // Fetching data from the provided API endpoint.
-        const response =  await fetch(window.location.origin + '/predict', {
-          method: 'POST',
-          body: binaryData
-        });
+        const response =  await fetch(window.location.origin + '/api/my_user');
 
         // Jayvee
         // Checking if the response is okay, if not, logging a network error and throwing an error.

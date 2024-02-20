@@ -9,6 +9,7 @@ from flask import Blueprint, request, jsonify
 from PIL import Image
 import json
 from datetime import datetime
+from ultralytics.engine.results import Results
 
 # Load the model
 model = YOLO("best.pt")
@@ -21,6 +22,7 @@ def predict():
     This endpoint takes a POST request with the body being bytes of a jpg
     It just returns json with the results
     """
-    results = model.predict(Image.open(BytesIO(request.data)))[0].tojson()
-    asJSON = json.loads(results)
-    return asJSON[0]
+    result : Results = model.predict(Image.open(BytesIO(request.data)))[0]
+    asJSON = json.loads(result.tojson())
+
+    return asJSON[0]["name"]

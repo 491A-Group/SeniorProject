@@ -71,6 +71,7 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
   //function for getting the screenshot and go to the catch results page
   const capture = useCallback(async () => {
     changeSource();
+    toCatch();
   }, [webcamRef, setSource, changeSource]);
 
       //cameron

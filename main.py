@@ -75,6 +75,7 @@ from backend.model import myPredictions
 @login_required
 def my_user():
     info = myPredictions[current_user.id]
+    myPredictions.pop(current_user.id)
     print("PREDICTIONS\n\n", myPredictions)
     return jsonify(info)
 

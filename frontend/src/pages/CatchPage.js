@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './HomePage.css';
+import { Buffer } from 'buffer';
 
 export default function CatchPage({changePage, iSource}) {
 
@@ -29,7 +30,7 @@ export default function CatchPage({changePage, iSource}) {
       });*/
 
 
-      
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,7 +70,7 @@ export default function CatchPage({changePage, iSource}) {
     // Jayvee
     // Calling the fetchData function when the component mounts.
     fetchData();
-    }, [iSource]); // Empty dependency array ensures that this effect runs only once after the initial render.
+    }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
 
     //the main return to display the home page or main feed

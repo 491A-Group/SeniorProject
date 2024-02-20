@@ -20,7 +20,7 @@ function App() {
   //setActivePage changes the variable activaPage via react's useState
   const [activePage, setActivePage] = useState(null);
   const [imageSrc, setImageSource] = useState("");
-  const [prediction, setPrediction] = useState("NO PREDICTION");
+  const [prediction, setPrediction] = useState([]);
 
 
   //cameron

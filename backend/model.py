@@ -24,5 +24,11 @@ def predict():
     """
     result : Results = model.predict(Image.open(BytesIO(request.data)))[0]
     asJSON = json.loads(result.tojson())
-    print(asJSON[0])
-    return asJSON[0]
+    output = []
+    for prediction in asJSON:
+        newPred = {"name": prediction["name"],
+                   "conf": prediction["confidence"]}
+        
+        output.append(newPred)
+    print(output)
+    return output

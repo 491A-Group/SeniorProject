@@ -79,7 +79,7 @@ function App() {
     //allows for it to NOT be set and still exit the page
     //this allows full navigation of the site while maintaining the same URL
     <div className="app">
-      {prediction}
+      {prediction["name"]}
       {activePage ? activePage : <TestPage changePage={changePage} />}
     </div>
   );

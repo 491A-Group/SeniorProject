@@ -56,7 +56,7 @@ def garage():
     """ BRIAN:
     Basic fields for a user viewing their own profile
     """
-    followers, following = db_queries.follows(current_user.id)
+    following, followers = db_queries.follows(current_user.id)
     return jsonify(
         {
             "displayname": "displayname",

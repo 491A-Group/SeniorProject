@@ -20,7 +20,6 @@ function App() {
   //setActivePage changes the variable activaPage via react's useState
   const [activePage, setActivePage] = useState(null);
   const [imageSrc, setImageSource] = useState("");
-  const [prediction, setPrediction] = useState([]);
 
 
   //cameron
@@ -56,13 +55,11 @@ function App() {
           break;
 
         case "Catch":
-          setActivePage(<CatchPage changePage={changePage} prediction={prediction} iSource={imageSrc}/>)
+          setActivePage(<CatchPage changePage={changePage} iSource={imageSrc}/>)
           break;
 
         default:
-          setPrediction(page, () => {
-            setActivePage(<CatchPage changePage={changePage} prediction={prediction} iSource={imageSrc}/>)
-          })
+          setActivePage(<TestPage changePage={changePage}/>)
           break;
       }
         

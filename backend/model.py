@@ -24,5 +24,5 @@ def predict():
     """
     result : Results = model.predict(Image.open(BytesIO(request.data)))[0]
     asJSON = json.loads(result.tojson())
-
+    print(asJSON[0])
     return asJSON[0]

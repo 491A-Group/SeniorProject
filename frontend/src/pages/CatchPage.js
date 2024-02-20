@@ -70,7 +70,7 @@ export default function CatchPage({changePage, iSource}) {
     // Jayvee
     // Calling the fetchData function when the component mounts.
     fetchData();
-    }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
+    }, [iSource]); // Empty dependency array ensures that this effect runs only once after the initial render.
 
 
     //the main return to display the home page or main feed

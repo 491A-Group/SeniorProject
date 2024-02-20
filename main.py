@@ -74,13 +74,9 @@ from backend.model import myPredictions
 @app.route('/api/my_user')
 @login_required
 def my_user():
-    myPredictions[current_user.id]
-    my_info = [{
-        "name": "ACUNSX91",
-        "conf": "0.89"
-    }]
-
-    return jsonify(my_info)
+    info = myPredictions[current_user.id]
+    print("PREDICTIONS\n\n", myPredictions)
+    return jsonify(info)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3030)

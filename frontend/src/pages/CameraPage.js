@@ -12,7 +12,7 @@ import Circle from "../images/circle-100.png";
 
 //cameron
 //overall camera page
-export default function CameraPage({changePage, setSource, source, setPredict, prediction}) {
+export default function CameraPage({changePage, setSource, source}) {
 
   //cameron
   //specs for the webcam module, makes the camera be the forward facing camera
@@ -59,7 +59,6 @@ export default function CameraPage({changePage, setSource, source, setPredict, p
         return response.json();
       })
       .then(data => {
-          setPredict(data);
           toCatch();
       })
       .catch((error) => {

@@ -6,7 +6,7 @@ export default function CatchPage({changePage, iSource, prediction}) {
     return (
       <div>
         <p>Welcome to the Catch Page. Our prediction is...</p>
-        {prediction.map((pred, index) => (<p>{prediction.name}</p>))}
+        {prediction}
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
     );

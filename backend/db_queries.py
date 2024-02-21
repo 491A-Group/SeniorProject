@@ -46,9 +46,7 @@ def verify_credentials(email, raw_password):
         3. argon2 verify password hash from SQL return
         4. determines http code to return
     """
-
-    connection = db_connection_pool.getconn()
-    try:
+    with db_connection_pool.getconn() as connection:
         with connection.cursor() as cursor:
             cursor.execute("""  SELECT id, password
                                 FROM users
@@ -67,9 +65,6 @@ def verify_credentials(email, raw_password):
                     return "Log In Success", 202, id
                 except Exception as e:
                     print("\nfailed\n", e)
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
 
     return "Log In Rejected", 401
 
@@ -82,8 +77,7 @@ def register_credentials(email, displayname, raw_password):
 
     # TODO FIX EXCEPTIONS IE DUPLICATE EMAIL, DUPLICATE DISPLAYNAME
     """
-    connection = db_connection_pool.getconn()
-    try:
+    with db_connection_pool.getconn() as connection:
         with connection.cursor() as cursor:
             cursor.execute("""  INSERT INTO users (email, displayname, password)
                                 VALUES (%s, %s, %s)
@@ -102,9 +96,7 @@ def register_credentials(email, displayname, raw_password):
                 connection.commit()
                 return 'Registration Success', 201, query_result[0]
             return 'Registration Failed', 409
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
+
 
 def follows(user_id):
     """ BRIAN
@@ -113,8 +105,7 @@ def follows(user_id):
     OR if ID isn't found:
         (-2, -2)
     """
-    connection = db_connection_pool.getconn()
-    try:
+    with db_connection_pool.getconn() as connection:
         with connection.cursor() as cursor:
             cursor.execute("""  SELECT
                                     (SELECT COUNT(*) FROM follows WHERE follower = %s),
@@ -128,6 +119,3 @@ def follows(user_id):
             if query_result is not None:
                 return query_result
             return -2, -2
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)

@@ -20,6 +20,10 @@ app = Flask(
 # Perhaps a seed for random? Keeping this key the same often saves sessions between restarts
 app.config['SECRET_KEY'] = config["SECRET_KEY"]["key"]
 
+
+# BRIAN: Load routes for static assets in Postgres
+from backend.static import blueprint_db_static
+app.register_blueprint(blueprint_db_static)
 # BRIAN: Load the route for the ML model. Everything it needs is taken care of in that file
 # FOR INCREMENTAL DEVELOPMENT I TURN THIS OFF SINCE ITS SLOW ON STARTUP, UNCOMMENT TO DEPLOY
 from backend.model import blueprint_model

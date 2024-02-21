@@ -23,7 +23,7 @@ def pfp(id):
             
             return send_file(
                 BytesIO(cursor.fetchone()[0]),
-                mimetype='image/png'
+                mimetype='image/svg+xml'
             )
     finally:
         print("returning a thread to the pool")

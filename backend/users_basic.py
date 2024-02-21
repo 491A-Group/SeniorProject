@@ -74,3 +74,8 @@ def test4():
     This endpoint can safely be deleted. It is occasionally useful to determine if cookies are useful. 
     """
     return "<h3>COOKIES WORKING " + current_user.id + "</h3>"
+
+
+@blueprint_users_basic.route('/search_users/<query>')
+def search(query):
+    return jsonify(["response", query])

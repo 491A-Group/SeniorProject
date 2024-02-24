@@ -40,6 +40,7 @@ def register():
     return result[0], result[1]
 
 
+# TODO declare rest methods
 @blueprint_users_basic.route('/logout')
 @login_required
 def logout():
@@ -50,13 +51,19 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@blueprint_users_basic.route('/garage')
+@blueprint_users_basic.route('/garage/<displayname>', methods=['GET'])
 @login_required
-def garage():
+def garage(displayname):
     """ BRIAN:
-    Basic fields for a user viewing their own profile
+    Public fields when viewing a profile.
+    Expects a string to search by displayname, however this
+        function (not route) can also take an integer to search by id.
+        displayname passed in from the flask route is always a string,
+        however the other garage route calls this function passing in an id integer
     """
-    displayname, following, followers = db_queries.follows(current_user.get_int_id())
+    # Debug
+    #print(displayname, True if type(displayname) is int else False)
+    displayname, followers, following = db_queries.follows(displayname)
     return jsonify(
         {
             "displayname": displayname,
@@ -66,6 +73,13 @@ def garage():
         }
     ), 200
 
+@blueprint_users_basic.route('/garage', methods=['GET'])
+@login_required
+def current_garage():
+    """ BRIAN:
+    Simply the garage of the user currently logged in
+    """
+    return garage(current_user.get_int_id())
 
 @blueprint_users_basic.route('/test4')
 @login_required
@@ -76,6 +90,6 @@ def test4():
     return "<h3>COOKIES WORKING " + current_user.id + "</h3>"
 
 
-@blueprint_users_basic.route('/search_users/<query>')
+@blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):
     return jsonify(db_queries.search_username(query))

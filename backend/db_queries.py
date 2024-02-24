@@ -109,18 +109,13 @@ def register_credentials(email, displayname, raw_password):
 def follows(user):
     """ BRIAN
     Given a user's ID returns counts:
-        (following, followers)
+        (displayname, followers, following)
     OR if ID isn't found:
-        (-2, -2)
+        ("", -2, -2)
     """
     connection = db_connection_pool.getconn()
     try:
         with connection.cursor() as cursor:
-            # cursor.execute("""  SELECT
-            #                         (SELECT COUNT(*) FROM follows WHERE follower = %s),
-            #                         (SELECT COUNT(*) FROM follows WHERE followed = %s)"""
-            #     , (user_id, user_id)
-            # )
             print(type(user))
             cursor.execute("""
                 SELECT
@@ -136,8 +131,7 @@ def follows(user):
                 (user,)
             )
 
-            # Since the query says 'returning id;' this fetchone() returns a tuple that represents a row.
-            #    This row has exactly one column that is the id
+            # fetchone() should be a tuple: (displayname, followers, following)
             query_result = cursor.fetchone()
             print(query_result)
             if query_result is not None:

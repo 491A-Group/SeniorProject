@@ -23,9 +23,26 @@ export default function LoginPage({ changePage }) {
     const [input_displayname, setDisplayname] = useState('');
     const [input_email, setEmail] = useState('');
     const [input_password, setPassword] = useState('');
+
+    //RL: This is new, error messages for email verification and forgotten password.
+    const [errorMessage, setErrorMessage] = useState('');
+    const[passwordMessage, setPasswordMessage] = useState('');
+
+    //RL: This was written to handle both switching between Login/Register
+    //pages AND clearing error messages (invalid email message does not
+    //persist rendering on Login page once switched back and forth)
+    const handlePageSwitch = (status) => {
+        setIsLogIn(status);
+        setErrorMessage('');
+        setPasswordMessage('');
+    }
+
     //Handlers for the states - updates changes when users type
     const handleDisplaynameChange = (event) => {setDisplayname(event.target.value)}
-    const handleEmailChange = (event) => {setEmail(event.target.value)}
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+        validateEmail(event.target.value);
+    }
     const handlePasswordChange = (event) => {setPassword(event.target.value)}
 
     //BRIAN: helped write this function to log in
@@ -71,6 +88,22 @@ export default function LoginPage({ changePage }) {
         })
     }
 
+    const handleForgottenPassword = (event) => {
+        event.preventDefault();
+
+        setPasswordMessage("Yo that's crazy dawg, why'd you forget it ¯\\_(ツ)_/¯");
+        return;
+    }
+
+    //Now this is a real doozy, this function uses a regular expression to ensure that
+    //email input follows a certain combination. To successfully pass validation an email must be the following combination:
+    // (chars) + (@) + (chars) + (.) + (chars)
+    //Not perfect but it's what I managed to figure out. 
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
     
   //Le Duong
   //creates HTML container that swaps between login page and registration page by calling setIsLogIn function
@@ -84,11 +117,13 @@ export default function LoginPage({ changePage }) {
                     <br />
                     <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
                     <br />
-                    <button className="btn">Forgot Password?</button>
+                    <button className="btn" onClick={handleForgottenPassword}>Forgot Password?</button>
+                    <br />
+                    {passwordMessage && <div style = {{color: 'red'}}>{passwordMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleSubmitLogin}>Log In</button>
                     <p> 
-                        <button className="btn" onClick={() => setIsLogIn(false)}>Register</button>
+                        <button className="btn" onClick={() => handlePageSwitch(false)}>Register</button>
                     </p>
                 </>
             ) : (
@@ -98,12 +133,13 @@ export default function LoginPage({ changePage }) {
                     <br />
                     <input type="email" value={input_email} onChange={handleEmailChange} placeholder="Email" />
                     <br />
+                    {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
                     <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
                     <br />
                     <button className="btn" onClick={handleSubmitRegister}>Register</button>
                     <p>
                         Already have an account? 
-                        <button className="btn" onClick={() => setIsLogIn(true)}>Log In</button>
+                        <button className="btn" onClick={() => handlePageSwitch(true)}>Log In</button>
                     </p>
                 </>
             )}

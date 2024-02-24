@@ -131,7 +131,7 @@ def follows(user):
                     (
                         SELECT id, displayname
                         FROM users """ +
-                        ("WHERE id = " if type(user) is int else "WHERE displayname ILIKE ") + """ %s
+                        ("WHERE id = " if type(user) is int else "WHERE displayname = ") + """ %s
                     ) AS subquery""",
                 (user,)
             )

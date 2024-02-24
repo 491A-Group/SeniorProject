@@ -78,4 +78,4 @@ def test4():
 
 @blueprint_users_basic.route('/search_users/<query>')
 def search(query):
-    return jsonify(["response", query])
+    return jsonify(db_queries.search_username(query))

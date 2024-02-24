@@ -146,3 +146,29 @@ def follows(user):
     finally:
         print("returning a thread to the pool")
         db_connection_pool.putconn(connection)
+    
+def search_username(query):
+    """
+    BRIAN: return a list of usernames that exist in the database given a search term
+    """
+    connection = db_connection_pool.getconn()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """SELECT displayname FROM users WHERE displayname ILIKE %s LIMIT 20;""",
+                (query + '%',)
+            )
+
+            # Since the query says 'displayname' this fetchall() returns a list of tuples that each represent a row.
+            #  Each row has exactly one column that is the displayname
+            #  Convert this simply to a list of displaynames with flat_list
+            query_result = cursor.fetchall()
+            if query_result is not None:
+                flat_list = [row[0] for row in query_result]
+                print("query result for '" + query + "':", flat_list)
+                return flat_list
+            print("DB_QUERIES.SEARCH_USERNAME ERROR. QUERY:", query, "QUERY_RESULT:", query_result)
+            return []
+    finally:
+        print("returning a thread to the pool")
+        db_connection_pool.putconn(connection)

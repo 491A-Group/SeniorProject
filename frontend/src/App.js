@@ -44,7 +44,7 @@ function App() {
           break;
 
         case "Home":
-          setActivePage(<HomePage changePage={changePage}/>)
+          setActivePage(<HomePage changePage={changePage} setActivePage={setActivePage}/>)
           break;
 
         case "Camera":

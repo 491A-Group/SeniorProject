@@ -11,10 +11,11 @@ import Filter  from "../images/filter.png";
 // import FordGT from "../images/ford-gt40.jpg";
 // import Porsche from "../images/porsche-_car.jpg";
 // import PorLogo from "../images/porsche.png";
+import SearchPage from './SearchPage';
 
 // Jayvee
 // Overall Main/Home page
-export default function HomePage({changePage}) {
+export default function HomePage({changePage, setActivePage}) {
 
     // Jayvee
     // Initializing a state variable 'carData' using useState hook with an empty array as initial state.
@@ -94,7 +95,7 @@ export default function HomePage({changePage}) {
         </ul>
 
         <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
-        <button onClick={() => {changePage("Search")}}>Go to Search Page</button>
+        <button onClick={() => {setActivePage(<SearchPage changePage={changePage} setActivePage={setActivePage}/>)}}>Go to Search Page</button>
       </div>
     );
   }

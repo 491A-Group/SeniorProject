@@ -13,20 +13,27 @@ import VolvoLogo from '../images/CarLogos/VolvoLogo.png';
 import VWLogo from '../images/CarLogos/VWLogo.png';
 import ProfilePic from '../images/DefaultProfilePicture.png';
 
-export default function Garage({changePage}) {
-
+//This function handles all garage pages, a user viewing their own or anyone else's page
+export default function Garage({changePage, profile}) {
+    // If profile is undefined, view your own page
+    // Otherwise, profile should be a valid displayname to view
+    const is_self = profile === undefined;
     const [followers, setFollowers] = useState(-1)
     const [following, setFollowing] = useState(-1)
     const [catches, setCatches] = useState(-1)
-    const [displayname, setDisplayname] = useState("")
+    const [displayname, setDisplayname] = useState('')
 
     //Brian helped work on this function to fetch data from the database
     useEffect(() => {
         //GET INFORMATION ON THE PAGE WHEN THE PAGE LOADS
         //This functions dependencies is [] so it only runs when this module is loaded
+        //console.log(is_self, profile, profile===null)
+        
         const fetchData = async () => {
             try {
-                const response = await fetch(window.location.origin + '/garage');
+                const query_destination = window.location.origin + '/garage' + (is_self ? '' : '/' + profile)
+                console.log("about to get @: ", query_destination)
+                const response = await fetch(query_destination);
                 if (!response.ok) {
                     console.log("network error")
                     throw new Error('Network response was not ok');
@@ -38,7 +45,6 @@ export default function Garage({changePage}) {
                 setFollowing(jsonData["following"])
                 setCatches(jsonData["catches"])
                 setDisplayname(jsonData["displayname"])
-                
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

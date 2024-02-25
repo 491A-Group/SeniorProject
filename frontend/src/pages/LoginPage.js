@@ -4,18 +4,18 @@ import './LoginPage.css';
 
 export default function LoginPage({ changePage }) {
   
-  //Le Duong
-  //When isLogIn is false, assume the user wants to create an account
-  const [isLogIn, setIsLogIn] = useState(true);
+    //Le Duong
+    //When isLogIn is false, assume the user wants to create an account
+    const [isLogIn, setIsLogIn] = useState(true);
   
-  //Le Duong 
-  //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
+    //Le Duong 
+    //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
     useEffect(() => {
       document.body.style.overflow = "hidden";
       return () => {
           document.body.style.overflow = "scroll"
       };
-  }, []);
+    }, []);
   
     //Le Duong
     //These states have the strings of user input in the forms. 

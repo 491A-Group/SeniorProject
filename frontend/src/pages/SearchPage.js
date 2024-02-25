@@ -22,7 +22,7 @@ export default function SearchPage({changePage, setActivePage}) {
                 throw new Error('Network response was not ok.');
             })
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setSearchResults(data)
             })
             .catch(error => {

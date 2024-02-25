@@ -21,6 +21,7 @@ export default function Garage({changePage, profile}) {
     const [followers, setFollowers] = useState(-1)
     const [following, setFollowing] = useState(-1)
     const [catches, setCatches] = useState(-1)
+    const [followStatus, setFollowStatus] = useState('')
     const [displayname, setDisplayname] = useState('')
 
     //Brian helped work on this function to fetch data from the database
@@ -32,7 +33,7 @@ export default function Garage({changePage, profile}) {
         const fetchData = async () => {
             try {
                 const query_destination = window.location.origin + '/garage' + (is_self ? '' : '/' + profile)
-                console.log("about to get @: ", query_destination)
+                //console.log("about to get @: ", query_destination)
                 const response = await fetch(query_destination);
                 if (!response.ok) {
                     console.log("network error")
@@ -43,6 +44,7 @@ export default function Garage({changePage, profile}) {
                 //The following 4 lines put the data from the Fetch response into React states
                 setFollowers(jsonData["followers"])
                 setFollowing(jsonData["following"])
+                setFollowStatus(jsonData["follow_status"])
                 setCatches(jsonData["catches"])
                 setDisplayname(jsonData["displayname"])
             } catch (error) {
@@ -51,6 +53,23 @@ export default function Garage({changePage, profile}) {
         };
         fetchData();
     }, []);
+
+    function renderFollowButton(status) {
+        switch(status) {
+            case "following":
+                return <div>
+                    <button onClick={() => {console.log('todo, unfollow')}}>
+                        Unfollow
+                    </button>
+                </div>
+            case "stranger":
+                return <div>
+                    <button onClick={() => {console.log('todo, follow')}}>
+                        Follow
+                    </button>
+                </div>
+        }
+    }
 
     return (
         <div className="garageContainer">
@@ -74,6 +93,9 @@ export default function Garage({changePage, profile}) {
                     </div>
                 </div>
             </div>
+
+            {renderFollowButton(followStatus)}
+
             <div className="carViewOptions">
                 <button>Grid View</button>
                 <button>List View</button>

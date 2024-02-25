@@ -63,13 +63,14 @@ def garage(displayname):
     """
     # Debug
     #print(displayname, True if type(displayname) is int else False)
-    displayname, followers, following = db_queries.follows(displayname)
+    displayname, followers, following, follow_status = db_queries.garage_overview(displayname, current_user.get_int_id())
     return jsonify(
         {
             "displayname": displayname,
             "followers": followers,
             "following": following,
-            "catches": 25
+            "catches": 25,
+            "follow_status": follow_status
         }
     ), 200
 

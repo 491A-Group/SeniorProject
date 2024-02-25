@@ -94,3 +94,14 @@ def test4():
 @blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):
     return jsonify(db_queries.search_username(query))
+
+
+@blueprint_users_basic.route('/user_function/follow/<displayname>', methods=['POST'])
+@login_required
+def follow(displayname):
+    return jsonify(["displayname", 12345])
+
+@blueprint_users_basic.route('/user_function/unfollow/<displayname>', methods=['POST'])
+@login_required
+def unfollow(displayname):
+    return jsonify(["displayname", 67890])

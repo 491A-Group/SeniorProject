@@ -27,8 +27,8 @@ Get connection from this connection pool.
 Opening new connections can be expensive so this keeps some idle without closing them. 
 """
 db_connection_pool = SimpleConnectionPool(
-    minconn=2,
-    maxconn=50,
+    minconn=int(config['pool']['min']),
+    maxconn=int(config['pool']['max']),
     **db_config
 )
 

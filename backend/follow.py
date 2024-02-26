@@ -5,7 +5,6 @@ add or remove followers.
 MVC: model and control logic are both in this file
 """
 
-from flask import jsonify
 from flask_login import login_required, current_user
 
 from backend.db_queries import db_connection_pool

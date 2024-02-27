@@ -17,7 +17,6 @@ def follow(displayname):
         return 'Bad request', 400
 
     with db_connection_pool.connection() as conn:
-        conn.set_autocommit = True
         with conn.cursor() as cursor:
             cursor.execute(
                 """INSERT INTO follows(follower, followed) VALUES(
@@ -26,6 +25,7 @@ def follow(displayname):
                 );""",
                 (current_user.get_int_id(), displayname)
             )
+            conn.commit()
             return 'followed', 201
     return 'Server error', 500
 

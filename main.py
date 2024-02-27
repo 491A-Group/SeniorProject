@@ -1,9 +1,6 @@
 """
 Brian wrote this unless portions are denoted otherwise
 """
-
-#testing Cameron github desktop linux
-
 from flask import Flask, render_template, jsonify
 from flask_login import LoginManager, login_required, current_user
 import configparser

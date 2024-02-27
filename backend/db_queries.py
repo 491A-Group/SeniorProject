@@ -1,9 +1,10 @@
 """
 Brian wrote this unless portions are denoted otherwise
 """
-from psycopg2.pool import SimpleConnectionPool
+from psycopg_pool import ConnectionPool
 import configparser
 from argon2 import PasswordHasher
+from datetime import datetime
 
 # BRIAN: Argon2 One Way Hashing for securing passwords
 ph = PasswordHasher()
@@ -14,7 +15,7 @@ config.read('config.ini')
 
 # BRIAN: Connect to the PostgreSQL database
 db_config = {
-    # BRIAN: This dictionary gets details ready for psycopg2 SimpleConnectionPool using secrets from config.ini
+    # BRIAN: This dictionary gets details ready for psycopg SimpleConnectionPool using secrets from config.ini
     "dbname" :    config['postgres']['database'],
     "user" :      config['postgres']['user'],
     "password" :  config['postgres']['password'],
@@ -26,10 +27,10 @@ db_config = {
 Get connection from this connection pool.
 Opening new connections can be expensive so this keeps some idle without closing them. 
 """
-db_connection_pool = SimpleConnectionPool(
-    minconn=int(config['pool']['min']),
-    maxconn=int(config['pool']['max']),
-    **db_config
+db_connection_pool = ConnectionPool(
+    min_size=int(config['pool']['min']),
+    max_size=int(config['pool']['max']),
+    kwargs= db_config
 )
 
 def verify_credentials(email, raw_password):
@@ -41,15 +42,14 @@ def verify_credentials(email, raw_password):
         - Raw password
     
     This function
-        1. gets a psycopg2 connection
+        1. gets a psycopg connection
         2. sql SELECT statement
         3. argon2 verify password hash from SQL return
         4. determines http code to return
     """
 
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
+    with db_connection_pool.getconn() as conn:
+        with conn.cursor() as cursor:
             cursor.execute("""  SELECT id, password
                                 FROM users
                                 WHERE email = %s;"""
@@ -66,12 +66,8 @@ def verify_credentials(email, raw_password):
                     print("\nuser " + str(id) + " successfully logged in\n")
                     return "Log In Success", 202, id
                 except Exception as e:
-                    print("\nfailed\n", e)
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
-
-    return "Log In Rejected", 401
+                    return "Log In Rejected", 401
+    return "Server error", 500
 
 def register_credentials(email, displayname, raw_password):
     """
@@ -82,9 +78,8 @@ def register_credentials(email, displayname, raw_password):
 
     # TODO FIX EXCEPTIONS IE DUPLICATE EMAIL, DUPLICATE DISPLAYNAME
     """
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
+    with db_connection_pool.getconn() as conn:
+        with conn.cursor() as cursor:
             cursor.execute("""  INSERT INTO users (email, displayname, password)
                                 VALUES (%s, %s, %s)
                                 RETURNING id;"""
@@ -99,12 +94,10 @@ def register_credentials(email, displayname, raw_password):
             query_result = cursor.fetchone()
             # print("SIGNUP QUERY RESULT: ", query_result)
             if query_result is not None:
-                connection.commit()
+                conn.commit()
                 return 'Registration Success', 201, query_result[0]
             return 'Registration Failed', 409
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
+    return 'Server Error', 500
 
 def garage_overview(target_user, current_user):
     """ BRIAN
@@ -114,10 +107,9 @@ def garage_overview(target_user, current_user):
     OR if ID isn't found:
         ("", -2, -2, "self")
     """
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
-            print(type(target_user))
+    with db_connection_pool.getconn() as conn:
+        with conn.cursor() as cursor:
+            #print(type(target_user))
             cursor.execute("""
                 SELECT
                     cache.target_displayname,
@@ -145,21 +137,17 @@ def garage_overview(target_user, current_user):
 
             # fetchone() should be a tuple: (displayname, followers, following)
             query_result = cursor.fetchone()
-            print(query_result)
+            #   print(query_result)
             if query_result is not None:
                 return query_result
-            return "", -2, -2, ""
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
+    return "", -2, -2, ""
     
 def search_username(query):
     """
     BRIAN: return a list of usernames that exist in the database given a search term
     """
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
+    with db_connection_pool.getconn() as conn:
+        with conn.cursor() as cursor:
             cursor.execute(
                 """SELECT displayname FROM users WHERE displayname ILIKE %s LIMIT 20;""",
                 (query + '%',)
@@ -175,6 +163,5 @@ def search_username(query):
                 return flat_list
             print("DB_QUERIES.SEARCH_USERNAME ERROR. QUERY:", query, "QUERY_RESULT:", query_result)
             return []
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
+    print(datetime.now(), "search_username error. query:", query)
+    return []

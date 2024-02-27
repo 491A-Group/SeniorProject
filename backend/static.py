@@ -6,9 +6,8 @@ blueprint_db_static = Blueprint("blueprint_db_static", __name__)
 
 @blueprint_db_static.route('/pfp/<id>', methods=['GET'])
 def pfp(id):
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
+    with db_connection_pool.getconn() as conn:
+        with conn.cursor() as cursor:
             id = id[:9] # get the first 9 characters. max id becomes 999,999,999
             try:
                 id = int(id)
@@ -25,7 +24,4 @@ def pfp(id):
                 BytesIO(cursor.fetchone()[0]),
                 mimetype='image/svg+xml'
             )
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
         

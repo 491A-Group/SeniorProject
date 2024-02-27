@@ -16,9 +16,9 @@ def follow(displayname):
     if len(displayname) > 32:
         return 'Bad request', 400
 
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
+    with db_connection_pool.connection() as conn:
+        conn.set_autocommit = True
+        with conn.cursor() as cursor:
             cursor.execute(
                 """INSERT INTO follows(follower, followed) VALUES(
                     %s,
@@ -26,12 +26,8 @@ def follow(displayname):
                 );""",
                 (current_user.get_int_id(), displayname)
             )
-            connection.commit()
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
-
-    return 'followed', 201
+            return 'followed', 201
+    return 'Server error', 500
 
 
 @blueprint_users_basic.route('/user_function/unfollow/<displayname>', methods=['POST'])
@@ -40,9 +36,8 @@ def unfollow(displayname):
     if len(displayname) > 32:
         return 'you followed', 400
     
-    connection = db_connection_pool.getconn()
-    try:
-        with connection.cursor() as cursor:
+    with db_connection_pool.connection() as conn:
+        with conn.cursor() as cursor:
             cursor.execute(
                 """DELETE FROM follows
                 WHERE follower=%s 
@@ -53,9 +48,6 @@ def unfollow(displayname):
                 ;""",
                 (current_user.get_int_id(), displayname)
             )
-            connection.commit()
-    finally:
-        print("returning a thread to the pool")
-        db_connection_pool.putconn(connection)
-
-    return 'no longer following', 201
+            conn.commit()
+            return 'no longer following', 201
+    return 'Server error', 500

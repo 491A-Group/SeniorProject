@@ -80,10 +80,11 @@ export default function Garage({changePage, profile}) {
                 console.log("network error")
                 throw new Error('Network response was not ok');
             }
+
+            fetchData()
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        fetchData()
     }
     async function unfollow() {
         try {
@@ -94,10 +95,11 @@ export default function Garage({changePage, profile}) {
                 console.log("network error")
                 throw new Error('Network response was not ok');
             }
+
+            fetchData()
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        fetchData()
     }
 
     return (

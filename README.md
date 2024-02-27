@@ -12,7 +12,16 @@
    - main.py, model.py, other python files in root are for backend
 
 ## Routes
-?? index, login, signup
+- /login
+- /register
+- /logout
+- /garage/\<displayname>
+- /search_users/\<query>
+- /pfp/\<id> #ID of static pfp, NOT ID OF USER; no dynamic pfp yet
+- /predict
+- /user_function
+    - /follow/\<displayname>
+    - /unfollow/\<displayname>
 
 ## Backend
  - flask server for ml. takes a request and returns predictions  
@@ -20,14 +29,15 @@
  
 ## Running
 I always recommend to do a venv
- - A certain version of python may be required for tensorflow ?? tbd
+ - A certain version of python may be required for tensorflow ?? tbd. 3.11 confirmed working
  - `python -m venv venvname`
  - Activating venv:
    - Linux: `source venvname/bin/activate`
    - Windows: `venvname/Scripts/activate`
  - Install required libraries with pip
    - untested, however try `pip install -r requirements.txt`
-   - otherwise try old fashioned way with 'pip install tensorflow numpy flask gunicorn pillow flask-cors flask-login argon2-cffi'
+   - otherwise try old fashioned way with `pip install tensorflow numpy flask gunicorn pillow flask-cors flask-login argon2-cffi "psycopg[binary]" pip install "psycopg[pool]"`
+   - I've outlined how to install psycopg using the binaries however this isn't the best practice, as the documentation for psycopg installation states that with a 'Local Installation' all upgrades in dependencies will be automatically used. For the scope of the class this is too much to learn/maintain.
      - ..etc you'll see the next missing library each time it fails to run
  - Make a valid config file or get one from Brian ~ config.ini (need to do ssh tunnel in python first)
  - Make sure the frontend React project is built.

@@ -27,8 +27,8 @@ Get connection from this connection pool.
 Opening new connections can be expensive so this keeps some idle without closing them. 
 """
 db_connection_pool = SimpleConnectionPool(
-    minconn=2,
-    maxconn=50,
+    minconn=int(config['pool']['min']),
+    maxconn=int(config['pool']['max']),
     **db_config
 )
 
@@ -106,29 +106,41 @@ def register_credentials(email, displayname, raw_password):
         print("returning a thread to the pool")
         db_connection_pool.putconn(connection)
 
-def follows(user):
+def garage_overview(target_user, current_user):
     """ BRIAN
-    Given a user's ID returns counts:
-        (displayname, followers, following)
+    Given a (target user's ID or displayname, current_user's ID) returns counts:
+        (displayname, followers, following, follow_status)
+        Follow status is 1 of 'self', 'following', 'stranger', ''
     OR if ID isn't found:
-        ("", -2, -2)
+        ("", -2, -2, "self")
     """
     connection = db_connection_pool.getconn()
     try:
         with connection.cursor() as cursor:
-            print(type(user))
+            print(type(target_user))
             cursor.execute("""
                 SELECT
-                    subquery.displayname,
-                    (SELECT COUNT(*) as followers FROM follows JOIN users ON users.id=follows.followed WHERE users.id=subquery.id),
-                    (SELECT COUNT(*) as following FROM follows JOIN users ON users.id=follows.follower WHERE users.id=subquery.id)
+                    cache.target_displayname,
+                    (SELECT COUNT(*) as followers FROM follows JOIN users ON users.id=follows.followed WHERE users.id=cache.target_id),
+                    (SELECT COUNT(*) as following FROM follows JOIN users ON users.id=follows.follower WHERE users.id=cache.target_id),
+                    (
+                        SELECT
+                            CASE
+                                WHEN cache.target_id = cache.current_id THEN 'self'
+                                WHEN (SELECT COUNT(*)=1 FROM follows WHERE follower = cache.current_id AND followed = cache.target_id) THEN 'following'
+                                ELSE 'stranger'
+                            END as follow_status
+                    )
                 FROM
                     (
-                        SELECT id, displayname
+                        SELECT 
+                            id as target_id,
+                           displayname as target_displayname,
+                           (SELECT %s) as current_id
                         FROM users """ +
-                        ("WHERE id = " if type(user) is int else "WHERE displayname = ") + """ %s
-                    ) AS subquery""",
-                (user,)
+                        ("WHERE id = " if type(target_user) is int else "WHERE displayname = ") + """ %s
+                    ) AS cache""",
+                (current_user, target_user,)
             )
 
             # fetchone() should be a tuple: (displayname, followers, following)
@@ -136,7 +148,7 @@ def follows(user):
             print(query_result)
             if query_result is not None:
                 return query_result
-            return "", -2, -2
+            return "", -2, -2, ""
     finally:
         print("returning a thread to the pool")
         db_connection_pool.putconn(connection)

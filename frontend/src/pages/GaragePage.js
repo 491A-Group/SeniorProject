@@ -21,36 +21,84 @@ export default function Garage({changePage, profile}) {
     const [followers, setFollowers] = useState(-1)
     const [following, setFollowing] = useState(-1)
     const [catches, setCatches] = useState(-1)
+    const [followStatus, setFollowStatus] = useState('')
     const [displayname, setDisplayname] = useState('')
 
     //Brian helped work on this function to fetch data from the database
+    const fetchData = async () => {
+        try {
+            const query_destination = window.location.origin + '/garage' + (is_self ? '' : '/' + profile)
+            //console.log("about to get @: ", query_destination)
+            const response = await fetch(query_destination);
+            if (!response.ok) {
+                console.log("network error")
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            
+            //The following 5 lines put the data from the Fetch response into React states
+            setFollowers(jsonData["followers"])
+            setFollowing(jsonData["following"])
+            setFollowStatus(jsonData["follow_status"])
+            setCatches(jsonData["catches"])
+            setDisplayname(jsonData["displayname"])
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
         //GET INFORMATION ON THE PAGE WHEN THE PAGE LOADS
         //This functions dependencies is [] so it only runs when this module is loaded
         //console.log(is_self, profile, profile===null)
-        
-        const fetchData = async () => {
-            try {
-                const query_destination = window.location.origin + '/garage' + (is_self ? '' : '/' + profile)
-                console.log("about to get @: ", query_destination)
-                const response = await fetch(query_destination);
-                if (!response.ok) {
-                    console.log("network error")
-                    throw new Error('Network response was not ok');
-                }
-                const jsonData = await response.json();
-                
-                //The following 4 lines put the data from the Fetch response into React states
-                setFollowers(jsonData["followers"])
-                setFollowing(jsonData["following"])
-                setCatches(jsonData["catches"])
-                setDisplayname(jsonData["displayname"])
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
         fetchData();
     }, []);
+
+    function renderFollowButton(status) {
+        switch(status) {
+            case "following":
+                return <div>
+                    <button onClick={() => {unfollow()}}>
+                        Unfollow
+                    </button>
+                </div>
+            case "stranger":
+                return <div>
+                    <button onClick={() => {follow()}}>
+                        Follow
+                    </button>
+                </div>
+        }
+    }
+
+    async function follow() {
+        try {
+            const query_destination = window.location.origin + '/user_function/follow/' + profile
+            console.log("about to post @: ", query_destination)
+            const response = await fetch(query_destination, {method: 'POST'});
+            if (!response.ok) {
+                console.log("network error")
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        fetchData()
+    }
+    async function unfollow() {
+        try {
+            const query_destination = window.location.origin + '/user_function/unfollow/' + profile
+            console.log("about to post @: ", query_destination)
+            const response = await fetch(query_destination, {method: 'POST'});
+            if (!response.ok) {
+                console.log("network error")
+                throw new Error('Network response was not ok');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        fetchData()
+    }
 
     return (
         <div className="garageContainer">
@@ -74,6 +122,9 @@ export default function Garage({changePage, profile}) {
                     </div>
                 </div>
             </div>
+
+            {renderFollowButton(followStatus)}
+
             <div className="carViewOptions">
                 <button>Grid View</button>
                 <button>List View</button>

@@ -9,6 +9,7 @@ from backend.user import User
 from . import db_queries
 
 blueprint_users_basic = Blueprint("blueprint_users_basic", __name__)
+import backend.follow # make sure to import this AFTER the blueprint is made to avoid circular import
 
 @blueprint_users_basic.route('/login', methods=['POST'])
 def login():
@@ -63,13 +64,14 @@ def garage(displayname):
     """
     # Debug
     #print(displayname, True if type(displayname) is int else False)
-    displayname, followers, following = db_queries.follows(displayname)
+    displayname, followers, following, follow_status = db_queries.garage_overview(displayname, current_user.get_int_id())
     return jsonify(
         {
             "displayname": displayname,
             "followers": followers,
             "following": following,
-            "catches": 25
+            "catches": 25,
+            "follow_status": follow_status
         }
     ), 200
 
@@ -80,15 +82,6 @@ def current_garage():
     Simply the garage of the user currently logged in
     """
     return garage(current_user.get_int_id())
-
-@blueprint_users_basic.route('/test4')
-@login_required
-def test4():
-    """BRIAN:
-    This endpoint can safely be deleted. It is occasionally useful to determine if cookies are useful. 
-    """
-    return "<h3>COOKIES WORKING " + current_user.id + "</h3>"
-
 
 @blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):

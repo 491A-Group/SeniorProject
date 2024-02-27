@@ -12,7 +12,7 @@ model = tf.keras.applications.ResNet50V2(weights='imagenet')
 
 #cameron
 # Load the images
-folder = "C:/Users/LeNDu/OneDrive/Documents/CS/CECS 491A Senior Project/RoboFlow/Cars/TESLA2/"
+folder = "C:/Users/cewei/OneDrive/Desktop/CARFINDER/Cars/ALFA/ALFA ROMEO Tonale (2022-2023)/"
 
 
 #loop through the folders

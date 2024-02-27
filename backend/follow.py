@@ -15,18 +15,18 @@ from backend.users_basic import blueprint_users_basic
 def follow(displayname):
     if len(displayname) > 32:
         return 'Bad request', 400
-
     with db_connection_pool.connection() as conn:
-        with conn.cursor() as cursor:
-            cursor.execute(
-                """INSERT INTO follows(follower, followed) VALUES(
-                    %s,
-                    (SELECT id FROM users WHERE displayname=%s)
-                );""",
-                (current_user.get_int_id(), displayname)
-            )
-            conn.commit()
-            return 'followed', 201
+        conn.execute(
+            """
+            INSERT INTO follows(follower, followed) VALUES(
+                %s,
+                (SELECT id FROM users WHERE displayname=%s)
+            );
+            """,
+            (current_user.get_int_id(), displayname)
+        )
+        conn.commit()
+        return 'followed', 201
     return 'Server error', 500
 
 
@@ -35,19 +35,18 @@ def follow(displayname):
 def unfollow(displayname):
     if len(displayname) > 32:
         return 'you followed', 400
-    
     with db_connection_pool.connection() as conn:
-        with conn.cursor() as cursor:
-            cursor.execute(
-                """DELETE FROM follows
-                WHERE follower=%s 
+        conn.execute(
+            """
+            DELETE FROM follows
+            WHERE   follower=%s 
                     AND followed=(
                         SELECT id FROM users
                         WHERE displayname=%s
-                    )
-                ;""",
-                (current_user.get_int_id(), displayname)
-            )
-            conn.commit()
-            return 'no longer following', 201
+                    );
+            """,
+            (current_user.get_int_id(), displayname)
+        )
+        conn.commit()
+        return 'no longer following', 201
     return 'Server error', 500

@@ -24,10 +24,9 @@ app.config['SECRET_KEY'] = config["SECRET_KEY"]["key"]
 # BRIAN: Load routes for static assets in Postgres
 from backend.static import blueprint_db_static
 app.register_blueprint(blueprint_db_static)
-# BRIAN: Load the route for the ML model. Everything it needs is taken care of in that file
-# FOR INCREMENTAL DEVELOPMENT I TURN THIS OFF SINCE ITS SLOW ON STARTUP, UNCOMMENT TO DEPLOY
-from backend.model import blueprint_model
-app.register_blueprint(blueprint_model)
+# BRIAN: Load the route for the user post use case (including ML model). Everything it needs is taken care of in that file
+from backend.user_post_flow import blueprint_user_post_flow
+app.register_blueprint(blueprint_user_post_flow)
 
 # BRIAN: flask_login handles all the cookies since those can get complicated to handle
 login_manager = LoginManager(app)
@@ -80,17 +79,6 @@ def home_1():
         }
     ]
     return jsonify(example)
-
-
-from backend.model import myPredictions
-
-@app.route('/api/my_user')
-@login_required
-def my_user():
-    info = myPredictions[current_user.id]
-    myPredictions.pop(current_user.id)
-    print("PREDICTIONS\n\n", myPredictions)
-    return jsonify(info)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3030)

@@ -7,6 +7,7 @@ from flask import Blueprint, request, redirect, url_for, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
 from backend.user import User
 from . import db_queries
+from backend.db_queries import db_connection_pool
 
 blueprint_users_basic = Blueprint("blueprint_users_basic", __name__)
 import backend.follow # make sure to import this AFTER the blueprint is made to avoid circular import
@@ -86,3 +87,22 @@ def current_garage():
 @blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):
     return jsonify(db_queries.search_username(query))
+
+
+# SUGGESTIONS AND BUG REPORTING
+@blueprint_users_basic.route('/brs', methods=['POST'])
+@login_required
+def suggest_or_report_bug():
+    """ BRIAN:
+    Simple sql to post a bug report. TODO check date/time of last sent to stop spam. 
+    """
+    with db_connection_pool.connection() as conn:
+        conn.execute(
+            """
+            INSERT INTO suggestions(user_id, suggestion)
+            VALUES (%s, %s);
+            """,
+            (current_user.get_int_id(), request.json.get('message'))
+        )
+        return 'Success', 200
+    return 'Server error', 500

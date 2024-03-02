@@ -48,7 +48,7 @@ export default function CameraPage({changePage, setSource, source}) {
         newValue.slice(22),
         'base64'
       )
-      fetch("https://sc-backend.brian2002.com/predict", {
+      fetch(window.location.origin + '/predict', {
         method: 'POST',
         body: binaryData
       })

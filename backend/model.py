@@ -6,7 +6,6 @@ Brian adapted it to work with Flask
 Then Brian re-fitted it to work by itself stand-alone so flask can simply call predict(..)
 """
 from ultralytics import YOLO
-from ultralytics.engine.results import Results
 from io import BytesIO
 from PIL import Image
 

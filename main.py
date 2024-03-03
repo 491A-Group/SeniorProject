@@ -2,7 +2,7 @@
 Brian wrote this unless portions are denoted otherwise
 """
 from flask import Flask, render_template, jsonify
-from flask_login import LoginManager, login_required, current_user
+from flask_login import LoginManager
 import configparser
 
 # BRIAN: config.ini

@@ -59,7 +59,7 @@ def predict():
             #print(picture_id)
 
             for confidence, label in combined_list:
-                #print(1, label, confidence, picture_id)
+                print(label, confidence)
                 cur.execute(
                     """
                     WITH prediction AS (
@@ -75,7 +75,7 @@ def predict():
                     (current_user.get_int_id(), label, picture_id)
                 )
                 cars.append(cur.fetchone() + (confidence,)) # append the car we've added to the database to the json response
-            print(id, ":\n", cars)
+            print(current_user.get_int_id(), ":\n", cars)
             
         return jsonify(cars)
     

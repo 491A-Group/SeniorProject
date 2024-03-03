@@ -96,13 +96,17 @@ def suggest_or_report_bug():
     """ BRIAN:
     Simple sql to post a bug report. TODO check date/time of last sent to stop spam. 
     """
+    message = request.json.get('message')
+    if len(message) > 2048:
+        return '2048 Characters Max', 413 # Content too large
+
     with db_connection_pool.connection() as conn:
         conn.execute(
             """
             INSERT INTO suggestions(user_id, suggestion)
             VALUES (%s, %s);
             """,
-            (current_user.get_int_id(), request.json.get('message'))
+            (current_user.get_int_id(), message)
         )
         return 'Success', 200
     return 'Server error', 500

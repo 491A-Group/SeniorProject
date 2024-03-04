@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import RenderUserList from '../components/RenderUserList';
 //Testpage done by Richard unless noted otherwise
 
 export default function TestPage({changePage}) {
-  //Richard
+    const [stateForTest, setStateForTest] = useState([
+        "user1",
+        "user2",
+        "john cena",
+        "george",
+        "peter_g"
+    ]);
+  
+  
+    //Richard
   //handle logout
   function logout() {
     fetch(window.location.origin + "/logout", {
@@ -27,6 +37,10 @@ export default function TestPage({changePage}) {
         <button onClick={() => {changePage("Home")}}>Home Page!</button>
         <button onClick={() => {changePage("Camera")}}>Camera Page!</button>
         <button onClick={logout}>Log Out</button>
+
+
+        <p>brian test; safe to delete</p>
+        <RenderUserList users={stateForTest}></RenderUserList>
     </div>
   );
   

@@ -23,19 +23,30 @@ export default function LoginPage({ changePage }) {
     const [input_displayname, setDisplayname] = useState('');
     const [input_email, setEmail] = useState('');
     const [input_password, setPassword] = useState('');
+    const [check_password, setCheckPassword] = useState(true);
 
     //RL: This is new, error messages for email verification and forgotten password.
     const [errorMessage, setErrorMessage] = useState('');
-    const[passwordMessage, setPasswordMessage] = useState('');
-
+    const [passwordMessage, setPasswordMessage] = useState('');
+    
+    //Le Duong: state for pw pop up note for pw suggestions
+    const [passwordNoteVisible, setPasswordNoteVisible] = useState('');
+  
+    //Le Duong: changes state to show password note when user clicks on pw field
+    const handlePasswordClick = () => {
+      setPasswordNoteVisible(true);
+    };
+  
     //RL: This was written to handle both switching between Login/Register
     //pages AND clearing error messages (invalid email message does not
     //persist rendering on Login page once switched back and forth)
     const handlePageSwitch = (status) => {
-        setIsLogIn(status);
-        setErrorMessage('');
-        setPasswordMessage('');
+      setIsLogIn(status);
+      setErrorMessage('');
+      setPasswordMessage('');
+      setPasswordNoteVisible('');
     }
+  
 
     //Handlers for the states - updates changes when users type
     const handleDisplaynameChange = (event) => {setDisplayname(event.target.value)}
@@ -43,8 +54,17 @@ export default function LoginPage({ changePage }) {
         setEmail(event.target.value);
         validateEmail(event.target.value);
     }
+  
     const handlePasswordChange = (event) => {setPassword(event.target.value)}
 
+    const handlePasswordCheck = (event) => {
+      if (input_password !== check_password) {
+        setCheckPassword(true);
+      } else {
+        setCheckPassword(false);
+      }
+    }
+  
     //BRIAN: helped write this function to log in
     // currently just works with cookies and does no re-routing logic
     const handleSubmitLogin = (event) => {
@@ -107,12 +127,13 @@ export default function LoginPage({ changePage }) {
     
   //Le Duong
   //creates HTML container that swaps between login page and registration page by calling setIsLogIn function
-    return (
+  return (
+      <div className="loginpage">
         <div className="container">
-            <h1>Welcome to SportsCar Spotter</h1>
+            <h1 className="h1">Welcome to SportsCar Spotter 🏎️ 💨</h1>
             { isLogIn ? (
                 <>
-                    <h2>Log In</h2>
+                    <h2 className="h2">Log In</h2>
                     <input type="email" value={input_email} onChange={handleEmailChange} placeholder="Email" />
                     <br />
                     <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
@@ -128,22 +149,46 @@ export default function LoginPage({ changePage }) {
                 </>
             ) : (
                 <>
-                    <h2>Register</h2>
+                    <h2 className="h2">Register</h2>
                     <input type="text" value={input_displayname} onChange={handleDisplaynameChange} placeholder="Displayname"/>
                     <br />
                     <input type="email" value={input_email} onChange={handleEmailChange} placeholder="Email" />
                     <br />
                     {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
-                    <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
+                    <input
+                      type="password"
+                      value={input_password}
+                      onChange={handlePasswordChange}
+                      onClick={handlePasswordClick}
+                      placeholder="Password"
+                    />
+                    <br />
+                    <input
+                      type="password"
+                      value={check_password}
+                      onClick={handlePasswordCheck}
+                      placeholder="Confirm Password"
+                    /> 
+                    <br />
+                    <p className="p" id = "pwderror" style={{ display: passwordNoteVisible ? 'block' : 'none'}}>
+                      Passwords do not match. Please try again. <br />
+                    </p>
+                    <p className="p" id = "pwdnote" style={{ display: passwordNoteVisible ? 'block' : 'none'}}>
+                      Password should be: <br />
+                      - 8 to 16 characters <br />
+                      - use a variety of characters (lowercase, uppercase, numbers, and special characters)  <br />
+                      - unique and distinct <br />
+                    </p>
                     <br />
                     <button className="btn" onClick={handleSubmitRegister}>Register</button>
-                    <p>
+                    <p className="p">
                         Already have an account? 
-                        <button className="btn" onClick={() => handlePageSwitch(true)}>Log In</button>
+                        <button className="btn" id = "loginbtn" onClick={() => handlePageSwitch(true)}>Log In</button>
                     </p>
                 </>
             )}
             <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
         </div>
+      </div>
     );
 };

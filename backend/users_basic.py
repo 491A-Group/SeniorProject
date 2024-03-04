@@ -22,11 +22,6 @@ def login():
     Takes in a form and responds so React can act accordingly
     # TODO MAKE SURE THIS WORKS WITH login_manager.login_view = 'blueprint_users_basic.login'
     """
-    # auth = db_queries.verify_credentials(request.form['email'], request.form['password'])
-    # if auth[1] == 202:
-    #     login_user(User(auth[2]))
-    # return auth[0], auth[1]
-    
     email = request.form['email']
     raw_password = request.form['password']
 
@@ -70,14 +65,6 @@ def register():
     displayname = request.form["displayname"]
     email = request.form["email"]
     raw_password = request.form["password"]
-    
-    #print(email, displayname, password)
-    # result = db_queries.register_credentials(email, displayname, password)
-
-    # if result[1] == 201:
-    #     login_user(User(result[2]))
-
-    # return result[0], result[1]
 
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
@@ -132,11 +119,7 @@ def garage(displayname):
     ("", -2, -2, "")
     """
     # Debug
-    #print(displayname, True if type(displayname) is int else False)
-    #displayname, followers, following, follow_status = db_queries.garage_overview(displayname, current_user.get_int_id())
-    
     target_user=displayname
-
     # ERROR CASE to be overwritten later; otherwise this error is the default
     displayname = ''
     followers = -2

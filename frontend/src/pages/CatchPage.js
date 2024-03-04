@@ -61,35 +61,35 @@ export default function CatchPage({changePage, iSource}) {
 
     //the main return to display the home page or main feed
     return (
-        <div>
-        <h3>Predictions</h3>
+        <div className="catchpage">
+        <h1>Predictions</h1>
         
         { predictions === null ? 
             (
-                <p>Loading<img src={loading} width="15vw"/></p>
+                <h1>Loading   <img src={loading} width="15vw"/></h1>
             ) 
         : 
             (
                 <ol>
                     {predictions.map((prediction, index) => (
                         <li key={index}>
-                            <button onClick={() => selectPrediction(prediction["label"])}>Select</button>
-                            <h5>
+                            <button className="btn" onClick={() => selectPrediction(prediction["label"])}>Select</button>
+                            <h2>
                                 {
                                     Math.floor(prediction["confidence"]*100) + '% ' +
                                     prediction["make_name"]  + ' ' +
                                     prediction["model_name"] + ' ' +
                                     prediction["year_start"] + '-' + prediction["year_end"]
                                 }
-                            </h5>
-                            <p>{prediction["description"]}</p>
+                            </h2>
+                            <h3>{prediction["description"]}</h3>
                         </li>
                     ))}
                 </ol>
             )
         }
 
-        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
+        <button className="btn" onClick={() => {changePage("Test")}}>Go to Test Page</button>
         </div>
     );
 }

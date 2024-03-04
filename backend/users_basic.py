@@ -29,7 +29,6 @@ def login():
     
     email = request.form['email']
     raw_password = request.form['password']
-    print(email, raw_password)
 
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
@@ -42,16 +41,13 @@ def login():
         )
         # BRIAN: fetchone() should return (id, hashed_password)
         query_result = cursor.fetchone()
-        print(query_result)
         if query_result is not None:
             id, hash = query_result
             # print("debug555", id, hash, raw_password, type(hash), type(raw_password))
             try:
                 # BRIAN: ph.verify is the argon2 function
                 # unfortunately, it does NOT return a boolean, but just throws an exception
-                print("debug 566", id, hash)
                 ph.verify(hash, raw_password)
-                print("debug 569")
                 login_user(User(id))
                 print("\nuser " + str(id) + " successfully logged in\n")
                 return "Log In Success", 202
@@ -99,7 +95,7 @@ def register():
         # Since the query says 'returning id;' this fetchone() returns a tuple that represents a row.
         # BRIAN: This row has exactly one column that is the id
         query_result = cursor.fetchone()
-        print("SIGNUP QUERY RESULT: ", query_result)
+        #print("SIGNUP QUERY RESULT: ", query_result)
         if query_result is not None:
             conn.commit()
             login_user(User(query_result[0]))

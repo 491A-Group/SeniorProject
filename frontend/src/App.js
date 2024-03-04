@@ -48,7 +48,7 @@ function App() {
           break;
 
         case "Camera":
-          setActivePage(<CameraPage changePage={changePage} setSource={setImageSource}/>)
+          setActivePage(<CameraPage changePage={changePage} setActivePage={setActivePage}/>)
           break;
 
         case "Test":

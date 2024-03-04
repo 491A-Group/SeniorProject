@@ -23,6 +23,7 @@ export default function Garage({changePage, profile}) {
     const [catches, setCatches] = useState(-1)
     const [followStatus, setFollowStatus] = useState('')
     const [displayname, setDisplayname] = useState('')
+    const [pfpId, setPfpId] = useState(1)
 
     //Brian helped work on this function to fetch data from the database
     const fetchData = async () => {
@@ -42,6 +43,7 @@ export default function Garage({changePage, profile}) {
             setFollowStatus(jsonData["follow_status"])
             setCatches(jsonData["catches"])
             setDisplayname(jsonData["displayname"])
+            setPfpId(jsonData["pfp_id"])
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -106,7 +108,7 @@ export default function Garage({changePage, profile}) {
         <div className="garageContainer">
             <div className="userInfo">
                 <div className="userProfile">
-                    <img src={ProfilePic} />
+                    <img src={window.location.origin + '/pfp/' + pfpId} />
                     <div className="displayname">{displayname}</div>
                 </div>
                 <div className="userStats">

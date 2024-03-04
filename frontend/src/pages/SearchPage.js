@@ -1,7 +1,7 @@
 import './HomePage.css';
 import React, { useState } from 'react';
 
-import Garage from './GaragePage';
+import RenderUserList from '../components/RenderUserList';
 
 export default function SearchPage({changePage, setActivePage}) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -45,17 +45,7 @@ export default function SearchPage({changePage, setActivePage}) {
                 />
                 <button type="submit">Search</button>
             </form>
-            <div>
-                <ul>
-                    {searchResults.map((item, index) => (
-                        <li key={index}>
-                            <button onClick={() => setActivePage(<Garage changePage={changePage} profile={item}/>)}>
-                                {item}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <RenderUserList users={searchResults} changePage={changePage} setActivePage={setActivePage}></RenderUserList>
         </>
     );
 }

@@ -4,11 +4,8 @@ import RenderUserList from '../components/RenderUserList';
 
 export default function TestPage({changePage}) {
     const [stateForTest, setStateForTest] = useState([
-        "user1",
-        "user2",
-        "john cena",
-        "george",
-        "peter_g"
+        {displayname: "peter_g", pfp_id: 58},
+        {displayname: "john_cena", pfp_id: 26},
     ]);
   
   

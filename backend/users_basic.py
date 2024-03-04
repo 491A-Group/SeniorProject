@@ -146,13 +146,15 @@ def garage(displayname):
                     SELECT count(*)
                     FROM posts
                     WHERE user_id=cache.target_id
-                ) AS catches
+                ) AS catches,
+                cache.pfp_id
             FROM
                 (
                     SELECT 
                         id as target_id,
                         displayname as target_displayname,
-                        (SELECT %s) as current_id
+                        (SELECT %s) as current_id,
+                        profile_picture_id as pfp_id
                     FROM users """ +
                     ("WHERE id = " if type(target_user) is int else "WHERE displayname = ") + """ %s
                 ) AS cache
@@ -161,9 +163,9 @@ def garage(displayname):
         )
         # fetchone() should be a tuple: (displayname, followers, following, follow_status, catches)
         query_result = cursor.fetchone()
-        #print(query_result)
+        print(query_result)
         if query_result is not None:
-            displayname, followers, following, follow_status, catches = query_result
+            displayname, followers, following, follow_status, catches, pfp = query_result
     
     return jsonify(
         {
@@ -172,6 +174,7 @@ def garage(displayname):
             "following": following,
             "follow_status": follow_status,
             "catches": catches,
+            "pfp_id": pfp,
         }
     ), 200
 
@@ -188,7 +191,7 @@ def search(query):
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
             """
-            SELECT displayname
+            SELECT displayname, profile_picture_id
             FROM users
             WHERE displayname ILIKE %s LIMIT 20;
             """,
@@ -199,7 +202,7 @@ def search(query):
         #  Convert this simply to a list of displaynames with flat_list
         query_result = cursor.fetchall()
         if query_result is not None:
-            flat_list = [row[0] for row in query_result]
+            flat_list = [{"displayname": row[0], "pfp_id": row[1]} for row in query_result]
             print("query result for '" + query + "':", flat_list)
             return jsonify(flat_list)
         print("DB_QUERIES.SEARCH_USERNAME ERROR. QUERY:", query, "QUERY_RESULT:", query_result)

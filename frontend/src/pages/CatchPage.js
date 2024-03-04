@@ -83,6 +83,7 @@ export default function CatchPage({changePage, iSource}) {
                                         prediction["year_start"] + '-' + prediction["year_end"]
                                     }
                                 </h2>
+                                <img src={iSource}/>
                                 <h3>{prediction["description"]}</h3>
                             </li>
                         ))}

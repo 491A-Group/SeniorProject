@@ -113,10 +113,10 @@ def garage(displayname):
         however the other garage route calls this function passing in an id integer
 
     Given a (target user's ID or displayname, current_user's ID) returns counts:
-    (displayname, followers, following, follow_status)
+    (displayname, followers, following, follow_status, catches)
     Follow status is one of 'self', 'following', 'stranger', ''
     OR if ID isn't found:
-    ("", -2, -2, "")
+    ("", -2, -2, "", -2)
     """
     # Debug
     target_user=displayname
@@ -125,14 +125,15 @@ def garage(displayname):
     followers = -2
     following = -2
     follow_status = ''
+    catches = -2
     
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
             """
             SELECT
                 cache.target_displayname,
-                (SELECT COUNT(*) as followers FROM follows JOIN users ON users.id=follows.followed WHERE users.id=cache.target_id),
-                (SELECT COUNT(*) as following FROM follows JOIN users ON users.id=follows.follower WHERE users.id=cache.target_id),
+                (SELECT count(*) AS followers FROM follows JOIN users ON users.id=follows.followed WHERE users.id=cache.target_id),
+                (SELECT count(*) AS following FROM follows JOIN users ON users.id=follows.follower WHERE users.id=cache.target_id),
                 (
                     SELECT
                         CASE
@@ -140,7 +141,12 @@ def garage(displayname):
                             WHEN (SELECT COUNT(*)=1 FROM follows WHERE follower = cache.current_id AND followed = cache.target_id) THEN 'following'
                             ELSE 'stranger'
                         END as follow_status
-                )
+                ),
+                (
+                    SELECT count(*)
+                    FROM posts
+                    WHERE user_id=cache.target_id
+                ) AS catches
             FROM
                 (
                     SELECT 
@@ -153,21 +159,19 @@ def garage(displayname):
             """,
             (current_user.get_int_id(), target_user,)
         )
-        # fetchone() should be a tuple: (displayname, followers, following, follow_status)
+        # fetchone() should be a tuple: (displayname, followers, following, follow_status, catches)
         query_result = cursor.fetchone()
-        #   print(query_result)
+        #print(query_result)
         if query_result is not None:
-            displayname, followers, following, follow_status = query_result
-            #return query_result
-        #return "", -2, -2, ""
+            displayname, followers, following, follow_status, catches = query_result
     
     return jsonify(
         {
             "displayname": displayname,
             "followers": followers,
             "following": following,
-            "catches": 25,
-            "follow_status": follow_status
+            "follow_status": follow_status,
+            "catches": catches,
         }
     ), 200
 

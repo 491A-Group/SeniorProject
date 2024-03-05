@@ -76,7 +76,7 @@ export default function CatchPage() {
             <div className="catchpage">
             <h1>Predictions</h1>
             
-            { predictions === null ? 
+            { (predictions === null  || predictions.length < 1) ? 
                 (
                     <h1>Loading   <img src={loading} width="15vw"/></h1>
                 ) 

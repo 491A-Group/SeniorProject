@@ -7,6 +7,7 @@ export default function LoginPage({ changePage }) {
     //Le Duong
     //When isLogIn is false, assume the user wants to create an account
     const [isLogIn, setIsLogIn] = useState(true);
+    const [successfulLogIn, setSuccessfulLogIn] = useState(false);
   
     //Le Duong 
     //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
@@ -16,6 +17,19 @@ export default function LoginPage({ changePage }) {
           document.body.style.overflow = "scroll"
       };
     }, []);
+
+
+    //RL: This effect is used to give a second-long pause,
+    //then redirect user to Home page once they have successfully logged in.
+    useEffect(() => {
+        if (successfulLogIn) {
+            const timeout = setTimeout(() => {
+                changePage("Home");
+            }, 1000);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [successfulLogIn]); //dependency array, used to prevent re-running effect after every render
   
     //Le Duong
     //These states have the strings of user input in the forms. 
@@ -28,6 +42,10 @@ export default function LoginPage({ changePage }) {
     //RL: This is new, error messages for email verification and forgotten password.
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordMessage, setPasswordMessage] = useState('');
+    const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState('');
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passErrorMessage, setPassErrorMessage] = useState('');
+    
     
     //Le Duong: state for pw pop up note for pw suggestions
     const [passwordNoteVisible, setPasswordNoteVisible] = useState('');
@@ -45,6 +63,8 @@ export default function LoginPage({ changePage }) {
       setErrorMessage('');
       setPasswordMessage('');
       setPasswordNoteVisible('');
+      setDisplayNameErrorMessage('');
+      setEmailErrorMessage('');
     }
   
 
@@ -68,6 +88,30 @@ export default function LoginPage({ changePage }) {
     //BRIAN: helped write this function to log in
     // currently just works with cookies and does no re-routing logic
     const handleSubmitLogin = (event) => {
+
+        //RL: This new chunk is for validating that the email and password
+        //fields are valid before continuing the rest of handleSubmitLogin.
+        setPasswordMessage('');
+
+        let hasError = false;
+
+        if (!validateEmail(input_email)) {
+            setEmailErrorMessage("Invalid email format.");
+            hasError = true;
+        }
+
+        if (!validatePassword(input_password)) {
+            setPassErrorMessage("Password field cannot be blank.");
+            hasError = true;
+        }
+
+        if (hasError) {
+            return;
+        }
+
+        setEmailErrorMessage('');
+        setPassErrorMessage('');
+
         let login_form = new FormData()
         login_form.append("email", input_email)
         login_form.append("password", input_password)
@@ -79,6 +123,7 @@ export default function LoginPage({ changePage }) {
         })
         .then(response => {
             if (response.ok) {
+                setSuccessfulLogIn(true); //new; needed for redirect to homepage after successful login.
                 console.log("login success")
             } else {
                 console.log("login error")
@@ -89,6 +134,32 @@ export default function LoginPage({ changePage }) {
     //BRIAN: helped write this function to sign up
     // currently just works with cookies and does no re-routing logic
     const handleSubmitRegister = (event) => {
+        let hasError = false;
+
+        if (!validateEmail(input_email)) {
+            setEmailErrorMessage("Invalid email format.");
+            hasError = true;
+        }
+
+        if (!validatePassword(input_password)) {
+            setPassErrorMessage("Password field cannot be blank.");
+            hasError = true;
+        }
+
+        if(!validateDisplayName(input_displayname)) {
+            setDisplayNameErrorMessage("Display Name cannot be blank.")
+            hasError = true;
+        }
+
+        if (hasError) {
+            return;
+        }
+
+        setEmailErrorMessage('');
+        setPassErrorMessage('');
+        setDisplayNameErrorMessage('');
+
+
         let signup_form = new FormData()
         signup_form.append("displayname", input_displayname)
         signup_form.append("email", input_email)
@@ -101,6 +172,7 @@ export default function LoginPage({ changePage }) {
         })
         .then (response => {
             if (response.ok) {
+                setSuccessfulLogIn(true);
                 console.log("signup response received ", response)
             } else {
                 console.log("signup error")
@@ -124,6 +196,17 @@ export default function LoginPage({ changePage }) {
         return emailRegex.test(email);
     }
 
+    //RL: Adding validation for password and displayname to be > length 0
+    const validatePassword = (password) => {
+        return password.length > 0;
+    }
+    //RL: Not sure what's going on with password stuff on register page, so I'm leaving this
+    //here for the time being
+    //{passErrorMessage && <div style={{color: 'red'}}>{passErrorMessage}</div>}
+
+    const validateDisplayName = (displayName) => {
+        return displayName.length > 0;
+    }
     
   //Le Duong
   //creates HTML container that swaps between login page and registration page by calling setIsLogIn function
@@ -135,8 +218,10 @@ export default function LoginPage({ changePage }) {
                 <>
                     <h2 className="h2">Log In</h2>
                     <input type="email" value={input_email} onChange={handleEmailChange} placeholder="Email" />
+                    {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
                     <br />
                     <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
+                    {passErrorMessage && <div style ={{color: 'red'}}>{passErrorMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleForgottenPassword}>Forgot Password?</button>
                     <br />
@@ -152,8 +237,10 @@ export default function LoginPage({ changePage }) {
                     <h2 className="h2">Register</h2>
                     <input type="text" value={input_displayname} onChange={handleDisplaynameChange} placeholder="Displayname"/>
                     <br />
+                    {displayNameErrorMessage && <div style={{color: 'red'}}>{displayNameErrorMessage}</div>}
                     <input type="email" value={input_email} onChange={handleEmailChange} placeholder="Email" />
                     <br />
+                    {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
                     {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
                     <input
                       type="password"
@@ -187,7 +274,12 @@ export default function LoginPage({ changePage }) {
                     </p>
                 </>
             )}
-            <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
+            {successfulLogIn && (
+                <div style = {{color: 'white'}}>
+                    <p> Successful Login! Loading homepage now....</p>
+                    <p> This could totally take less time but it's purely experimental</p>
+                </div>
+            )}
         </div>
       </div>
     );

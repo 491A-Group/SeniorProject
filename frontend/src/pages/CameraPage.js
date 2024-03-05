@@ -20,8 +20,8 @@ export default function CameraPage() {
     //specs for the webcam module, makes the camera be the forward facing camera
     const vc = {
         facingMode: { exact: "environment" },
-        width: window.width,
-        height: window.width
+        width: "400px",
+        height: "400px"
     }
     //cameron
     //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL

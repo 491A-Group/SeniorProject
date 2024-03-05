@@ -145,9 +145,9 @@ export default function LoginPage({ changePage }) {
             hasError = true;
         }
 
-        if (!validatePassword(input_password)) {
-            setPassErrorMessage("Password field cannot be blank.");
-            hasError = true;
+        if (!validatePassword(input_password) || !validatePassword(check_password)) {
+            setPassErrorMessage("Password field(s) cannot be blank.");
+            return;
         }
 
         if(!validateDisplayName(input_displayname)) {
@@ -213,7 +213,7 @@ export default function LoginPage({ changePage }) {
     }
     //RL: Not sure what's going on with password stuff on register page, so I'm leaving this
     //here for the time being
-    //{passErrorMessage && <div style={{color: 'red'}}>{passErrorMessage}</div>}
+    //
 
     const validateDisplayName = (displayName) => {
         return displayName.length > 0;

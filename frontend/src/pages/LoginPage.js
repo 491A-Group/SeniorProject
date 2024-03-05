@@ -158,7 +158,7 @@ export default function LoginPage() {
         }
 
         if (!handlePasswordCheck(input_password, check_password)) {
-            setPasswordNotMatchError("Passwords do not match.")
+            setPasswordNotMatchError("Passwords do not match. Please Try again.")
             setPasswordNoteVisible(!passwordNoteVisible);
             hasError = true;
         }
@@ -266,7 +266,19 @@ export default function LoginPage() {
                     <br />
                     <p>
                     {passErrorMessage && <div style={{color: 'red'}}>{passErrorMessage}</div>}
-                    {passwordNotMatchError && <div style={{color: 'red'}}>{passwordNotMatchError}</div>}
+                    {passwordNotMatchError && <div style={{
+                      color: 'red',
+                      width: '80%',
+                      margin: 'auto',
+                      paddingTop: '1%',
+                      paddingBottom: '1%',
+                      backgroundColor: '#FFBF00',
+                      fontsize: '90%',
+                      borderRadius: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>{passwordNotMatchError}</div>}
                     </p>
                     <p className="p" id = "pwdnote" >
                       Password should be: <br />

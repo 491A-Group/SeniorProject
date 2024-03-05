@@ -36,10 +36,6 @@ export default function CatchPage({changePage, iSource}) {
         }
 
         fetchData()
-
-        setPredictions([{"label": "ACUNSX91", "confidence": "0.810218", "make_name": "ACURA", "model_name": "NSX", "year_start": "1991", "year_end": "2001", "description": "This is a car"},
-                        {"label": "ACUNSX01", "confidence": "0.700218", "make_name": "ACURA", "model_name": "NSX", "year_start": "2001", "year_end": "2005", "description": "This is a car"},
-                        {"label": "ACUNSX16", "confidence": "0.540218", "make_name": "ACURA", "model_name": "NSX", "year_start": "2016", "year_end": "2023", "description": "This is a car"}]);
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
 

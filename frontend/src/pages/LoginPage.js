@@ -228,7 +228,8 @@ export default function LoginPage({ changePage }) {
                     {passwordMessage && <div style = {{color: 'red'}}>{passwordMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleSubmitLogin}>Log In</button>
-                    <p> 
+                    <p className = "p">
+                        Don't have an account?
                         <button className="btn" onClick={() => handlePageSwitch(false)}>Register</button>
                     </p>
                 </>

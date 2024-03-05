@@ -263,6 +263,7 @@ export default function LoginPage({ changePage }) {
                     <input type= {passwordNoteVisible ? "text" : "password"} value={check_password} onChange={handleCheckPasswordChange} placeholder="Confirm Password"/> 
                     <br />
                     <p>
+                    {passErrorMessage && <div style={{color: 'red'}}>{passErrorMessage}</div>}
                     {passwordNotMatchError && <div style={{color: 'red'}}>{passwordNotMatchError}</div>}
                     </p>
                     <p className="p" id = "pwdnote" >

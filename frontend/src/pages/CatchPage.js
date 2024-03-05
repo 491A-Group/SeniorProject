@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './CatchPage.css';
 import { Buffer } from 'buffer';
-
+import NavBar from '../components/NavBar';
 
 import loading from "../images/loading.gif";
 
@@ -9,6 +9,7 @@ export default function CatchPage({changePage, iSource}) {
 
     const [predictions, setPredictions] = useState(null);
 
+    const [predID, setID] = useState(0);
     useEffect(() => {
         const fetchData = async () => {
             const binaryData = Buffer.from(
@@ -35,8 +36,16 @@ export default function CatchPage({changePage, iSource}) {
         }
 
         fetchData()
+
+        setPredictions([{"label": "ACUNSX91", "confidence": "0.810218", "make_name": "ACURA", "model_name": "NSX", "year_start": "1991", "year_end": "2001", "description": "This is a car"},
+                        {"label": "ACUNSX01", "confidence": "0.700218", "make_name": "ACURA", "model_name": "NSX", "year_start": "2001", "year_end": "2005", "description": "This is a car"},
+                        {"label": "ACUNSX16", "confidence": "0.540218", "make_name": "ACURA", "model_name": "NSX", "year_start": "2016", "year_end": "2023", "description": "This is a car"}]);
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
+
+    function nextCar() {
+        setID((predID + 1) % predictions.length)
+    }
     function selectPrediction(label) {
         const body = {
             label: label
@@ -53,10 +62,13 @@ export default function CatchPage({changePage, iSource}) {
             if (!response.ok) {
                 throw new Error("Network response was not OK")
             }
-            console.log(response)
+            console.log(response);
+
+            changePage("Garage");
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
+            changePage("Garage")
         })
     }
 
@@ -71,27 +83,29 @@ export default function CatchPage({changePage, iSource}) {
                 ) 
             : 
                 (
-                    <ol className="container">
-                        {predictions.map((prediction, index) => (
-                            <li key={index}>
-                                <button className="btn" onClick={() => selectPrediction(prediction["label"])}>Select</button>
+                    <div className="container">
+                        {<div>
+                                <div className="blist">
+                                    <button className="btn" onClick={() => selectPrediction(predictions[predID]["label"])}>Select</button>
+                                    <button className="rej" onClick={() => nextCar()}>X</button>
+                                </div>
                                 <h2>
                                     {
-                                        Math.floor(prediction["confidence"]*100) + '% ' +
-                                        prediction["make_name"]  + ' ' +
-                                        prediction["model_name"] + ' ' +
-                                        prediction["year_start"] + '-' + prediction["year_end"]
+                                        Math.floor(predictions[predID]["confidence"]*100) + '% ' +
+                                        predictions[predID]["make_name"]  + ' ' +
+                                        predictions[predID]["model_name"] + ' ' +
+                                        predictions[predID]["year_start"] + '-' + predictions[predID]["year_end"]
                                     }
                                 </h2>
                                 <img src={iSource}/>
-                                <h3>{prediction["description"]}</h3>
-                            </li>
-                        ))}
-                    </ol>
+                                <h3>{predictions[predID]["description"]}</h3>
+                            </div>
+                        }
+                    </div>
                 )
             }
-
-            <button className="btn" onClick={() => {changePage("Test")}}>Go to Test Page</button>
+            <button className="inc" onClick={() => {changePage("Test")}}>Prediction Incorrect?</button>
+            <NavBar changePage={changePage}/>
         </div>
     );
 }

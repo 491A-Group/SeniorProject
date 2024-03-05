@@ -14,7 +14,6 @@
 .container {
   width: 80%;
   margin: 10% auto;
-  padding: 20px;
   background-color: #36454F;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -37,76 +36,40 @@
   font-size: 90%;
 }
 
-input {
-  width: 80%;
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.blist {
+.navbar {
   display: flex;
-  padding: 5%;
+  position: absolute;
+  bottom: 0%;
+  width: 100%;
 }
 
-.btn {
+.nbtn {
   width: 80%;
   padding: 10px;
-  margin: 10px 0;
   border: none;
-  border-radius: 5px;
   background-color: #FF521B;
   color: white;
   cursor: pointer;
   font-family: "Anta", sans-serif;
-  margin-right: 5%;
-  margin-left: 5%;
 }
 
-.inc {
+
+.nrej {
+  background-color: #4a84db;
   width: 80%;
   padding: 10px;
-  margin: 10px 0;
   border: none;
-  border-radius: 5px;
-  background-color: #be2626;
   color: white;
   cursor: pointer;
   font-family: "Anta", sans-serif;
-  margin-right: 5%;
-  margin-left: 5%;
-  
-}
-
-.rej {
-  width: 20%;
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  background-color: #4a84db;
-  color: white;
-  cursor: pointer;
-  font-family: "Anta", sans-serif;
-  margin-right: 5%;
+  border-left: 10px solid #252525;
+  border-right: 10px solid #252525;
 }
 
 .btn:hover {
   background-color: #F4743B;
 }
 
-.btn-alt {
-  width: 50%;
-  padding: 2%;
-  margin: 10% auto;
-  border: none;
-  border-radius: 5px;
-  background-color: #FF5F1F;
-  color: white;
-  cursor: pointer;
-}
 
 
 .btn-alt:hover {

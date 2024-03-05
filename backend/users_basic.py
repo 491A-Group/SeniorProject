@@ -36,6 +36,9 @@ def login():
         )
         # BRIAN: fetchone() should return (id, hashed_password)
         query_result = cursor.fetchone()
+        if query_result is None:
+            # most likely caused by non-existent email
+            return "Log In Rejected", 401
         if query_result is not None:
             id, hash = query_result
             # print("debug555", id, hash, raw_password, type(hash), type(raw_password))
@@ -86,7 +89,7 @@ def register():
         if query_result is not None:
             conn.commit()
             login_user(User(query_result[0]))
-            return 'Registration Success', 201#, query_result[0]
+            return 'Registration Success', 201
         return 'Registration Failed', 409
     return 'Server Error', 500
 

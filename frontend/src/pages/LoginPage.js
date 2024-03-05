@@ -37,7 +37,7 @@ export default function LoginPage({ changePage }) {
     const [input_displayname, setDisplayname] = useState('');
     const [input_email, setEmail] = useState('');
     const [input_password, setPassword] = useState('');
-    const [check_password, setCheckPassword] = useState(true);
+    const [check_password, setCheckPassword] = useState('');
 
     //RL: This is new, error messages for email verification and forgotten password.
     const [errorMessage, setErrorMessage] = useState('');
@@ -45,10 +45,11 @@ export default function LoginPage({ changePage }) {
     const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState('');
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passErrorMessage, setPassErrorMessage] = useState('');
+    const [passwordNotMatchError, setPasswordNotMatchError] = useState('');
     
     
     //Le Duong: state for pw pop up note for pw suggestions
-    const [passwordNoteVisible, setPasswordNoteVisible] = useState('');
+    const [passwordNoteVisible, setPasswordNoteVisible] = useState(false);
   
     //Le Duong: changes state to show password note when user clicks on pw field
     const handlePasswordClick = () => {
@@ -62,9 +63,10 @@ export default function LoginPage({ changePage }) {
       setIsLogIn(status);
       setErrorMessage('');
       setPasswordMessage('');
-      setPasswordNoteVisible('');
+      setPasswordNoteVisible(false);
       setDisplayNameErrorMessage('');
       setEmailErrorMessage('');
+      setPasswordNotMatchError('');
     }
   
 
@@ -77,13 +79,9 @@ export default function LoginPage({ changePage }) {
   
     const handlePasswordChange = (event) => {setPassword(event.target.value)}
 
-    const handlePasswordCheck = (event) => {
-      if (input_password !== check_password) {
-        setCheckPassword(true);
-      } else {
-        setCheckPassword(false);
-      }
-    }
+    const handleCheckPasswordChange = (event) => {setCheckPassword(event.target.value)}
+
+    
   
     //BRIAN: helped write this function to log in
     // currently just works with cookies and does no re-routing logic
@@ -91,7 +89,8 @@ export default function LoginPage({ changePage }) {
 
         //RL: This new chunk is for validating that the email and password
         //fields are valid before continuing the rest of handleSubmitLogin.
-        setPasswordMessage('');
+        setEmailErrorMessage('');
+        setPassErrorMessage('');
 
         let hasError = false;
 
@@ -134,6 +133,11 @@ export default function LoginPage({ changePage }) {
     //BRIAN: helped write this function to sign up
     // currently just works with cookies and does no re-routing logic
     const handleSubmitRegister = (event) => {
+        setPasswordNotMatchError('');
+        setEmailErrorMessage('');
+        setPassErrorMessage('');
+        setDisplayNameErrorMessage('');
+        setPasswordNoteVisible(false);
         let hasError = false;
 
         if (!validateEmail(input_email)) {
@@ -151,10 +155,17 @@ export default function LoginPage({ changePage }) {
             hasError = true;
         }
 
+        if (!handlePasswordCheck(input_password, check_password)) {
+            setPasswordNotMatchError("Passwords do not match.")
+            setPasswordNoteVisible(!passwordNoteVisible);
+            hasError = true;
+        }
+
         if (hasError) {
             return;
         }
 
+        setPasswordNotMatchError('');
         setEmailErrorMessage('');
         setPassErrorMessage('');
         setDisplayNameErrorMessage('');
@@ -207,6 +218,10 @@ export default function LoginPage({ changePage }) {
     const validateDisplayName = (displayName) => {
         return displayName.length > 0;
     }
+
+    const handlePasswordCheck = (input_password, check_password) => {
+        return input_password == check_password;
+      }
     
   //Le Duong
   //creates HTML container that swaps between login page and registration page by calling setIsLogIn function
@@ -229,7 +244,7 @@ export default function LoginPage({ changePage }) {
                     <br />
                     <button className="btn" onClick={handleSubmitLogin}>Log In</button>
                     <p className = "p">
-                        Don't have an account?
+                        Don't have an account? 
                         <button className="btn" onClick={() => handlePageSwitch(false)}>Register</button>
                     </p>
                 </>
@@ -243,25 +258,14 @@ export default function LoginPage({ changePage }) {
                     <br />
                     {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
                     {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
-                    <input
-                      type="password"
-                      value={input_password}
-                      onChange={handlePasswordChange}
-                      onClick={handlePasswordClick}
-                      placeholder="Password"
-                    />
+                    <input type = {passwordNoteVisible ? "text" : "password"}  value={input_password} onChange={handlePasswordChange} placeholder="Password"/>
                     <br />
-                    <input
-                      type="password"
-                      value={check_password}
-                      onClick={handlePasswordCheck}
-                      placeholder="Confirm Password"
-                    /> 
+                    <input type= {passwordNoteVisible ? "text" : "password"} value={check_password} onChange={handleCheckPasswordChange} placeholder="Confirm Password"/> 
                     <br />
-                    <p className="p" id = "pwderror" style={{ display: passwordNoteVisible ? 'block' : 'none'}}>
-                      Passwords do not match. Please try again. <br />
+                    <p>
+                    {passwordNotMatchError && <div style={{color: 'red'}}>{passwordNotMatchError}</div>}
                     </p>
-                    <p className="p" id = "pwdnote" style={{ display: passwordNoteVisible ? 'block' : 'none'}}>
+                    <p className="p" id = "pwdnote" >
                       Password should be: <br />
                       - 8 to 16 characters <br />
                       - use a variety of characters (lowercase, uppercase, numbers, and special characters)  <br />

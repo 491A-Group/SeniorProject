@@ -6,6 +6,8 @@ import './GaragePage.css';
 // import AcuraLogo from "..images/CarLogos/AcuraLogo.png"; find new Acura logo cause this broken
 import ProfilePic from '../images/DefaultProfilePicture.png';
 
+import NavBar from '../components/NavBar';
+
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {
     const navigate = useNavigate();
@@ -101,7 +103,8 @@ export default function Garage() {
     }
 
     return (
-        <div className="garageContainer">
+        <div>
+            <div className="garageContainer">
             <div className="userInfo">
                 <div className="userProfile">
                     <img src={window.location.origin + '/pfp/' + pfpId} />
@@ -170,8 +173,11 @@ export default function Garage() {
                 <li>Car Brand 3</li>
                 // Add more list items as needed
             </ul> */}
-
+            
             <button onClick={() => {navigate('/');}}>Go to Test Page</button>
         </div>
+        <NavBar/>
+        </div>
+        
     );
 }

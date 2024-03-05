@@ -72,7 +72,8 @@ export default function CatchPage() {
 
     //the main return to display the home page or main feed
     return (
-        <div className="catchpage">
+        <div width="100%">
+            <div className="catchpage">
             <h1>Predictions</h1>
             
             { predictions === null ? 
@@ -103,8 +104,11 @@ export default function CatchPage() {
                 )
             }
             <button className="inc" onClick={() => {navigate("/")}}>Prediction Incorrect?</button>
-            <NavBar/>
+            
         </div>
+        <NavBar/>
+        </div>
+        
     );
 }
   

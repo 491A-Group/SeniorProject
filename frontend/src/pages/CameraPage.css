@@ -1,34 +1,115 @@
-.Camera {
-  width: 100%;
-  height: 120%;
-  background-color: #00000000;
-  margin: auto;
-  overflow: hidden;
-  scroll-behavior: unset;
-}
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
-.navBar {
-  position: absolute;
-  background-color: #00000060;
-  opacity: 100%;
-  height: 15%;
+.camerapage {
+  background-color: #2b373f;
+  margin: 0;
+  height: 100%;
+  position: fixed;
+  font-family: "Anta", sans-serif;
+  width: 100%;
   text-align: center;
+}
 
-  bottom: 13%;
+
+.container {
+  width: 80%;
+  margin: 10% auto;
+  padding: 20px;
+  background-color: #36454F;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  justify-content: center;
+}
+
+.h1{
+  font-size: 300% !important;
   width: 100%;
+  color: #f5f5f5 !important;
 }
 
-.navButton {
-  padding-left: 4%;
-  padding-right: 4%;
-  padding-top: 2%;
-  display: inline;
+.h2 {
+  font-size: 120%;
+  color: #f5f5f5;
+}
+
+p { 
+  color: #f5f5f5;
+  font-size: 90%;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.blist {
+  display: flex;
+  padding: 5%;
+}
+
+.btn {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
   border: none;
-  background-color: #00000000;
-  opacity: 100% !important;
+  border-radius: 5px;
+  background-color: #FF521B;
+  color: white;
+  cursor: pointer;
+  font-family: "Anta", sans-serif;
+  margin-right: 5%;
+  margin-left: 5%;
 }
 
-.cameraSpacer {
-  background-color: #00000000;
-  height: 85%;
+.inc {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #be2626;
+  color: white;
+  cursor: pointer;
+  font-family: "Anta", sans-serif;
+  margin-right: 5%;
+  margin-left: 5%;
+  
+}
+
+.rej {
+  width: 20%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #4a84db;
+  color: white;
+  cursor: pointer;
+  font-family: "Anta", sans-serif;
+  margin-right: 5%;
+}
+
+.btn:hover {
+  background-color: #F4743B;
+}
+
+.btn-alt {
+  width: 50%;
+  padding: 2%;
+  margin: 10% auto;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF5F1F;
+  color: white;
+  cursor: pointer;
+}
+
+
+.btn-alt:hover {
+  background-color: #FF5F1F;
 }

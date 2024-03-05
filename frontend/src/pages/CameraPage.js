@@ -9,6 +9,7 @@ import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 import Circle from "../images/circle-100.png";
 import CatchPage from "./CatchPage";
+import NavBar from '../components/NavBar';
 
 //cameron
 //overall camera page
@@ -19,6 +20,8 @@ export default function CameraPage() {
     //specs for the webcam module, makes the camera be the forward facing camera
     const vc = {
         facingMode: { exact: "environment" },
+        width: window.width,
+        height: window.width
     }
     //cameron
     //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
@@ -53,13 +56,11 @@ export default function CameraPage() {
     //spawns a webcam
     //main menu button on the bottom
     return (
-        <div className="Camera">
+        <div className="camerapage">
+            <h1 className="h1">Sportscar Spotter</h1>
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
-            <div className="navBar">
-                <button onClick={() => {navigate("/home")}} className="navButton"><img width="50vw" src={Home}/></button>
-                <button onClick={capture} className="navButton"><img width="100vw" src={Circle}/></button>
-                <button onClick={() => {navigate("/garage")}} className="navButton"><img width="50vw" src={Garage}/></button>
-            </div>
+            <button onClick={capture} className="inc"><img width="100vw" src={Circle}/></button>
+            <NavBar/>
         </div>
     );
 };

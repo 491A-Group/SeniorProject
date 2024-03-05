@@ -96,7 +96,7 @@ export default function CatchPage() {
                                         predictions[predID]["year_start"] + '-' + predictions[predID]["year_end"]
                                     }
                                 </h2>
-                                <img src={location.state.image_source}/>
+                                <img src={location.state.image_source} width="80%" height="80%"/>
                                 <h3>{predictions[predID]["description"]}</h3>
                             </div>
                         }

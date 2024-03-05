@@ -196,7 +196,8 @@ def search(query):
             """
             SELECT displayname, profile_picture_id
             FROM users
-            WHERE displayname ILIKE %s LIMIT 20;
+            WHERE displayname ILIKE %s
+            LIMIT 32;
             """,
             (query + '%',)
         )

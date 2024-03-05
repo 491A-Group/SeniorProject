@@ -48,6 +48,7 @@ export default function LoginPage() {
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passErrorMessage, setPassErrorMessage] = useState('');
     const [passwordNotMatchError, setPasswordNotMatchError] = useState('');
+    const [logInFailureError, setLogInFailureError] = useState('');
     
     
     //Le Duong: state for pw pop up note for pw suggestions
@@ -70,6 +71,7 @@ export default function LoginPage() {
       setEmailErrorMessage('');
       setPassErrorMessage('');
       setPasswordNotMatchError('');
+      setLogInFailureError('');
     }
   
 
@@ -97,6 +99,7 @@ export default function LoginPage() {
         setPassErrorMessage('');
         setDisplayNameErrorMessage('');
         setPasswordNoteVisible(false);
+        setLogInFailureError('');
 
         let hasError = false;
 
@@ -131,6 +134,7 @@ export default function LoginPage() {
                 setSuccessfulLogIn(true); //new; needed for redirect to homepage after successful login.
                 console.log("login success")
             } else {
+                setLogInFailureError('Login failed. Check credentials and try again.')
                 console.log("login error")
             }
         })
@@ -242,6 +246,7 @@ export default function LoginPage() {
                     {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
                     <br />
                     <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
+                    {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
                     {passErrorMessage && <div style ={{color: 'red'}}>{passErrorMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleForgottenPassword}>Forgot Password?</button>

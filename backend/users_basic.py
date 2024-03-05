@@ -209,7 +209,7 @@ def search(query):
             print("query result for '" + query + "':", flat_list)
             return jsonify(flat_list)
         print("DB_QUERIES.SEARCH_USERNAME ERROR. QUERY:", query, "QUERY_RESULT:", query_result)
-        return jsonify([])
+        return jsonify([]), 200
     print(datetime.now(), "search_username error. query:", query)
     return 'Server Error', 500
 

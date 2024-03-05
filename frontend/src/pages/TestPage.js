@@ -4,8 +4,7 @@ import RenderUserList from '../components/RenderUserList';
 
 export default function TestPage({changePage}) {
     const [stateForTest, setStateForTest] = useState([
-        {displayname: "peter_g", pfp_id: 58},
-        {displayname: "john_cena", pfp_id: 26},
+        {displayname: "this is an empty list", pfp_id: 29}
     ]);
   
   
@@ -38,6 +37,12 @@ export default function TestPage({changePage}) {
 
         <p>brian test; safe to delete</p>
         <RenderUserList users={stateForTest}></RenderUserList>
+        <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/followers", {method: 'GET'})
+                                    .then(response => {return response.json()})
+                                    .then(data => {setStateForTest(data)}) }}>followers</button>
+        <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/following", {method: 'GET'})
+                                    .then(response => {return response.json()})
+                                    .then(data => {setStateForTest(data)}) }}>following</button>
     </div>
   );
   

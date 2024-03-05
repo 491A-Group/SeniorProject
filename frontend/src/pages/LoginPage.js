@@ -246,7 +246,7 @@ export default function LoginPage() {
                     {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
                     <br />
                     <input type="password" value={input_password} onChange={handlePasswordChange} placeholder="Password" />
-                    {emailErrorMessage && <div style={{color: 'red'}}>{emailErrorMessage}</div>}
+                    {logInFailureError && <div style={{color: 'red'}}>{logInFailureError}</div>}
                     {passErrorMessage && <div style ={{color: 'red'}}>{passErrorMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleForgottenPassword}>Forgot Password?</button>

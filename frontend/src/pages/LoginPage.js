@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
   
 
-export default function LoginPage({ changePage }) {
-  
+export default function LoginPage() {
+    const navigate = useNavigate();
+
     //Le Duong
     //When isLogIn is false, assume the user wants to create an account
     const [isLogIn, setIsLogIn] = useState(true);
@@ -24,7 +26,7 @@ export default function LoginPage({ changePage }) {
     useEffect(() => {
         if (successfulLogIn) {
             const timeout = setTimeout(() => {
-                changePage("Home");
+                navigate("/home");
             }, 1000);
 
             return () => clearTimeout(timeout);

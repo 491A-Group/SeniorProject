@@ -1,9 +1,12 @@
-import './HomePage.css';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import './HomePage.css';
 import RenderUserList from '../components/RenderUserList';
 
-export default function SearchPage({changePage, setActivePage}) {
+export default function SearchPage() {
+    const navigate = useNavigate();
+
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -45,7 +48,7 @@ export default function SearchPage({changePage, setActivePage}) {
                 />
                 <button type="submit">Search</button>
             </form>
-            <RenderUserList users={searchResults} changePage={changePage} setActivePage={setActivePage}></RenderUserList>
+            <RenderUserList users={searchResults}></RenderUserList>
         </>
     );
 }

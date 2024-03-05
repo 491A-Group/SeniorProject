@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import './HomePage.css';
 import './GaragePage.css';
@@ -14,7 +15,10 @@ import VWLogo from '../images/CarLogos/VWLogo.png';
 import ProfilePic from '../images/DefaultProfilePicture.png';
 
 //This function handles all garage pages, a user viewing their own or anyone else's page
-export default function Garage({changePage, profile}) {
+export default function Garage() {
+    const navigate = useNavigate();
+    const {profile} = useParams();
+
     // If profile is undefined, view your own page
     // Otherwise, profile should be a valid displayname to view
     const is_self = profile === undefined;
@@ -175,7 +179,7 @@ export default function Garage({changePage, profile}) {
                 // Add more list items as needed
             </ul> */}
 
-            <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
+            <button onClick={() => {navigate('/');}}>Go to Test Page</button>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 // Jayvee wrote most of this file unless denoted otherwise
-
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
@@ -15,7 +16,8 @@ import SearchPage from './SearchPage';
 
 // Jayvee
 // Overall Main/Home page
-export default function HomePage({changePage, setActivePage}) {
+export default function HomePage() {
+    const navigate = useNavigate();
 
     // Jayvee
     // Initializing a state variable 'carData' using useState hook with an empty array as initial state.
@@ -64,7 +66,7 @@ export default function HomePage({changePage, setActivePage}) {
     // Cameron
     // Function to navigate to the 'Test' page when called.
     const toTest = () => {
-      changePage("Test");
+        navigate("/");
     }
   
     //Jayvee
@@ -94,8 +96,8 @@ export default function HomePage({changePage, setActivePage}) {
           ))}
         </ul>
 
-        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
-        <button onClick={() => {setActivePage(<SearchPage changePage={changePage} setActivePage={setActivePage}/>)}}>Go to Search Page</button>
+        <button onClick={() => {navigate("/")}}>Go to Test Page</button>
+        <button onClick={() => {navigate("/search")}}>Go to Search Page</button>
       </div>
     );
   }

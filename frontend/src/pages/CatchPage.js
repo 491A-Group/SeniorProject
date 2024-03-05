@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import './CatchPage.css';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Buffer } from 'buffer';
-import NavBar from '../components/NavBar';
 
+import './CatchPage.css';
+import NavBar from '../components/NavBar';
 import loading from "../images/loading.gif";
 
-export default function CatchPage({changePage, iSource}) {
+export default function CatchPage() {
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [predictions, setPredictions] = useState(null);
 
@@ -13,7 +16,7 @@ export default function CatchPage({changePage, iSource}) {
     useEffect(() => {
         const fetchData = async () => {
             const binaryData = Buffer.from(
-                iSource.slice(22),
+                location.state.image_source.slice(22),
                 'base64'
             )
             fetch(window.location.origin + '/predict', {
@@ -59,12 +62,11 @@ export default function CatchPage({changePage, iSource}) {
                 throw new Error("Network response was not OK")
             }
             console.log(response);
-
-            changePage("Garage");
+            navigate("/garage");
         })
         .catch((error) => {
             console.error('Error fetching data:', error);
-            changePage("Garage")
+            navigate("/garage")
         })
     }
 
@@ -93,15 +95,15 @@ export default function CatchPage({changePage, iSource}) {
                                         predictions[predID]["year_start"] + '-' + predictions[predID]["year_end"]
                                     }
                                 </h2>
-                                <img src={iSource}/>
+                                <img src={location.state.image_source}/>
                                 <h3>{predictions[predID]["description"]}</h3>
                             </div>
                         }
                     </div>
                 )
             }
-            <button className="inc" onClick={() => {changePage("Test")}}>Prediction Incorrect?</button>
-            <NavBar changePage={changePage}/>
+            <button className="inc" onClick={() => {navigate("/")}}>Prediction Incorrect?</button>
+            <NavBar/>
         </div>
     );
 }

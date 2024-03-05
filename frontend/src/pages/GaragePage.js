@@ -4,14 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './HomePage.css';
 import './GaragePage.css';
 // import AcuraLogo from "..images/CarLogos/AcuraLogo.png"; find new Acura logo cause this broken
-import AudiLogo from "../images/CarLogos/AudiLogo.jpg";
-import BMWLogo from '../images/CarLogos/BMWLogo.png';
-import InfinitiLogo from '../images/CarLogos/InfinitiLogo.png';
-import PorscheLogo from '../images/CarLogos/PorscheLogo.jpg';
-import TeslaLogo from '../images/CarLogos/TeslaLogo.png';
-import ToyotaLogo from '../images/CarLogos/ToyotaLogo.jpg';
-import VolvoLogo from '../images/CarLogos/VolvoLogo.png';
-import VWLogo from '../images/CarLogos/VWLogo.png';
 import ProfilePic from '../images/DefaultProfilePicture.png';
 
 //This function handles all garage pages, a user viewing their own or anyone else's page
@@ -143,31 +135,31 @@ export default function Garage() {
                     <img src = {AcuraLogo}/> Find new Acura Logo, cause this shit is brocken
                 </div> */}
                 <div className="carItem">
-                    <img src = {AudiLogo}/>
+                    <img src={window.location.origin + "/pfp/50"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {BMWLogo}/>
+                    <img src={window.location.origin + "/pfp/2"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {InfinitiLogo}/>
+                    <img src={window.location.origin + "/pfp/3"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {PorscheLogo}/>
+                    <img src={window.location.origin + "/pfp/4"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {TeslaLogo}/>
+                    <img src={window.location.origin + "/pfp/5"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {ToyotaLogo}/>
+                    <img src={window.location.origin + "/pfp/6"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {ToyotaLogo}/>
+                    <img src={window.location.origin + "/pfp/70"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {VolvoLogo}/>
+                    <img src={window.location.origin + "/pfp/28"}/>
                 </div>
                 <div className="carItem">
-                    <img src = {VWLogo}/>
+                    <img src={window.location.origin + "/pfp/30"}/>
                 </div>
                 {/* Add more car items as needed */}
             </div>

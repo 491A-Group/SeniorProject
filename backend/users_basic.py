@@ -116,8 +116,8 @@ def garage(displayname):
         however the other garage route calls this function passing in an id integer
 
     Given a (target user's ID or displayname, current_user's ID) returns counts:
-    (displayname, followers, following, follow_status, catches)
-    Follow status is one of 'self', 'following', 'stranger', ''
+    (displayname, followers, following, follow_status, catches, pfp)
+    Follow status is one of 'self', 'following', 'stranger', '', 1
     OR if ID isn't found:
     ("", -2, -2, "", -2)
     """
@@ -129,6 +129,7 @@ def garage(displayname):
     following = -2
     follow_status = ''
     catches = -2
+    pfp = 1
     
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(

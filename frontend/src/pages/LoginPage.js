@@ -91,8 +91,11 @@ export default function LoginPage() {
 
         //RL: This new chunk is for validating that the email and password
         //fields are valid before continuing the rest of handleSubmitLogin.
+        setPasswordNotMatchError('');
         setEmailErrorMessage('');
         setPassErrorMessage('');
+        setDisplayNameErrorMessage('');
+        setPasswordNoteVisible(false);
 
         let hasError = false;
 

@@ -1,44 +1,104 @@
-/* code written by Le Duong, unless stated otherwise */
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+.loginpage {
+  background-color: #2b373f;
+  margin: 0;
+  height: 100%;
+  position: fixed;
+  font-family: "Anta", sans-serif;
+}
+
 
 .container {
-    text-align: center;
-    align-items: center;
-    max-width: 300%;
-    width: 100%;
-    /* Le Duong */
-    /* highlights login form area on webpage ,will be removed later */
-    background-color: #808080;
+  width: 80%;
+  margin: 10% auto;
+  padding: 20px;
+  background-color: #36454F;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  justify-content: center;
 }
 
-
-.input-group {
-    margin-bottom: 20px;
-    text-align: center;
+.h1 {
+  font-size: 150%;
+  color: #f5f5f5;
 }
 
-/* Le Duong */
-/* formats all input fields on login form */
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+.h2 {
+  font-size: 120%;
+  color: #f5f5f5;
 }
 
-/* Le Duong */
-/* formats all buttons on login form */
+.p { 
+  color: #f5f5f5;
+  font-size: 90%;
+}
+
+input {
+  width: 80%;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 .btn {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF521B;
+  color: white;
+  cursor: pointer;
+  font-family: "Anta", sans-serif;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+  background-color: #F4743B;
+}
+
+.btn-alt {
+  width: 50%;
+  padding: 2%;
+  margin: 10% auto;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF5F1F;
+  color: white;
+  cursor: pointer;
+}
+
+
+.btn-alt:hover {
+  background-color: #FF5F1F;
+}
+
+#pwdnote { 
+  color: #f5f5f5;
+  background-color: #FF521B;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto; /* Center horizontally */
+  margin-top: 3%;
+  border-radius: 5px;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+#pwderror {
+  color: black;
+  width: 80%;
+  margin: auto; /* Center horizontally */
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #FFBF00;
+  font-size: 90%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

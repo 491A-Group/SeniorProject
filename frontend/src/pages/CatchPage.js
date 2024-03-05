@@ -84,7 +84,7 @@ export default function CatchPage() {
                 (
                     predictions.length < 1? 
                         (
-                            <p>Testing </p>
+                            <h1>Please take a photo of a car </h1>
                         )
                         :
                         (<div className="container">

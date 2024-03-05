@@ -68,6 +68,7 @@ export default function LoginPage() {
       setPasswordNoteVisible(false);
       setDisplayNameErrorMessage('');
       setEmailErrorMessage('');
+      setPassErrorMessage('');
       setPasswordNotMatchError('');
     }
   

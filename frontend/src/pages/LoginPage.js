@@ -142,6 +142,11 @@ export default function LoginPage() {
         setPasswordNoteVisible(false);
         let hasError = false;
 
+        if(!validateDisplayName(input_displayname)) {
+            setDisplayNameErrorMessage("Display Name cannot be blank.")
+            hasError = true;
+        }
+
         if (!validateEmail(input_email)) {
             setEmailErrorMessage("Invalid email format.");
             hasError = true;
@@ -150,11 +155,6 @@ export default function LoginPage() {
         if (!validatePassword(input_password) || !validatePassword(check_password)) {
             setPassErrorMessage("Password field(s) cannot be blank.");
             return;
-        }
-
-        if(!validateDisplayName(input_displayname)) {
-            setDisplayNameErrorMessage("Display Name cannot be blank.")
-            hasError = true;
         }
 
         if (!handlePasswordCheck(input_password, check_password)) {

@@ -1,6 +1,8 @@
 """
 Brian wrote this unless portions are denoted otherwise
 
+'suggest_or_report_bug' and 'query' are for peer review 2
+
 This file is for API endpoints - BACKEND
 """
 from flask import Blueprint, request, redirect, url_for, jsonify

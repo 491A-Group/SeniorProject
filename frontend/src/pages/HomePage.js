@@ -1,15 +1,22 @@
 // Jayvee wrote most of this file unless denoted otherwise
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
-import SearchPage from './SearchPage';
+// import CarData from "./CarData.json";
+// import Ferrari from "../images/ferrari.png";
+// import Testa from "../images/testa_rossa.jpeg";
+// import Ford from "../images/ford.png";
+// import FordGT from "../images/ford-gt40.jpg";
+// import Porsche from "../images/porsche-_car.jpg";
+// import PorLogo from "../images/porsche.png";
+
+import NavBar from '../components/NavBar';
 
 // Jayvee
 // Overall Main/Home page
-export default function HomePage() {
-    const navigate = useNavigate();
+export default function HomePage({changePage}) {
 
     // Jayvee
     // Initializing a state variable 'carData' using useState hook with an empty array as initial state.
@@ -57,47 +64,40 @@ export default function HomePage() {
 
     // Cameron
     // Function to navigate to the 'Test' page when called.
-    const toTest = () => {
-        navigate("/");
-    }
-  
+
     //Jayvee
     //the main return to display the home page or main feed
     return (
       <div>
+        <div>
         <div className="searchPad">
-          <img src={Filter} alt="Filter"/>
+          <img src={Filter} alt="Filter" />
           <p> Filters: Only the coolest cars (Not objective at all)</p>
           <img src={Search} alt="Search"/>
         </div>
         <ul className="content">
           {carData.map((car, index) => (
             <li className="post" key={index}>
-              <div>
-                <p>Posted by: {car.poster_displayname}</p>
-                <img src={car.poster_pfp} alt={car.poster_displayname} />
-              </div>
               <div className="cardHeader">
                 <img src={car.icon} alt={car.name} />
                 <h2>{car.name}</h2>
               </div>
     
               <div className="main">
-                <div className="imageContainer">
-                  <img src={car.icon} alt={car.name}/> {/* Reuse the same image as header, replace with appropriate image if needed */}
-                  <img src={car.image} alt={car.name} /> 
-                </div>
+                <img src={car.icon} alt={car.name} /> {/* Reuse the same image as header, replace with appropriate image if needed */}
                 <div>
                   <p>{car.details}</p>
-                  <p>Likes: {car.likes}</p>
                 </div>
               </div>
             </li>
           ))}
         </ul>
 
-        <button onClick={() => {navigate("/")}}>Go to Test Page</button>
-        <button onClick={() => {navigate("/search")}}>Go to Search Page</button>
+        
+        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
       </div>
+      <NavBar/>
+      </div>
+      
     );
   }

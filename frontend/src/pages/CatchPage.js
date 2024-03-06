@@ -72,39 +72,50 @@ export default function CatchPage() {
 
     //the main return to display the home page or main feed
     return (
-        <div className="catchpage">
+        <div width="100%">
+            <div className="catchpage">
             <h1>Predictions</h1>
             
-            { predictions === null ? 
+            { predictions === null? 
                 (
                     <h1>Loading   <img src={loading} width="15vw"/></h1>
                 ) 
             : 
                 (
-                    <div className="container">
-                        {<div>
-                                <div className="blist">
-                                    <button className="btn" onClick={() => selectPrediction(predictions[predID]["label"])}>Select</button>
-                                    <button className="rej" onClick={() => nextCar()}>X</button>
+                    predictions.length < 1? 
+                        (
+                            <h1>Please take a photo of a car </h1>
+                        )
+                        :
+                        (<div className="container">
+                            {   <div>
+                                    <div className="blist">
+                                        <button className="btn" onClick={() => selectPrediction(predictions[predID]["label"])}>Select</button>
+                                        <button className="rej" onClick={() => nextCar()}>X</button>
+                                    </div>
+                                    <h2>
+                                        {
+                                            Math.floor(predictions[predID]["confidence"]*100) + '% ' +
+                                            predictions[predID]["make_name"]  + ' ' +
+                                            predictions[predID]["model_name"] + ' ' +
+                                            predictions[predID]["year_start"] + '-' + predictions[predID]["year_end"]
+                                        }
+                                    </h2>
+                                    <img src={location.state.image_source} width="80%" height="80%"/>
+                                    <h3>{predictions[predID]["description"]}</h3>
                                 </div>
-                                <h2>
-                                    {
-                                        Math.floor(predictions[predID]["confidence"]*100) + '% ' +
-                                        predictions[predID]["make_name"]  + ' ' +
-                                        predictions[predID]["model_name"] + ' ' +
-                                        predictions[predID]["year_start"] + '-' + predictions[predID]["year_end"]
-                                    }
-                                </h2>
-                                <img src={location.state.image_source}/>
-                                <h3>{predictions[predID]["description"]}</h3>
-                            </div>
-                        }
-                    </div>
+                            }
+                        </div>
+                        )
+                    
                 )
-            }
+                        }
             <button className="inc" onClick={() => {navigate("/")}}>Prediction Incorrect?</button>
-            <NavBar/>
+            
         </div>
+        <NavBar/>
+        </div>
+        
     );
 }
   

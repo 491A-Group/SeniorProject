@@ -192,6 +192,14 @@ def current_garage():
 
 @blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):
+    """BRIAN:
+    This function was added after the first work review.
+
+    It serves a list of users to be fed into the frontend RenderUserList.js:
+    [{displayname, pfp_id}, {displayname, pfp_id} ...]
+
+    LIMIT 32 to not make too much load
+    """
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
             """
@@ -222,6 +230,8 @@ def search(query):
 def suggest_or_report_bug():
     """ BRIAN:
     Simple sql to post a bug report. TODO check date/time of last sent to stop spam. 
+
+    This backend endpoint is almost done for Peer Review 2 however it's not available on the frontend yet. 
     """
     message = request.json.get('message')
     if len(message) > 2048:

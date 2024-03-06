@@ -1,8 +1,11 @@
 """
 BRIAN MADE THIS FILE
 
-add or remove followers. 
+follow or unfollow users. see followers/following
+
 MVC: model and control logic are both in this file
+The first check in each function quickly disregards requests that are attempting to
+reference a displayname longer than Postgres schema allowed
 """
 
 from flask_login import login_required, current_user
@@ -14,8 +17,11 @@ from backend.users_basic import blueprint_users_basic
 @blueprint_users_basic.route('/user_function/follow/<displayname>', methods=['POST'])
 @login_required
 def follow(displayname):
+    """BRIAN:
+    This function follows a user. 
+    """
     if len(displayname) > 32:
-        return 'Bad request', 400
+        return 'Bad Request', 400
     with db_connection_pool.connection() as conn:
         conn.execute(
             """
@@ -34,8 +40,11 @@ def follow(displayname):
 @blueprint_users_basic.route('/user_function/unfollow/<displayname>', methods=['POST'])
 @login_required
 def unfollow(displayname):
+    """BRIAN:
+    This function unfollows a user. 
+    """
     if len(displayname) > 32:
-        return 'you followed', 400
+        return 'Bad Request', 400
     with db_connection_pool.connection() as conn:
         conn.execute(
             """
@@ -56,6 +65,10 @@ def unfollow(displayname):
 @blueprint_users_basic.route('/user_function/get_relations/<relation>', methods=['GET'])
 @login_required
 def get_list(relation):
+    """BRIAN:
+    This function returns a list of displaynames and id's
+    It can show who you are following or who follows you
+    """
     if len(relation) > 32:
         return 'Bad Request', 400
     if relation != 'followers' and relation != 'following':

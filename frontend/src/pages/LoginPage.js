@@ -42,6 +42,7 @@ export default function LoginPage() {
     const [check_password, setCheckPassword] = useState('');
 
     //RL: This is new, error messages for email verification and forgotten password.
+    // More messages were created for various error messages.
     const [errorMessage, setErrorMessage] = useState('');
     const [passwordMessage, setPasswordMessage] = useState('');
     const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState('');
@@ -52,6 +53,8 @@ export default function LoginPage() {
     
     
     //Le Duong: state for pw pop up note for pw suggestions
+    //RL: When set to false, it will show all text input into the password field 
+    //as password text (****), when true it will show all text input as plain text.
     const [passwordNoteVisible, setPasswordNoteVisible] = useState(false);
   
     //Le Duong: changes state to show password note when user clicks on pw field
@@ -101,6 +104,9 @@ export default function LoginPage() {
         setPasswordNoteVisible(false);
         setLogInFailureError('');
 
+        //RL: hasError is a boolean that is marked as "true" when any validations for email/passwords fail.
+        //this allows for us to set the error messages and exit once we've gone through all of the validations,
+        //not just returning upon whichever validation that fails.
         let hasError = false;
 
         if (!validateEmail(input_email)) {
@@ -131,7 +137,7 @@ export default function LoginPage() {
         })
         .then(response => {
             if (response.ok) {
-                setSuccessfulLogIn(true); //new; needed for redirect to homepage after successful login.
+                setSuccessfulLogIn(true); //RL: New; needed for redirect to homepage after successful login.
                 console.log("login success")
             } else {
                 setLogInFailureError('Login failed. Check credentials and try again.')
@@ -142,6 +148,8 @@ export default function LoginPage() {
 
     //BRIAN: helped write this function to sign up
     // currently just works with cookies and does no re-routing logic
+    //RL: Modified function to include constraints and set error messages if any of the validations
+    //are not met.
     const handleSubmitRegister = (event) => {
         setPasswordNotMatchError('');
         setEmailErrorMessage('');
@@ -208,7 +216,7 @@ export default function LoginPage() {
         return;
     }
 
-    //Now this is a real doozy, this function uses a regular expression to ensure that
+    //RL: Now this is a real doozy, this function uses a regular expression to ensure that
     //email input follows a certain combination. To successfully pass validation an email must be the following combination:
     // (chars) + (@) + (chars) + (.) + (chars)
     //Not perfect but it's what I managed to figure out. 
@@ -234,7 +242,8 @@ export default function LoginPage() {
       }
     
   //Le Duong
-  //creates HTML container that swaps between login page and registration page by calling setIsLogIn function
+  //Added a password note to give users guidelines on good password creation
+  //Inserted extra text box for Register page to confirm password. 
   return (
       <div className="loginpage">
         <div className="container">
@@ -306,7 +315,6 @@ export default function LoginPage() {
             {successfulLogIn && (
                 <div style = {{color: 'white'}}>
                     <p> Successful Login! Loading homepage now....</p>
-                    <p> This could totally take less time but it's purely experimental</p>
                 </div>
             )}
         </div>

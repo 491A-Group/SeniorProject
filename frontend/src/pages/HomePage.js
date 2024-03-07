@@ -18,7 +18,7 @@ import NavBar from '../components/NavBar';
 
 // Jayvee
 // Overall Main/Home page
-export default function HomePage({changePage}) {
+export default function HomePage() {
     const navigate = useNavigate()
 
     // Jayvee

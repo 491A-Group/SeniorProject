@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import './HomePage.css';
 import RenderUserList from '../components/RenderUserList';
 
 export default function SearchPage() {
-    const navigate = useNavigate();
-
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 

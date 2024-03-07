@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './HomePage.css';
 import './GaragePage.css';
 // import AcuraLogo from "..images/CarLogos/AcuraLogo.png"; find new Acura logo cause this broken
-import ProfilePic from '../images/DefaultProfilePicture.png';
 
 import NavBar from '../components/NavBar';
 

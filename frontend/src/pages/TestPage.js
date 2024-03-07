@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import RenderUserList from '../components/RenderUserList';
 import { useNavigate } from 'react-router-dom';
-import RelationList from '../components/RelationList';
 //Testpage done by Richard unless noted otherwise
 
 export default function TestPage() {

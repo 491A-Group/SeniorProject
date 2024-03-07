@@ -13,7 +13,7 @@ export default function RenderUserList({users}) {
             {users.map((user, index) => (
                 <li key={index}>
                 <button className='userButtonLink' onClick={() => navigate( '/garage/' + user["displayname"] )}>
-                        <img src={window.location.origin + '/pfp/' + user["pfp_id"]}/> {user["displayname"]}
+                        <img src={window.location.origin + '/pfp/' + user["pfp_id"]} alt="Profile"/> {user["displayname"]}
                     </button>
                 </li>
             ))}

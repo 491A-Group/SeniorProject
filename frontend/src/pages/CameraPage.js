@@ -5,10 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
-import Garage from "../images/garage.png";
-import Home from "../images/home.png";
 import Circle from "../images/circle-100.png";
-import CatchPage from "./CatchPage";
 import NavBar from '../components/NavBar';
 
 //cameron

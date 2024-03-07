@@ -16,6 +16,8 @@ import SearchPage from './pages/SearchPage';
 import RelationList from './components/RelationList';
 
 export default function App() {
+    // Pass 'catch' location.state.image_source
+    // Pass 'relations' location.state.owner and location.state.users
     return (
         <BrowserRouter>
             <Routes>
@@ -25,7 +27,7 @@ export default function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/garage/:profile?" element={<GaragePage />} />
                     <Route path="/camera" element={<CameraPage />} />
-                    <Route path="/catch" element={<CatchPage />} />
+                    <Route path="/catch" element={<CatchPage />} /> 
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/relations" element={<RelationList />} />
                 </Route>

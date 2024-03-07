@@ -7,6 +7,7 @@ import NavBar from '../components/NavBar';
 import loading from "../images/loading.gif";
 
 export default function CatchPage() {
+    // This route needs to be passed location.state.image_source
     const navigate = useNavigate();
     const location = useLocation();
 

@@ -1,30 +1,33 @@
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import RenderUserList from './RenderUserList';
 
 // BRIAN: this component takes a state thats a list of objects. each object is a user with profile picture and displayname
 //    this is to be used in at least 3 locations: search, followers, following. it's useful to keep them styled similarly
 
-export default function RelationList({users, owner}) {
+export default function RelationList() {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [filterText, setFilterText] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState(users);
+   
+    useEffect(() => {
+        setFilteredUsers(location.state.users)
+    }, [])
 
     const handleFilterChange = (event) => {
         setFilterText(event.target.value);
         console.log(filterText)
     };
 
-    useEffect(() => {
-        setFilteredUsers(users)
-    }, [users])
-
     return <>
         <table>
             <tr>
-                <button>back</button>
-                <h2>{owner}</h2>
+                <button onClick={() => {navigate(-1)}}>back</button>
+                <h2>{location.state.owner}</h2>
             </tr>
         </table>
         <input

@@ -6,11 +6,6 @@ import RelationList from '../components/RelationList';
 
 export default function TestPage() {
     const navigate = useNavigate();
-
-    const [stateForTest, setStateForTest] = useState([
-        {displayname: "this is an empty list", pfp_id: 29}
-    ]);
-  
   
     //Richard
   //handle logout
@@ -18,7 +13,7 @@ export default function TestPage() {
     fetch(window.location.origin + "/logout", {
       method: 'GET'
     })
-    .then (response => {
+    .then(response => {
       //Richard
       //checks if the response is okay
       if (response.ok) {
@@ -42,14 +37,18 @@ export default function TestPage() {
 
         <p>brian test; safe to delete</p>
         {/* {<RenderUserList users={stateForTest}></RenderUserList>} */}
-        <RelationList users={stateForTest} owner={'owner name'}></RelationList>
+        {/* {<RelationList users={stateForTest} owner={'owner name'}></RelationList>} */}
         
         <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/followers", {method: 'GET'})
                                     .then(response => {return response.json()})
-                                    .then(data => {setStateForTest(data)}) }}>followers</button>
+                                    .then(data => {
+                                      navigate('/relations', { state: {users: data, owner: 'my name'}})
+                                    }) }}>followers</button>
         <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/following", {method: 'GET'})
                                     .then(response => {return response.json()})
-                                    .then(data => {setStateForTest(data)}) }}>following</button>
+                                    .then(data => {
+                                      navigate('/relations', { state: {users: data, owner: 'my name'}})
+                                    }) }}>following</button>
         
     </div>
   );

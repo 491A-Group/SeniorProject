@@ -13,12 +13,12 @@ export default function LoginPage() {
   
     //Le Duong 
     //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
-    useEffect(() => {
-      document.body.style.overflow = "hidden";
-      return () => {
-          document.body.style.overflow = "scroll"
-      };
-    }, []);
+    //useEffect(() => {
+    //  document.body.style.overflow = "hidden";
+    //  return () => {
+    //      document.body.style.overflow = "scroll"
+    //  };
+    //}, []);
 
 
     //RL: This effect is used to give a second-long pause,

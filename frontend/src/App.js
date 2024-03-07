@@ -13,6 +13,7 @@ import GaragePage from './pages/GaragePage';
 import CameraPage from './pages/CameraPage';
 import CatchPage from './pages/CatchPage';
 import SearchPage from './pages/SearchPage';
+import RelationList from './components/RelationList';
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                     <Route path="/camera" element={<CameraPage />} />
                     <Route path="/catch" element={<CatchPage />} />
                     <Route path="/search" element={<SearchPage />} />
+                    <Route path="/relations" element={<RelationList />} />
                 </Route>
             </Routes>
         </BrowserRouter>

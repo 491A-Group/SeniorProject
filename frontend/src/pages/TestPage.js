@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RenderUserList from '../components/RenderUserList';
 import { useNavigate } from 'react-router-dom';
+import RelationList from '../components/RelationList';
 //Testpage done by Richard unless noted otherwise
 
 export default function TestPage() {
@@ -27,6 +28,7 @@ export default function TestPage() {
       }
     })
   }
+
   //Richard
   //render buttons that all call the changePage function 
   return (
@@ -39,13 +41,16 @@ export default function TestPage() {
 
 
         <p>brian test; safe to delete</p>
-        <RenderUserList users={stateForTest}></RenderUserList>
+        {/* {<RenderUserList users={stateForTest}></RenderUserList>} */}
+        <RelationList users={stateForTest} owner={'owner name'}></RelationList>
+        
         <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/followers", {method: 'GET'})
                                     .then(response => {return response.json()})
                                     .then(data => {setStateForTest(data)}) }}>followers</button>
         <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/following", {method: 'GET'})
                                     .then(response => {return response.json()})
                                     .then(data => {setStateForTest(data)}) }}>following</button>
+        
     </div>
   );
   

@@ -113,11 +113,15 @@ export default function Garage() {
                 <div className="userStats">
                     <div className="userStatsItem">
                         <div>Followers</div>
-                        <div>{followers}</div>
+                        <button onClick={() => {
+                            navigate('/relations', {state: {relations: "followers", owner: displayname}})
+                        }}>{followers}</button>
                     </div>
                     <div className="userStatsItem">
                         <div>Following</div>
-                        <div>{following}</div>
+                        <button onClick={() => {
+                            navigate('/relations', {state: {relations: "following", owner: displayname}})
+                        }}>{following}</button>
                     </div>
                     <div className="userStatsItem">
                         <div>Catches</div>

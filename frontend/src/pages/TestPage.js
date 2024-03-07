@@ -33,22 +33,6 @@ export default function TestPage() {
         <button onClick={() => {navigate("/home")}}>Home Page!</button>
         <button onClick={() => {navigate("/camera")}}>Camera Page!</button>
         <button onClick={logout}>Log Out</button>
-
-
-        <p>brian test; safe to delete</p>
-        {/* {<RenderUserList users={stateForTest}></RenderUserList>} */}
-        {/* {<RelationList users={stateForTest} owner={'owner name'}></RelationList>} */}
-        
-        <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/followers", {method: 'GET'})
-                                    .then(response => {return response.json()})
-                                    .then(data => {
-                                      navigate('/relations', { state: {users: data, owner: 'my name'}})
-                                    }) }}>followers</button>
-        <button onClick={() => {fetch(window.location.origin + "/user_function/get_relations/following", {method: 'GET'})
-                                    .then(response => {return response.json()})
-                                    .then(data => {
-                                      navigate('/relations', { state: {users: data, owner: 'my name'}})
-                                    }) }}>following</button>
         
     </div>
   );

@@ -1,6 +1,8 @@
 // Jayvee wrote most of this file unless denoted otherwise
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
@@ -17,6 +19,7 @@ import NavBar from '../components/NavBar';
 // Jayvee
 // Overall Main/Home page
 export default function HomePage({changePage}) {
+    const navigate = useNavigate()
 
     // Jayvee
     // Initializing a state variable 'carData' using useState hook with an empty array as initial state.
@@ -72,8 +75,9 @@ export default function HomePage({changePage}) {
         <div>
         <div className="searchPad">
           <img src={Filter} alt="Filter" />
-          <p> Filters: Only the coolest cars (Not objective at all)</p>
-          <img src={Search} alt="Search"/>
+          <p> Filters:</p>
+          
+          <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button>
         </div>
         <ul className="content">
           {carData.map((car, index) => (
@@ -94,7 +98,7 @@ export default function HomePage({changePage}) {
         </ul>
 
         
-        <button onClick={() => {changePage("Test")}}>Go to Test Page</button>
+        <button onClick={() => {navigate("/")}}>Go to Test Page</button>
       </div>
       <NavBar/>
       </div>

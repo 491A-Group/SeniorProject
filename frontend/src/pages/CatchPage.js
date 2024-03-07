@@ -41,6 +41,12 @@ export default function CatchPage() {
         fetchData()
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "scroll"
+        };
+    }, []); // No scroll effect
 
     function nextCar() {
         setID((predID + 1) % predictions.length)

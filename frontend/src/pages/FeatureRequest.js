@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../components/BackButton';
+import "./FeatureRequest.css";
 
 import loading from "../images/loading.gif";
 
@@ -52,14 +54,18 @@ export default function FeatureRequest() {
 
     return (
         <>
-            <button onClick={() => {navigate(-1)}}>Back</button>
-            
-            <p>only submit no more than 1 every 24 hours</p>
-            <input type="text" value={field} onChange={handleFieldUpdate} placeholder="Describe Bug Or Suggestion"/>
-            <button onClick={() => {handleSubmit()}}>Submit</button>
-            <p style={{ color: 'black' }}>{field.length}/2048</p>
+        <div className = "featureRequestPage">
+        <BackButton enableBackButton={true} />
+            <div className = "container" >
+                <p>only submit no more than 1 suggestion every 24 hours</p>
+                <input type="text" value={field} onChange={handleFieldUpdate} placeholder="Describe Suggestion"/>
+                <button onClick={() => {handleSubmit()}}>Submit</button>
+                <p style={{ color: 'black' }}>{field.length}/2048</p>
+            </div>
+        </div>
             
             {renderStatus}
         </>
     )
 }
+

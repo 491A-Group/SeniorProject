@@ -59,6 +59,7 @@
 
 .carItem {
     text-align: center;
+    filter: invert(100%);
 }
 
 .carItem img {

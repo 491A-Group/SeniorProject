@@ -13,11 +13,10 @@ export default function FeatureRequest() {
     const [complete, setComplete] = useState(false);
     const [yappingMessage, setYappingMessage] = useState('');
     const [confirmMessage, setConfirmMessage] = useState('');
+    
 
 
     /*RL Left to do on this page:
-    - Check mark looks funky, should be green, check that
-    - Add constraint for blank suggestion/bug report, shouldn't send empty requests to DB
     - Auto adjust text box for when user's request extends past the predefined dimensions for the text box? Shit sounds kinda hard ngl
     - Fix the structuring of text for "Do not submit multiple requests of the same kind", it sounds kinda weird
     */
@@ -38,9 +37,15 @@ export default function FeatureRequest() {
         setYappingMessage('');
         setIsLoading(true);
 
+        if (!validateSubmission(field)) {
+            setYappingMessage('Suggestion cannot be blank.')
+            setIsLoading(false);
+            return;
+        }
+
         if (isYapping(field)) {
             setYappingMessage('Dawg, I ain\'t reading allat. 5000 characters or less.');
-            setIsLoading(false)
+            setIsLoading(false);
             return;
         }
 
@@ -60,8 +65,8 @@ export default function FeatureRequest() {
                 if (response.ok) {
                     setStatus('success');
                     setComplete(true);
-                    setConfirmMessage("Thank you, your suggestion has been successfully submitted ✔️");
-                    setField('');
+                    setConfirmMessage("Thank you, your suggestion has been successfully submitted ✅");
+                    setField(''); //clear suggestion field upon successful submission.
                 } else {
                     setStatus('error');
                     setConfirmMessage("Error sending request. Please try again later.");
@@ -93,7 +98,11 @@ export default function FeatureRequest() {
     */
 
     const isYapping = (field) => {
-        return field.length > 5000;
+        return field.length > 500;
+    }
+
+    const validateSubmission = (field) => {
+        return field.length > 0;
     }
 
     return (
@@ -104,7 +113,7 @@ export default function FeatureRequest() {
                 <p>Please do not submit multiple requests of the same kind</p>
                 <input type="text" value={field} onChange={handleFieldUpdate} placeholder="Describe your bug or suggestion"/>
                 <button onClick={() => {handleSubmit()}}>Submit</button>
-                <p><span style={{ color: field.length > 5000 ? 'red' : 'white' }}>{field.length}</span>/5000</p>
+                <p><span style={{ color: field.length > 500 ? 'red' : 'white' }}>{field.length}</span>/500</p>
                 {isLoading && <img src = {loading} width="25vw" />}
 
                 {yappingMessage && <p>{yappingMessage}</p>}

@@ -15,6 +15,13 @@ export default function FeatureRequest() {
     const [confirmMessage, setConfirmMessage] = useState('');
 
 
+    /*RL Left to do on this page:
+    - Check mark looks funky, should be green, check that
+    - Add constraint for blank suggestion/bug report, shouldn't send empty requests to DB
+    - Auto adjust text box for when user's request extends past the predefined dimensions for the text box? Shit sounds kinda hard ngl
+    - Fix the structuring of text for "Do not submit multiple requests of the same kind", it sounds kinda weird
+    */
+
 
     const handleSubmitClick = () => {
         setIsLoading(true);

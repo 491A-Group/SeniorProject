@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import './HomePage.css';
 import './GaragePage.css';
@@ -10,6 +10,7 @@ import NavBar from '../components/NavBar';
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {
     const navigate = useNavigate();
+    const location = useLocation();
     const {profile} = useParams();
 
     // If profile is undefined, view your own page
@@ -104,9 +105,17 @@ export default function Garage() {
         }
     }
 
+    const renderBackButton = () => {
+        if (location.state !== null && location.state !== undefined) {
+            if (location.state.enable_back_button) {
+                return <button onClick={() => {navigate(-1)}}>back</button>
+            } 
+        }
+    }
+
     return (
         <div>
-            
+            {renderBackButton()}
 
             <div className="garageContainer">
             <div className="userInfo">

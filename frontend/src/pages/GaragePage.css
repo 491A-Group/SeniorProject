@@ -1,8 +1,10 @@
 /* Garage.css */
 
 .garageContainer {
-    color: black;
+    color: white;
     padding: 20px;
+    background-color: #201e1e;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .userInfo {
@@ -37,19 +39,13 @@
 .userStatsItem {
     text-align: center;
     border: none;
+    background: none;
+    color: #e4e4e4;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .carViewOptions {
     margin-bottom: 20px;
-}
-
-.carViewOptions button {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-right: 10px;
-    cursor: pointer;
 }
 
 .carGrid {
@@ -76,3 +72,30 @@
 .carList li {
     margin-bottom: 10px;
 }
+
+.carbtn {
+    width: 10%;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF521B;
+    color: white;
+    cursor: pointer;
+    font-family: "Anta", sans-serif;
+  }
+
+  .sbtn {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #be2626;
+    color: white;
+    cursor: pointer;
+    font-family: "Anta", sans-serif;
+    margin-right: 5%;
+    margin-left: 5%;
+    
+  }

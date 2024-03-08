@@ -58,7 +58,7 @@ export default function Garage() {
     function renderFollowButton(status) {
         switch(String(status)) {
             case "self":
-                return <button onClick={() => {navigate("/bug-report")}}>Report Bug / Make Suggestion</button>
+                return <button className="sbtn" onClick={() => {navigate("/bug-report")}}>Report Bug / Make Suggestion</button>
             case "following":
                 return <div>
                     <button onClick={() => {unfollow()}}>
@@ -146,8 +146,8 @@ export default function Garage() {
             {renderFollowButton(followStatus)}
 
             <div className="carViewOptions">
-                <button>Grid View</button>
-                <button>List View</button>
+                <button className="carbtn">Grid View</button>
+                <button className="carbtn">List View</button>
             </div>
             <div className="carGrid">
                 {/* Car brand logos will be rendered here */}

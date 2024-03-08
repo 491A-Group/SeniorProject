@@ -33,6 +33,7 @@ export default function Garage() {
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
+            //console.log(jsonData)
             
             //The following 5 lines put the data from the Fetch response into React states
             setFollowers(jsonData["followers"])
@@ -54,7 +55,9 @@ export default function Garage() {
     }, []);
 
     function renderFollowButton(status) {
-        switch(status) {
+        switch(String(status)) {
+            case "self":
+                return <button onClick={() => {navigate("/bug-report")}}>Report Bug / Make Suggestion</button>
             case "following":
                 return <div>
                     <button onClick={() => {unfollow()}}>
@@ -103,6 +106,8 @@ export default function Garage() {
 
     return (
         <div>
+            
+
             <div className="garageContainer">
             <div className="userInfo">
                 <div className="userProfile">

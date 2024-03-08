@@ -13,6 +13,7 @@ import CameraPage from './pages/CameraPage';
 import CatchPage from './pages/CatchPage';
 import SearchPage from './pages/SearchPage';
 import RelationList from './components/RelationList';
+import FeatureRequest from './pages/FeatureRequest';
 
 export default function App() {
     // Pass 'catch' location.state.image_source
@@ -29,6 +30,7 @@ export default function App() {
                     <Route path="/catch" element={<CatchPage />} /> 
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/relations" element={<RelationList />} />
+                    <Route path="/bug-report" element={<FeatureRequest />} />
                 </Route>
             </Routes>
         </BrowserRouter>

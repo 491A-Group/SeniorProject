@@ -19,14 +19,17 @@ export default function RelationList() {
         let target_api = window.location.origin;
         switch (location.state.relations) {
             case 'followers':
-                target_api += "/user_function/get_relations/followers"
+                target_api += "/user_function/get_relations/followers/" + location.state.owner
                 break;
             case 'following':
-                target_api += "/user_function/get_relations/following"
+                target_api += "/user_function/get_relations/following/" + location.state.owner
                 break;
             default:
                 return
         }
+        
+        //console.log(target_api)
+
         fetch(target_api, {method: 'GET'})
         .then(response => {return response.json()})
         .then(data => {

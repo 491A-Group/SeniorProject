@@ -63,37 +63,56 @@ def unfollow(displayname):
 
 
 @blueprint_users_basic.route('/user_function/get_relations/<relation>', methods=['GET'])
+@blueprint_users_basic.route('/user_function/get_relations/<relation>/<displayname>', methods=['GET'])
 @login_required
-def get_list(relation):
+def get_list(relation, displayname=None):
     """BRIAN:
     This function returns a list of displaynames and id's
-    It can show who you are following or who follows you
+    It shows who is following who
+
+    Since the frontend always knows the displayname the route without displayname is never used
+    It's cool to just have in there
     """
     if len(relation) > 32:
         return 'Bad Request', 400
-    if relation != 'followers' and relation != 'following':
+    
+    # this string is the start of any relation query
+    find_relations_query = """
+        SELECT related.profile_picture_id, related.displayname
+        FROM users owner
+    """
+
+    # choose next part of relation query
+    if relation == 'followers':
+        find_relations_query += """
+            JOIN follows f ON f.followed=owner.id
+            JOIN users related ON f.follower=related.id
+        """
+    elif relation == 'following':
+        find_relations_query += """
+            JOIN follows f ON f.follower=owner.id
+            JOIN users related ON f.followed=related.id
+        """
+    else:
         return 'Bad Request', 400
     
-    find_followers_query = """
-    SELECT u.profile_picture_id, u.displayname
-    FROM users u
-    JOIN follows f ON f.follower=u.id
-    WHERE f.followed=%s
-    """
+    # finally, to support the self|displayname-less query it queries the id instead of the displayname
+    if displayname:
+        find_relations_query += " WHERE owner.displayname=%s "
+    else:
+        find_relations_query += " WHERE owner.id=%s "
 
-    find_following_query = """
-    SELECT u.profile_picture_id, u.displayname
-    FROM users u
-    JOIN follows f ON f.followed=u.id
-    WHERE f.follower=%s
-    """
+    # debug
+    #print(type(displayname), displayname, " ||| backup id for self:", current_user.get_int_id())
+    #print(find_relations_query)
 
     with db_connection_pool.connection() as conn:    
-        if relation == 'followers':
-            cur = conn.execute(find_followers_query, (current_user.get_int_id(),))
-        elif relation == 'following':
-            cur = conn.execute(find_following_query, (current_user.get_int_id(),))
+        if displayname:
+            cur = conn.execute(find_relations_query, (displayname,))
+        else:
+            cur = conn.execute(find_relations_query, (current_user.get_int_id(),))
         return jsonify(
             [{"displayname": displayname, "pfp_id": pfp_id} for pfp_id, displayname in cur.fetchall()]
         ), 200
     return 'Server error', 500
+

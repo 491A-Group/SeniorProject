@@ -1,8 +1,10 @@
 /* Garage.css */
 
 .garageContainer {
-    color: black;
+    color: white;
     padding: 20px;
+    background-color: #201e1e;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .userInfo {
@@ -31,24 +33,22 @@
 .userStats {
     display: flex;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 3%;
+    margin-right: 5%;
 }
 
 .userStatsItem {
     text-align: center;
+    border: none;
+    background: none;
+    color: #e4e4e4;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 2%;
+    font-size: 15px;
 }
 
 .carViewOptions {
     margin-bottom: 20px;
-}
-
-.carViewOptions button {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-right: 10px;
-    cursor: pointer;
 }
 
 .carGrid {
@@ -59,6 +59,7 @@
 
 .carItem {
     text-align: center;
+    filter: invert(100%);
 }
 
 .carItem img {
@@ -75,3 +76,31 @@
 .carList li {
     margin-bottom: 10px;
 }
+
+.carbtn {
+    width: 30%;
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF521B;
+    color: white;
+    cursor: pointer;
+    font-family: "Anta", sans-serif;
+    font-size: 15px !important;
+  }
+
+  .sbtn {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #be2626;
+    color: white;
+    cursor: pointer;
+    font-family: "Anta", sans-serif;
+    margin-right: 5%;
+    margin-left: 5%;
+    
+  }

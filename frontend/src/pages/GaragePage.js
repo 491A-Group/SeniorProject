@@ -58,7 +58,7 @@ export default function Garage() {
     function renderFollowButton(status) {
         switch(String(status)) {
             case "self":
-                return <button onClick={() => {navigate("/bug-report")}}>Report Bug / Make Suggestion</button>
+                return <button className="sbtn" onClick={() => {navigate("/bug-report")}}>Report Bug / Make Suggestion</button>
             case "following":
                 return <div>
                     <button onClick={() => {unfollow()}}>
@@ -126,19 +126,19 @@ export default function Garage() {
                 <div className="userStats">
                     <div className="userStatsItem">
                         <div>Followers</div>
-                        <button onClick={() => {
+                        <button className="userStatsItem" onClick={() => {
                             navigate('/relations', {state: {relations: "followers", owner: displayname}})
                         }}>{followers}</button>
                     </div>
                     <div className="userStatsItem">
                         <div>Following</div>
-                        <button onClick={() => {
+                        <button className="userStatsItem"  onClick={() => {
                             navigate('/relations', {state: {relations: "following", owner: displayname}})
                         }}>{following}</button>
                     </div>
                     <div className="userStatsItem">
                         <div>Catches</div>
-                        <div>{catches}</div>
+                        <p className="userStatsItem" >{catches}</p>
                     </div>
                 </div>
             </div>
@@ -146,8 +146,8 @@ export default function Garage() {
             {renderFollowButton(followStatus)}
 
             <div className="carViewOptions">
-                <button>Grid View</button>
-                <button>List View</button>
+                <button className="carbtn">Grid View</button>
+                <button className="carbtn">List View</button>
             </div>
             <div className="carGrid">
                 {/* Car brand logos will be rendered here */}

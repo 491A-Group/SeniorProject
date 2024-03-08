@@ -247,7 +247,8 @@ export default function LoginPage() {
   return (
       <div className="loginpage">
         <div className="container">
-            <h1 className="h1">Welcome to SportsCar Spotter 🏎️ 💨</h1>
+            <h1 className="h1">SportsCar Spotter 🏎️ 💨</h1>
+            
             { isLogIn ? (
                 <>
                     <h2 className="h2">Log In</h2>
@@ -259,7 +260,6 @@ export default function LoginPage() {
                     {passErrorMessage && <div style ={{color: 'red'}}>{passErrorMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleForgottenPassword}>Forgot Password?</button>
-                    <br />
                     {passwordMessage && <div style = {{color: 'red'}}>{passwordMessage}</div>}
                     <br />
                     <button className="btn" onClick={handleSubmitLogin}>Log In</button>

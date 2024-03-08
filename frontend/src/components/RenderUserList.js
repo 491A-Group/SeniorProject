@@ -12,8 +12,8 @@ export default function RenderUserList({users}) {
         <ul className='unorderedUserList'>
             {users.map((user, index) => (
                 <li key={index}>
-                <button className='userButtonLink' onClick={() => navigate( '/garage/' + user["displayname"] )}>
-                        <img src={window.location.origin + '/pfp/' + user["pfp_id"]}/> {user["displayname"]}
+                <button className='userButtonLink' onClick={() => navigate( '/garage/' + user["displayname"], {state: {enable_back_button: true}} )}>
+                        <img src={window.location.origin + '/pfp/' + user["pfp_id"]} alt="Profile"/> {user["displayname"]}
                     </button>
                 </li>
             ))}

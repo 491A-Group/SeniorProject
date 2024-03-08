@@ -13,8 +13,8 @@ export default function NavBar({changePage}) {
 
     
     return (<div className="navbar">
-    <button onClick={() => {navigate("/home")}} className="nbtn"><img width="50%" src={Home}/></button>
-    <button onClick={() => {navigate("/camera")}} className="nrej"><img width="50%" src={camera}/></button>
-    <button onClick={() => {navigate("/garage")}} className="nbtn"><img width="50%" src={Garage}/></button>
+    <button onClick={() => {navigate("/home")}} className="nbtn"><img width="50%" src={Home} alt="Home Page"/></button>
+    <button onClick={() => {navigate("/camera")}} className="nrej"><img width="50%" src={camera} alt="Begin Identification"/></button>
+    <button onClick={() => {navigate("/garage")}} className="nbtn"><img width="50%" src={Garage} alt="Garage Page"/></button>
 </div>)
 }

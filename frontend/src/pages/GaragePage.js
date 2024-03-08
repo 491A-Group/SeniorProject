@@ -138,7 +138,7 @@ export default function Garage() {
                     </div>
                     <div className="userStatsItem">
                         <div>Catches</div>
-                        <div>{catches}</div>
+                        <p className="userStatsItem" >{catches}</p>
                     </div>
                 </div>
             </div>

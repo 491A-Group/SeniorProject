@@ -11,28 +11,6 @@ export default function LoginPage() {
     const [isLogIn, setIsLogIn] = useState(true);
     const [successfulLogIn, setSuccessfulLogIn] = useState(false);
   
-    //Le Duong
-    //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
-    //useEffect(() => {
-    //  document.body.style.overflow = "hidden";
-    //  return () => {
-    //      document.body.style.overflow = "scroll"
-    //  };
-    //}, []);
-  
-    useEffect(() => {
-      const handleScroll = () => {
-        // Handle scroll event as needed
-      };
-
-      window.addEventListener('scroll', handleScroll);
-
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []); // Empty dependency array ensures the effect runs once when the component mounts
-
-
     //RL: This effect is used to give a second-long pause,
     //then redirect user to Home page once they have successfully logged in.
     useEffect(() => {
@@ -69,10 +47,6 @@ export default function LoginPage() {
     //as password text (****), when true it will show all text input as plain text.
     const [passwordNoteVisible, setPasswordNoteVisible] = useState(false);
   
-    //Le Duong: changes state to show password note when user clicks on pw field
-    const handlePasswordClick = () => {
-      setPasswordNoteVisible(true);
-    };
   
     //RL: This was written to handle both switching between Login/Register
     //pages AND clearing error messages (invalid email message does not
@@ -250,7 +224,7 @@ export default function LoginPage() {
     }
 
     const handlePasswordCheck = (input_password, check_password) => {
-        return input_password == check_password;
+        return input_password === check_password;
       }
     
   //Le Duong

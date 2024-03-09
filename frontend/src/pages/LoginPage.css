@@ -6,6 +6,7 @@
   height: 100%;
   position: fixed;
   font-family: "Anta", sans-serif;
+  overflow: scroll;
 }
 
 

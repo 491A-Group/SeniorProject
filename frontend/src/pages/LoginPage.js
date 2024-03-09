@@ -11,7 +11,7 @@ export default function LoginPage() {
     const [isLogIn, setIsLogIn] = useState(true);
     const [successfulLogIn, setSuccessfulLogIn] = useState(false);
   
-    //Le Duong 
+    //Le Duong
     //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
     //useEffect(() => {
     //  document.body.style.overflow = "hidden";
@@ -19,6 +19,18 @@ export default function LoginPage() {
     //      document.body.style.overflow = "scroll"
     //  };
     //}, []);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        // Handle scroll event as needed
+      };
+
+      window.addEventListener('scroll', handleScroll);
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []); // Empty dependency array ensures the effect runs once when the component mounts
 
 
     //RL: This effect is used to give a second-long pause,

@@ -1,5 +1,11 @@
+.homeContainer { 
+  background-color: #2b373f;
+  width: 100%;
+  height: 100vh;
+}
+
 .content {
-    background-color: #201e1e;
+    background-color: #36454F;
     padding: 3%;
 }
 

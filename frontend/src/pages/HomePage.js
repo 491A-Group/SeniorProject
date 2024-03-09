@@ -71,8 +71,9 @@ export default function HomePage() {
     //Jayvee
     //the main return to display the home page or main feed
     return (
-      <div>
+      <div className="homeContainer">
         <div>
+          <h1 style={{color: 'red'}}>Sportscar Spotter</h1>
         <div className="searchPad">
           <img src={Filter} alt="Filter" />
           <p> Filters:</p>
@@ -99,8 +100,8 @@ export default function HomePage() {
 
         
         <button onClick={() => {navigate("/")}}>Go to Test Page</button>
-      </div>
-      <NavBar/>
+        </div>
+        <NavBar/>
       </div>
       
     );

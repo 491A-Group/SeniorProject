@@ -107,9 +107,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@blueprint_users_basic.route('/garage', methods=['GET'])
 @blueprint_users_basic.route('/garage/<displayname>', methods=['GET'])
 @login_required
-def garage(displayname):
+def garage(displayname=None):
     """ BRIAN:
     Public fields when viewing a profile.
     Expects a string to search by displayname, however this
@@ -123,8 +124,11 @@ def garage(displayname):
     OR if ID isn't found:
     ("", -2, -2, "", -2)
     """
-    # Debug
-    target_user=displayname
+    # If a displayname is provided that's the target, otherwise target self
+    target_user=current_user.get_int_id()
+    if displayname:
+        target_user = displayname
+
     # ERROR CASE to be overwritten later; otherwise this error is the default
     displayname = ''
     followers = -2
@@ -184,13 +188,13 @@ def garage(displayname):
         }
     ), 200
 
-@blueprint_users_basic.route('/garage', methods=['GET'])
-@login_required
-def current_garage():
-    """ BRIAN:
-    Simply the garage of the user currently logged in
-    """
-    return garage(current_user.get_int_id())
+# @blueprint_users_basic.route('/garage', methods=['GET'])
+# @login_required
+# def current_garage():
+#     """ BRIAN:
+#     Simply the garage of the user currently logged in
+#     """
+#     return garage(current_user.get_int_id())
 
 @blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):

@@ -2,18 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
-// import CarData from "./CarData.json";
-// import Ferrari from "../images/ferrari.png";
-// import Testa from "../images/testa_rossa.jpeg";
-// import Ford from "../images/ford.png";
-// import FordGT from "../images/ford-gt40.jpg";
-// import Porsche from "../images/porsche-_car.jpg";
-// import PorLogo from "../images/porsche.png";
-
 import NavBar from '../components/NavBar';
 
 // Jayvee
@@ -65,33 +56,39 @@ export default function HomePage() {
       fetchData();
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
-    // Cameron
-    // Function to navigate to the 'Test' page when called.
 
     //Jayvee
     //the main return to display the home page or main feed
     return (
       <div className="homeContainer">
         <div>
-          <h1 style={{color: 'red'}}>Sportscar Spotter</h1>
+          <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}
         <div className="searchPad">
-          <img src={Filter} alt="Filter" />
+          <img src={Filter} alt="Filter" /> {/* Filter icon */}
           <p> Filters:</p>
           
-          <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button>
+          <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button> {/* Search Button */}
         </div>
         <ul className="content">
-          {carData.map((car, index) => (
+          {carData.map((car, index) => (    
             <li className="post" key={index}>
+              <div>
+                <p> Posted by: {car.poster_displayname}</p> {/* Displaying Poster Username */}
+                <img src={car.poster_pfp} alt={car.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
+              </div>
               <div className="cardHeader">
-                <img src={car.icon} alt={car.name} />
-                <h2>{car.name}</h2>
+                <img src={car.icon} alt={car.name} /> {/* Display Car Brand Icon/Logo */}
+                <h2>{car.name}</h2> {/* Display Car's Name (Year/Make/Model) */}
               </div>
     
               <div className="main">
-                <img src={car.icon} alt={car.name} /> {/* Reuse the same image as header, replace with appropriate image if needed */}
+                <div className="imageContainer">
+                  <img src={car.icon} alt={car.name} /> {/* Redisplay Car Brand Icon/Logo */}
+                  <img src={car.image} alt={car.name} /> {/* Display Car Image */}
+                </div>
                 <div>
-                  <p>{car.details}</p>
+                  <p>{car.details}</p> {/* Display Car Details */}
+                  <p>Likes: {car.likes}</p> {/* Display Number of Likes on Post */}
                 </div>
               </div>
             </li>

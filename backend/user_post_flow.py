@@ -130,12 +130,13 @@ def select_prediction():
 @login_required
 def feed():
     """BRIAN
-    
+    This function queries the database for posts. It uses the current_user object to keep track
+    of served posts so in one session no post is served twice. The current method is pretty slow,
+    and might even be faster if we stored seen posts in postgres. A big reason for this is
+    current_user is a proxy, however for now this performs alright. 
     """
-
-    import pprint
-    CHUNK_SIZE = 5
-    print("existing session feed", current_user.session_feed)
+    CHUNK_SIZE = 5 # CONST. originally 5, can increase/decrease to load more pictures at once. currently, a small pool of posts doesn't warrant a larger CHUNK_SIZE
+    #print("existing session feed", current_user.session_feed)
 
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
@@ -167,11 +168,12 @@ def feed():
         )
         query_results = cursor.fetchall()
         current_user.session_feed.extend([result[0] for result in query_results]) # add post id's to session_feed
-        login_user(User(current_user.get_int_id(), current_user.session_feed))
+        login_user(User(current_user.get_int_id(), current_user.session_feed))    # commit session_feed to actual user instead of proxy
         #print("this requests' ids:", [result[0] for result in query_results])
         #print("user session_feed after update:", current_user.session_feed, "\n")
 
-        #posts_to_serve = [result[1:] for result in query_results] # return to the requester everything except the post id
+        # dank list comprehension where every element is a dictionary from comprehension but those are actually made from elements from a 
+        #       list comprehension because the original list of tuples included post.id which is private info.
         posts_to_serve = [
             {
                 "poster_displayname": displayname,
@@ -194,8 +196,8 @@ def feed():
                 del post["post_location"]
         #print(posts_to_serve)
 
+        # please indicate to users when there are no more posts to show, indicated with 206 response code.
         if len(query_results) < CHUNK_SIZE:
             return jsonify(posts_to_serve), 206
         return jsonify(posts_to_serve), 200
-
     return 'Server Error', 500

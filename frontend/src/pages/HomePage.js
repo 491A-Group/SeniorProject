@@ -13,8 +13,8 @@ export default function HomePage() {
     const navigate = useNavigate()
 
     // Jayvee
-    // Initializing a state variable 'carData' using useState hook with an empty array as initial state.
-    const [carData, setCardata] = useState([]);
+    // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
+    const [postData, setPostData] = useState([]);
 
     // Jayvee
     // useEffect hook to perform side effects like data fetching when the component mounts.
@@ -27,7 +27,7 @@ export default function HomePage() {
 
          // Jayvee
          // Fetching data from the provided API endpoint.
-         const response =  await fetch(window.location.origin + '/api/home_1');
+         const response =  await fetch(window.location.origin + '/feed');
 
          // Jayvee
          // Checking if the response is okay, if not, logging a network error and throwing an error.
@@ -41,8 +41,8 @@ export default function HomePage() {
           const jsonData = await response.json();
 
           // Jayvee
-          // Updating the 'carData' state with the fetched JSON data.
-          setCardata(jsonData);
+          // Updating the 'postData' state with the fetched JSON data.
+          setPostData(jsonData);
 
         } catch(error){
           // Jayvee
@@ -70,29 +70,36 @@ export default function HomePage() {
           <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button> {/* Search Button */}
         </div>
         <ul className="content">
-          {carData.map((car, index) => (    
-            <li className="post" key={index}>
-              <div>
-                <p> Posted by: {car.poster_displayname}</p> {/* Displaying Poster Username */}
-                <img src={car.poster_pfp} alt={car.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
-              </div>
-              <div className="cardHeader">
-                <img src={car.icon} alt={car.name} /> {/* Display Car Brand Icon/Logo */}
-                <h2>{car.name}</h2> {/* Display Car's Name (Year/Make/Model) */}
-              </div>
-    
-              <div className="main">
-                <div className="imageContainer">
-                  <img src={car.icon} alt={car.name} /> {/* Redisplay Car Brand Icon/Logo */}
-                  <img src={car.image} alt={car.name} /> {/* Display Car Image */}
-                </div>
-                <div>
-                  <p>{car.details}</p> {/* Display Car Details */}
-                  <p>Likes: {car.likes}</p> {/* Display Number of Likes on Post */}
-                </div>
-              </div>
-            </li>
-          ))}
+            {postData.map((post, index) => (    
+                <li className="post" key={index}>
+                    <div>
+                        <p> {post.poster_displayname}</p> {/* Displaying Poster Username */}
+                        <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
+                    </div>
+                    <div className="cardHeader">
+                        {/*<img src={post.icon} alt={post.name} />*/} {/* Display Car Brand Icon/Logo */}
+                        <h2>
+                            {
+                                post.car_make + ' ' +
+                                post.car_model + ' ' +
+                                post.car_start_year + '-' + post.car_end_year
+                            }
+                        </h2> {/* Display Car's Name (Year/Make/Model) */}
+                    </div>
+
+                    <div className="main">
+                        <div className="imageContainer">
+                            {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
+                            <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} /> {/* Display Car Image */}
+                        </div>
+                        <div>
+                            <p>{post.car_details}</p> {/* Display Car Details */}
+                            <p>Likes: {post.post_likes}</p> {/* Display Number of Likes on Post */}
+                            <p>{post.post_uuid} {post.post_timestamp} {post.post_location}</p>
+                        </div>
+                    </div>
+                </li>
+            ))}
         </ul>
 
         

@@ -5,8 +5,9 @@ This file is for API endpoints - BACKEND
 """
 
 from flask import Blueprint, request, jsonify
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, login_user
 from backend.db_queries import db_connection_pool
+from backend.user import User
 
 from datetime import datetime
 
@@ -35,7 +36,7 @@ def predict():
         [p.names[int(yolov8_id)] for yolov8_id in p.boxes.cls.tolist()]
     ))
     if not combined_list:
-        return jsonify(combined_list) # returning an empty list because there were no predictions
+        return jsonify(combined_list), 200 # returning an empty list because there were no predictions
     #print(combined_list) # DEBUG, PARTICULARLY CHECKING IF YOLOv8 ALREADY SORTS BY CONF
     combined_list = combined_list[0:3] # take only the 3 highest
 
@@ -83,7 +84,7 @@ def predict():
                     "description": description
                 }) # append the car we've added to the database to the json response
             print(current_user.get_int_id(), ":\n", cars)
-        return jsonify(cars)
+        return jsonify(cars), 200
     return 'Server Error', 500
 
 
@@ -122,4 +123,76 @@ def select_prediction():
                 (current_user.get_int_id(),)
             )
         return 'Created post', 201
+    return 'Server Error', 500
+
+@blueprint_user_post_flow.route('/feed', methods=['GET'])
+@login_required
+def feed():
+    """BRIAN
+    
+    """
+
+    CHUNK_SIZE = 5
+    print("existing session feed", current_user.session_feed)
+
+    with db_connection_pool.connection() as conn:
+        cursor = conn.execute(
+            f"""
+            SELECT 
+                post.id,
+                u.displayname,
+                u.profile_picture_id,
+                pic.img_bin,
+                m.name,
+                c.model_name,
+                c.start_year,
+                c.end_year,
+                c.description,
+                post.public_id,
+                post.datetime,
+                post.location,
+                post.likes
+            FROM posts post
+            JOIN users u ON u.id=post.user_id
+            JOIN pictures pic ON pic.id=post.picture_id
+            JOIN cars c ON c.id=post.car_id
+            JOIN manufacturers m ON m.id=c.make
+            WHERE post.id != ALL(%s)
+            ORDER BY datetime DESC
+            LIMIT {CHUNK_SIZE};
+            """,
+            [current_user.session_feed]
+        )
+        query_results = cursor.fetchall()
+        current_user.session_feed.extend([result[0] for result in query_results]) # add post id's to session_feed
+        login_user(User(current_user.get_int_id(), current_user.session_feed))
+        print("this requests' ids:", [result[0] for result in query_results])
+        print("user session_feed after update:", current_user.session_feed, "\n")
+
+        #posts_to_serve = [result[1:] for result in query_results] # return to the requester everything except the post id
+        posts_to_serve = [
+            {
+                "poster_displayname": displayname,
+                "poster_pfp": pfp_id,
+                #"post_image": img_bin,
+                "car_model": model,
+                "car_make": make,
+                "car_details": description,
+                "car_start_year": start_year,
+                "car_end_year": end_year,
+                "post_uuid": uuid,
+                "post_timestamp": timestamp,
+                "post_likes": likes,
+                #"post_location": location,
+            } for displayname, pfp_id, img_bin, make, model, start_year, end_year, description, uuid, timestamp, location, likes in [result[1:] for result in query_results]
+        ]
+        # since conditionals in python list comprehension is tricky I drop null values here
+        # for post in posts_to_serve:
+        #     if post["post_location"] is None:
+        #         del post["post_location"]
+            
+        if len(query_results) < CHUNK_SIZE:
+            return jsonify(posts_to_serve), 206
+        return jsonify(posts_to_serve), 200
+
     return 'Server Error', 500

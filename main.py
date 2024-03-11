@@ -78,7 +78,7 @@ def home_1():
             "likes": 6
         }
     ]
-    return jsonify(example)
+    return jsonify(example), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3030)

@@ -8,6 +8,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required, login_user
 from backend.db_queries import db_connection_pool
 from backend.user import User
+import base64
 
 from datetime import datetime
 
@@ -132,6 +133,7 @@ def feed():
     
     """
 
+    import pprint
     CHUNK_SIZE = 5
     print("existing session feed", current_user.session_feed)
 
@@ -150,7 +152,7 @@ def feed():
                 c.description,
                 post.public_id,
                 post.datetime,
-                post.location,
+                CONCAT(ST_AsText(post.location)) AS location,
                 post.likes
             FROM posts post
             JOIN users u ON u.id=post.user_id
@@ -166,15 +168,15 @@ def feed():
         query_results = cursor.fetchall()
         current_user.session_feed.extend([result[0] for result in query_results]) # add post id's to session_feed
         login_user(User(current_user.get_int_id(), current_user.session_feed))
-        print("this requests' ids:", [result[0] for result in query_results])
-        print("user session_feed after update:", current_user.session_feed, "\n")
+        #print("this requests' ids:", [result[0] for result in query_results])
+        #print("user session_feed after update:", current_user.session_feed, "\n")
 
         #posts_to_serve = [result[1:] for result in query_results] # return to the requester everything except the post id
         posts_to_serve = [
             {
                 "poster_displayname": displayname,
                 "poster_pfp": pfp_id,
-                #"post_image": img_bin,
+                "post_image": base64.b64encode(img_bin).decode('utf-8'),
                 "car_model": model,
                 "car_make": make,
                 "car_details": description,
@@ -183,14 +185,15 @@ def feed():
                 "post_uuid": uuid,
                 "post_timestamp": timestamp,
                 "post_likes": likes,
-                #"post_location": location,
+                "post_location": location, # THIS IS IN POINT(LONG, LAT)
             } for displayname, pfp_id, img_bin, make, model, start_year, end_year, description, uuid, timestamp, location, likes in [result[1:] for result in query_results]
         ]
         # since conditionals in python list comprehension is tricky I drop null values here
-        # for post in posts_to_serve:
-        #     if post["post_location"] is None:
-        #         del post["post_location"]
-            
+        for post in posts_to_serve:
+            if post["post_location"] is None:
+                del post["post_location"]
+        #print(posts_to_serve)
+
         if len(query_results) < CHUNK_SIZE:
             return jsonify(posts_to_serve), 206
         return jsonify(posts_to_serve), 200

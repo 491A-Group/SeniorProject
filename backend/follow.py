@@ -13,52 +13,49 @@ from flask import jsonify
 
 from backend.db_queries import db_connection_pool
 from backend.users_basic import blueprint_users_basic
-    
-@blueprint_users_basic.route('/user_function/follow/<displayname>', methods=['POST'])
+
+@blueprint_users_basic.route('/user_function/<method>/<displayname>', methods=['POST'])
 @login_required
-def follow(displayname):
+def follow(method, displayname):
     """BRIAN:
-    This function follows a user. 
+    This function follows or unfollows a user. 
+
+    /user_function/follow/<displayname>
+    /user_function/unfollow/<displayname>
     """
+
     if len(displayname) > 32:
         return 'Bad Request', 400
-    with db_connection_pool.connection() as conn:
-        conn.execute(
-            """
-            INSERT INTO follows(follower, followed) VALUES(
-                %s,
-                (SELECT id FROM users WHERE displayname=%s)
-            );
-            """,
-            (current_user.get_int_id(), displayname)
-        )
-        conn.commit()
-        return 'followed', 201
-    return 'Server error', 500
 
-
-@blueprint_users_basic.route('/user_function/unfollow/<displayname>', methods=['POST'])
-@login_required
-def unfollow(displayname):
-    """BRIAN:
-    This function unfollows a user. 
-    """
-    if len(displayname) > 32:
-        return 'Bad Request', 400
-    with db_connection_pool.connection() as conn:
-        conn.execute(
-            """
-            DELETE FROM follows
-            WHERE   follower=%s 
-                    AND followed=(
-                        SELECT id FROM users
-                        WHERE displayname=%s
-                    );
-            """,
-            (current_user.get_int_id(), displayname)
-        )
-        conn.commit()
-        return 'no longer following', 201
+    if method == 'follow':
+        with db_connection_pool.connection() as conn:
+            conn.execute(
+                """
+                INSERT INTO follows(follower, followed) VALUES(
+                    %s,
+                    (SELECT id FROM users WHERE displayname=%s)
+                );
+                """,
+                (current_user.get_int_id(), displayname)
+            )
+            conn.commit()
+            return 'followed', 201
+    elif method == 'unfollow':    
+        with db_connection_pool.connection() as conn:
+            conn.execute(
+                """
+                DELETE FROM follows
+                WHERE   follower=%s 
+                        AND followed=(
+                            SELECT id FROM users
+                            WHERE displayname=%s
+                        );
+                """,
+                (current_user.get_int_id(), displayname)
+            )
+            conn.commit()
+            return 'no longer following', 201
+        
     return 'Server error', 500
 
 

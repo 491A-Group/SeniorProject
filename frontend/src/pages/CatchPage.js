@@ -11,9 +11,13 @@ export default function CatchPage() {
     const navigate = useNavigate();
     const location = useLocation();
 
+    //predictions array for use later
     const [predictions, setPredictions] = useState(null);
 
+    //prediction selection ID. This is the index of the selected prediction
     const [predID, setID] = useState(0);
+
+    //this loads the predictions from the server based on the logged in user. It gets all unselected predictions based on the image
     useEffect(() => {
         const fetchData = async () => {
             const binaryData = Buffer.from(
@@ -42,6 +46,7 @@ export default function CatchPage() {
         fetchData()
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
+    //this disables scrolling of the page
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -49,9 +54,12 @@ export default function CatchPage() {
         };
     }, []); // No scroll effect
 
+    //this is the reject function. it simply just goes to the next prediction, cylcing when you reach the end of the prediction list
     function nextCar() {
         setID((predID + 1) % predictions.length)
     }
+
+    //this is the select prediction function. When you select the prediction, it sends it to the server to save
     function selectPrediction(label) {
         const body = {
             label: label
@@ -78,6 +86,7 @@ export default function CatchPage() {
     }
 
     //the main return to display the home page or main feed
+    //this is the entire display of CatchPage
     return (
         <div width="100%">
             <div className="catchpage">

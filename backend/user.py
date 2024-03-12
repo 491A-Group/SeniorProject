@@ -4,7 +4,9 @@ class User(UserMixin):
     def __init__(self, user_id, session_feed=[]):
         # flask_login expects self.id to be a string. it's converted automatically from the database
         self.id = user_id
+        print(session_feed)
         self.session_feed = session_feed # to prevent from showing a single post several times. used in main feed endpoint
+        print(self.session_feed)
     
     def is_anonymous(self):
         return False

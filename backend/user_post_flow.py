@@ -194,7 +194,7 @@ def feed():
         for post in posts_to_serve:
             if post["post_location"] is None:
                 del post["post_location"]
-        print(posts_to_serve)
+        #print(posts_to_serve)
 
         # please indicate to users when there are no more posts to show, indicated with 206 response code.
         if len(query_results) < CHUNK_SIZE:

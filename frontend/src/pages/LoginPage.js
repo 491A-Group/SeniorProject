@@ -63,16 +63,18 @@ export default function LoginPage() {
       setLogInFailureError('');
     }
   
-
+    //Le Duong
     //Handlers for the states - updates changes when users type
     const handleDisplaynameChange = (event) => {setDisplayname(event.target.value)}
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
         validateEmail(event.target.value);
     }
-  
+    
+    //Le Duong
+    //sets password field to take in user input
     const handlePasswordChange = (event) => {setPassword(event.target.value)}
-
+    //sets confirm password field to take in user input 
     const handleCheckPasswordChange = (event) => {setCheckPassword(event.target.value)}
 
     
@@ -194,7 +196,9 @@ export default function LoginPage() {
             }
         })
     }
-
+    
+    // Le Duong 
+    //Temporary function for Forgot password button
     const handleForgottenPassword = (event) => {
         event.preventDefault();
 
@@ -223,6 +227,7 @@ export default function LoginPage() {
         return displayName.length > 0;
     }
 
+  // Le Duong checks both password fields to confirm they match when user submit reigster form
     const handlePasswordCheck = (input_password, check_password) => {
         return input_password === check_password;
       }
@@ -230,6 +235,7 @@ export default function LoginPage() {
   //Le Duong
   //Added a password note to give users guidelines on good password creation
   //Inserted extra text box for Register page to confirm password. 
+  //added error messages when user tries to login/register with invalid password
   return (
       <div className="loginpage">
         <div className="container">
@@ -270,19 +276,7 @@ export default function LoginPage() {
                     <br />
                     <p>
                     {passErrorMessage && <div style={{color: 'red'}}>{passErrorMessage}</div>}
-                    {passwordNotMatchError && <div style={{
-                      color: 'red',
-                      width: '80%',
-                      margin: 'auto',
-                      paddingTop: '1%',
-                      paddingBottom: '1%',
-                      backgroundColor: '#FFBF00',
-                      fontsize: '90%',
-                      borderRadius: '5px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>{passwordNotMatchError}</div>}
+                    {passwordNotMatchError && <div style={{color: 'red'}}>{passwordNotMatchError}</div>}
                     </p>
                     <p className="p" id = "pwdnote" >
                       Password should be: <br />

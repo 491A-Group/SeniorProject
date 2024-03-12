@@ -38,7 +38,7 @@
 
 .navbar {
   display: flex;
-  position: fixed;
+  position: fixed; /* fixed at bottom of page */
   bottom: 0%;
   width: 100%;
   justify-content: space-around; /* Adjust as needed */

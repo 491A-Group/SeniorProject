@@ -1,5 +1,8 @@
+/* All code in this file is written by Le Duong unless specified otherwise */
+/* imported Google font to match styling of other pages */
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
+/* Sets general color and font theme for the login page */
 .loginpage {
   background-color: #2b373f;
   margin: 0;
@@ -9,7 +12,7 @@
   overflow: scroll;
 }
 
-
+/* highlights container for login form */
 .container {
   width: 80%;
   margin: 10% auto;
@@ -45,6 +48,7 @@ input {
   box-sizing: border-box;
 }
 
+/* Decided on orange for color buttons to stand out from gray background */
 .btn {
   width: 80%;
   padding: 10px;
@@ -61,7 +65,9 @@ input {
   background-color: #F4743B;
 }
 
-#pwdnote { 
+/* Formatting for pw note telling user suggestions for their pw */
+#pwdnote 
+{ 
   color: #f5f5f5;
   background-color: #FF521B;
   width: 80%;
@@ -75,6 +81,7 @@ input {
   padding-bottom: 1%;
 }
 
+/* Formatting for pw error that returns when user invalid pw*/
 #pwderror {
   color: black;
   width: 80%;

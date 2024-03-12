@@ -20,7 +20,7 @@ body {
 }
 
 .post {
-    border: 4px solid rgb(209, 192, 115);
+    border: 4px solid #FF521B;   
     border-radius: 9px;
     background-color: #181818;
     padding: 3%;

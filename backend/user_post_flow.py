@@ -136,7 +136,7 @@ def feed():
     current_user is a proxy, however for now this performs alright. 
     """
     CHUNK_SIZE = 5 # CONST. originally 5, can increase/decrease to load more pictures at once. currently, a small pool of posts doesn't warrant a larger CHUNK_SIZE
-    #print("existing session feed", current_user.session_feed)
+    print("existing session feed", current_user.session_feed)
 
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
@@ -169,8 +169,8 @@ def feed():
         query_results = cursor.fetchall()
         current_user.session_feed.extend([result[0] for result in query_results]) # add post id's to session_feed
         login_user(User(current_user.get_int_id(), current_user.session_feed))    # commit session_feed to actual user instead of proxy
-        #print("this requests' ids:", [result[0] for result in query_results])
-        #print("user session_feed after update:", current_user.session_feed, "\n")
+        print("this requests' ids:", [result[0] for result in query_results])
+        print("user session_feed after update:", current_user.session_feed, "\n")
 
         # dank list comprehension where every element is a dictionary from comprehension but those are actually made from elements from a 
         #       list comprehension because the original list of tuples included post.id which is private info.
@@ -194,7 +194,7 @@ def feed():
         for post in posts_to_serve:
             if post["post_location"] is None:
                 del post["post_location"]
-        #print(posts_to_serve)
+        print(posts_to_serve)
 
         # please indicate to users when there are no more posts to show, indicated with 206 response code.
         if len(query_results) < CHUNK_SIZE:

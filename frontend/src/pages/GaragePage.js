@@ -12,7 +12,7 @@ export default function Garage() {
     const navigate = useNavigate();
     const location = useLocation();
     const {profile} = useParams();
-    console.log('page loaded; profile', profile)
+    //console.log('garage page loaded for profile:', profile)
 
     // If profile is undefined, view your own page
     // Otherwise, profile should be a valid displayname to view

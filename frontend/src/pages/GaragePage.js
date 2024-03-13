@@ -12,6 +12,7 @@ export default function Garage() {
     const navigate = useNavigate();
     const location = useLocation();
     const {profile} = useParams();
+    console.log('page loaded; profile', profile)
 
     // If profile is undefined, view your own page
     // Otherwise, profile should be a valid displayname to view
@@ -50,10 +51,13 @@ export default function Garage() {
 
     useEffect(() => {
         //GET INFORMATION ON THE PAGE WHEN THE PAGE LOADS
-        //This functions dependencies is [] so it only runs when this module is loaded
+        //This functions dependencies is [profile] so it runs whenever we view a new profile and that displayname 
+        //      is passed into the url (see app.js route for this component)
+        //I CHANGED THIS FROM DEPENDENCY ARRAY FROM [] TO FIX NO-REFRESH BUG WHEN COMING FROM OTHER PAGES, SAY FROM SEARCH
+        //      so if stuff breaks maybe learn how this is supposed to work.
         //console.log(is_self, profile, profile===null)
         fetchData();
-    }, []);
+    }, [profile]);
 
     function renderFollowButton(status) {
         switch(String(status)) {

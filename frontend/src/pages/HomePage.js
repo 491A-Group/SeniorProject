@@ -2,18 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
-// import CarData from "./CarData.json";
-// import Ferrari from "../images/ferrari.png";
-// import Testa from "../images/testa_rossa.jpeg";
-// import Ford from "../images/ford.png";
-// import FordGT from "../images/ford-gt40.jpg";
-// import Porsche from "../images/porsche-_car.jpg";
-// import PorLogo from "../images/porsche.png";
-
 import NavBar from '../components/NavBar';
 
 // Jayvee
@@ -22,8 +13,10 @@ export default function HomePage() {
     const navigate = useNavigate()
 
     // Jayvee
-    // Initializing a state variable 'carData' using useState hook with an empty array as initial state.
-    const [carData, setCardata] = useState([]);
+    // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
+    const [postData, setPostData] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
     // Jayvee
     // useEffect hook to perform side effects like data fetching when the component mounts.
@@ -36,7 +29,7 @@ export default function HomePage() {
 
          // Jayvee
          // Fetching data from the provided API endpoint.
-         const response =  await fetch(window.location.origin + '/api/home_1');
+         const response =  await fetch(window.location.origin + '/feed');
 
          // Jayvee
          // Checking if the response is okay, if not, logging a network error and throwing an error.
@@ -50,52 +43,82 @@ export default function HomePage() {
           const jsonData = await response.json();
 
           // Jayvee
-          // Updating the 'carData' state with the fetched JSON data.
-          setCardata(jsonData);
+          // Updating the 'postData' state with the fetched JSON data.
+          setPostData(jsonData);
 
         } catch(error){
           // Jayvee
           // Catching any errors that occur during the fetch process and logging them.
-            console.error('Error fetching data', error);
+          console.error('Error fetching data', error);
+          
+        } finally {
+          setLoading(false);
         }
       };
-     
+      
+      fetchData();
+      
+      const handleScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+          loading
+        ) return;
+        fetchData();
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+
       // Jayvee
       // Calling the fetchData function when the component mounts.
       fetchData();
-    }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
+    }, [loading]); // Empty dependency array ensures that this effect runs only once after the initial render.
 
-    // Cameron
-    // Function to navigate to the 'Test' page when called.
 
     //Jayvee
     //the main return to display the home page or main feed
     return (
       <div className="homeContainer">
         <div>
-          <h1 style={{color: 'red'}}>Sportscar Spotter</h1>
+          <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}
         <div className="searchPad">
-          <img src={Filter} alt="Filter" />
+          <img src={Filter} alt="Filter" /> {/* Filter icon */}
           <p> Filters:</p>
           
-          <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button>
+          <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button> {/* Search Button */}
         </div>
         <ul className="content">
-          {carData.map((car, index) => (
-            <li className="post" key={index}>
-              <div className="cardHeader">
-                <img src={car.icon} alt={car.name} />
-                <h2>{car.name}</h2>
-              </div>
-    
-              <div className="main">
-                <img src={car.icon} alt={car.name} /> {/* Reuse the same image as header, replace with appropriate image if needed */}
-                <div>
-                  <p>{car.details}</p>
-                </div>
-              </div>
-            </li>
-          ))}
+            {postData.map((post, index) => (    
+                <li className="post" key={index}>
+                    <div>
+                        <p> {post.poster_displayname}</p> {/* Displaying Poster Username */}
+                        <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
+                    </div>
+                    <div className="cardHeader">
+                        {/*<img src={post.icon} alt={post.name} />*/} {/* Display Car Brand Icon/Logo */}
+                        <h2>
+                            {
+                                post.car_make + ' ' +
+                                post.car_model + ' ' +
+                                post.car_start_year + '-' + post.car_end_year
+                            }
+                        </h2> {/* Display Car's Name (Year/Make/Model) */}
+                    </div>
+
+                    <div className="main">
+                        <div className="imageContainer">
+                            {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
+                            <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} /> {/* Display Car Image */}
+                        </div>
+                        <div>
+                            <p>{post.car_details}</p> {/* Display Car Details */}
+                            <p>Likes: {post.post_likes}</p> {/* Display Number of Likes on Post */}
+                            <p>{post.post_uuid} {post.post_timestamp} {post.post_location}</p>
+                        </div>
+                    </div>
+                </li>
+            ))}
         </ul>
 
         

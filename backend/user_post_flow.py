@@ -7,7 +7,7 @@ This file is for API endpoints - BACKEND
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required, login_user
 from backend.db_queries import db_connection_pool
-from backend.user import User
+from backend.user import User, session_feeds
 import base64
 
 from datetime import datetime
@@ -136,7 +136,7 @@ def feed():
     current_user is a proxy, however for now this performs alright. 
     """
     CHUNK_SIZE = 5 # CONST. originally 5, can increase/decrease to load more pictures at once. currently, a small pool of posts doesn't warrant a larger CHUNK_SIZE
-    print("existing session feed", current_user.session_feed)
+    print("existing session feed", session_feeds[current_user.get_int_id()])
 
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
@@ -164,13 +164,12 @@ def feed():
             ORDER BY datetime DESC
             LIMIT {CHUNK_SIZE};
             """,
-            [current_user.session_feed]
+            [session_feeds[current_user.get_int_id()]]
         )
         query_results = cursor.fetchall()
-        current_user.session_feed.extend([result[0] for result in query_results]) # add post id's to session_feed
-        login_user(User(current_user.get_int_id(), current_user.session_feed))    # commit session_feed to actual user instead of proxy
+        session_feeds[current_user.get_int_id()].extend([result[0] for result in query_results]) # add post id's to session_feed
         print("this requests' ids:", [result[0] for result in query_results])
-        print("user session_feed after update:", current_user.session_feed, "\n")
+        print("user session_feeds after update:", session_feeds[current_user.get_int_id()], "\n")
 
         # dank list comprehension where every element is a dictionary from comprehension but those are actually made from elements from a 
         #       list comprehension because the original list of tuples included post.id which is private info.

@@ -7,7 +7,7 @@ This file is for API endpoints - BACKEND
 """
 from flask import Blueprint, request, redirect, url_for, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
-from backend.user import User
+from backend.user import User, session_feeds # delete a user entry upon logging out
 from backend.db_queries import db_connection_pool
 
 from argon2 import PasswordHasher
@@ -104,6 +104,7 @@ def logout():
     logout_user() interfaces with flask_login
     TODO fix return redirect to work with fetch api
     """
+    del session_feeds[current_user.get_int_id()]
     logout_user()
     return redirect(url_for('index'))
 

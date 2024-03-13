@@ -16,6 +16,8 @@ export default function HomePage() {
     // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
     const [postData, setPostData] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
     // Jayvee
     // useEffect hook to perform side effects like data fetching when the component mounts.
     useEffect(() => {
@@ -47,14 +49,31 @@ export default function HomePage() {
         } catch(error){
           // Jayvee
           // Catching any errors that occur during the fetch process and logging them.
-            console.error('Error fetching data', error);
+          console.error('Error fetching data', error);
+          
+        } finally {
+          setLoading(false);
         }
       };
-     
+      
+      fetchData();
+      
+      const handleScroll = () => {
+        if (
+          window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+          loading
+        ) return;
+        fetchData();
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+
       // Jayvee
       // Calling the fetchData function when the component mounts.
       fetchData();
-    }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
+    }, [loading]); // Empty dependency array ensures that this effect runs only once after the initial render.
 
 
     //Jayvee

@@ -6,6 +6,7 @@ import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
 import NavBar from '../components/NavBar';
+//Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 
@@ -17,6 +18,7 @@ export default function HomePage() {
     // Jayvee
     // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
     const [postData, setPostData] = useState([]);
+    //Le Duong
     const [page, setPage] = useState(1); // State for tracking current page
     const [hasMore, setHasMore] = useState(true); // State for indicating whether there is more data to fetch
 
@@ -40,11 +42,12 @@ export default function HomePage() {
         // Parsing the response data to JSON format.
         const jsonData = await response.json();
 
-        // Jayvee
+        // Jayvee, Edited by Le Duong
         // Updating the 'postData' state with the fetched JSON data.
-        setPostData(prevData => [...prevData, ...jsonData]);
-        setPage(page + 1);
-        setHasMore(jsonData.length > 0);
+        setPostData(prevData => [...prevData, ...jsonData]); //concatenantes prevData with new data (jsonData)
+        setPage(page + 1); //increments page to load new set of posts when scrolling
+        setHasMore(jsonData.length > 0); //checks if there is more posts to fetch and populate on main feed
+        //otherwise, hasMore will be set to false meaning no new posts can be fetched
 
       } catch (error) {
         // Jayvee
@@ -88,6 +91,7 @@ export default function HomePage() {
           <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button> {/* Search Button */}
         </div>
         <InfiniteScroll
+            //Le Duong
             dataLength={postData.length} // Number of items
             next={fetchData} // Function to call when scrolling reaches the bottom
             hasMore={hasMore} // Indicate whether there is more data to fetch

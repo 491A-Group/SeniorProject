@@ -195,7 +195,7 @@ def feed():
                     ELSE NULL
                 END AS state,
                 CASE
-                    WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_us_counties WHERE st_contains(geom, post.location) LIMIT 1)
+                    WHEN post.location IS NOT NULL THEN (SELECT namelsad FROM postgis_us_counties WHERE st_contains(geom, post.location) LIMIT 1)
                     ELSE NULL
                 END AS county,
                 CASE

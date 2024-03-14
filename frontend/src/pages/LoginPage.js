@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
+import loading from "../images/loading.gif";
   
 
 export default function LoginPage() {
@@ -40,6 +41,7 @@ export default function LoginPage() {
     const [passErrorMessage, setPassErrorMessage] = useState('');
     const [passwordNotMatchError, setPasswordNotMatchError] = useState('');
     const [logInFailureError, setLogInFailureError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     
     
     //Le Duong: state for pw pop up note for pw suggestions
@@ -53,6 +55,7 @@ export default function LoginPage() {
     //persist rendering on Login page once switched back and forth)
     const handlePageSwitch = (status) => {
       setIsLogIn(status);
+      setIsLoading(false);
       setErrorMessage('');
       setPasswordMessage('');
       setPasswordNoteVisible(false);
@@ -85,6 +88,7 @@ export default function LoginPage() {
 
         //RL: This new chunk is for validating that the email and password
         //fields are valid before continuing the rest of handleSubmitLogin.
+        setIsLoading(true);
         setPasswordNotMatchError('');
         setEmailErrorMessage('');
         setPassErrorMessage('');
@@ -108,6 +112,7 @@ export default function LoginPage() {
         }
 
         if (hasError) {
+            setIsLoading(false);
             return;
         }
 
@@ -129,6 +134,7 @@ export default function LoginPage() {
                 console.log("login success")
             } else {
                 setLogInFailureError('Login failed. Check credentials and try again.')
+                setIsLoading(false);
                 console.log("login error")
             }
         })
@@ -139,6 +145,7 @@ export default function LoginPage() {
     //RL: Modified function to include constraints and set error messages if any of the validations
     //are not met.
     const handleSubmitRegister = (event) => {
+        setIsLoading(true);
 
         if (input_displayname.toLowerCase() == 'hoffman') {
             window.location.href = 'https://encord.com/blog/an-introduction-to-data-labelling-and-training-data/'
@@ -164,6 +171,7 @@ export default function LoginPage() {
 
         if (!validatePassword(input_password) || !validatePassword(check_password)) {
             setPassErrorMessage("Password field(s) cannot be blank.");
+            setIsLoading(false);
             return;
         }
 
@@ -174,6 +182,7 @@ export default function LoginPage() {
         }
 
         if (hasError) {
+            setIsLoading(false);
             return;
         }
 
@@ -198,6 +207,7 @@ export default function LoginPage() {
                 setSuccessfulLogIn(true);
                 console.log("signup response received ", response)
             } else {
+                setIsLoading(false);
                 console.log("signup error")
             }
         })
@@ -298,6 +308,7 @@ export default function LoginPage() {
             {successfulLogIn && (
                 <div style = {{color: 'white'}}>
                     <p> Successful Login! Loading homepage now....</p>
+                    {isLoading && <img src = {loading} width="25vw" />}
                 </div>
             )}
         </div>

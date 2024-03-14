@@ -5,10 +5,11 @@ This file is for API endpoints - BACKEND
 """
 
 from flask import Blueprint, request, jsonify
-from flask_login import current_user, login_required, login_user
+from flask_login import current_user, login_required
 from backend.db_queries import db_connection_pool
-from backend.user import User, session_feeds
+from backend.user import session_feeds
 import base64
+import json
 
 from datetime import datetime
 
@@ -45,8 +46,15 @@ def predict():
 
 
     # location portion
-    print(request.headers)
-    
+    geolocation = None
+    if "Geolocation" in request.headers:
+        geolocation = json.loads(request.headers["Geolocation"]) # the header comes in as a string
+        print(geolocation)
+        print(type(geolocation["latitude"]))
+
+    # this is a portion used to help build the SQL query. putting it here makes the statement prettier
+    # and also makes the code inside the 'with' statement nominally faster
+    sql_location_portion = " st_makepoint(%s, %s) " if geolocation else " NULL " 
 
     with db_connection_pool.connection() as conn:
         cur = conn.cursor()
@@ -65,12 +73,32 @@ def predict():
             #print(picture_id)
 
             for confidence, label in combined_list:
+                # These arguments are normally put unnamed in the second parameter of cur.execute
+                #   however this function is complicated and we know all the arguments at this point
+                #   There are 2 possible quantities of arguments to use later so I slice later
+                sql_arguments = (
+                    current_user.get_int_id(),
+                    label,
+                    picture_id,
+                    geolocation["longitude"] if geolocation else None,
+                    geolocation["latitude"] if geolocation else None
+                )
+
                 print(label, confidence)
                 cur.execute(
                     """
                     WITH prediction AS (
-                        INSERT INTO predictions(user_id, car_id, picture_id)
-                        VALUES (%s, (SELECT id FROM cars WHERE label=%s), %s)
+                        INSERT INTO predictions(
+                            user_id,
+                            car_id,
+                            picture_id,
+                            location)
+                        VALUES (
+                            %s,
+                            (SELECT id FROM cars WHERE label=%s),
+                            %s,
+                    """ + sql_location_portion + """
+                        )
                         RETURNING car_id
                     )
                     SELECT m.name, c.model_name, c.start_year, c.end_year, c.description
@@ -78,8 +106,9 @@ def predict():
                     JOIN manufacturers m ON m.id=c.make
                     WHERE c.id=(SELECT car_id FROM prediction);
                     """,
-                    (current_user.get_int_id(), label, picture_id)
+                    sql_arguments if geolocation else sql_arguments[:-2]
                 )
+
                 # cars.append((confidence, label) + cur.fetchone())
                 make_name, model_name, year_start, year_end, description = cur.fetchone()
                 cars.append({

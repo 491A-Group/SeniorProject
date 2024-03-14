@@ -46,17 +46,9 @@ export default function CatchPage() {
             }
             if (geolocation !== undefined) {
                 request_header.append(
-                    'geolocation', JSON.stringify(geolocation)
+                    "Geolocation", JSON.stringify(geolocation)
                 )
             }
-            // DEBUG. i dont think ios allows http to access geolocation
-            request_header.append(
-                'geolocation', JSON.stringify({
-                    latitude: 33.667446550221825,
-                    longitude: -117.90772365722547
-                })
-            )
-
 
 
             // start the fetch request

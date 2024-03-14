@@ -196,6 +196,7 @@ export default function Garage() {
             </ul> */}
             
             <button onClick={() => {navigate('/');}}>Go to Test Page</button>
+            <br/><br/><br/>
         </div>
         <NavBar/>
         </div>

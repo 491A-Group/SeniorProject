@@ -92,8 +92,8 @@ def predict():
                             user_id,
                             car_id,
                             picture_id,
-                            location)
-                        VALUES (
+                            location
+                        ) VALUES (
                             %s,
                             (SELECT id FROM cars WHERE label=%s),
                             %s,

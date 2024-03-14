@@ -20,34 +20,16 @@ export default function CatchPage() {
 
     //this loads the predictions from the server based on the logged in user. It gets all unselected predictions based on the image
     useEffect(() => {
-        function fetchData() { //just define, will call later
-            let request_header = new Headers();
-            
-
+        let request_header = new Headers();
+        function makeFetchRequest() { //just define, will call later
             // get the binary for the image
             const binaryData = Buffer.from(
                 location.state.image_source.slice(22),
                 'base64'
             )
-
-
             // this portion handles the geolocation
             // it uses the header since the body is binary image
-            if(navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        request_header.append(
-                            "Geolocation",
-                            JSON.stringify({
-                                latitude: position.coords.latitude,
-                                longitude: position.coords.longitude
-                            })
-                        )
-                    }
-                )
-            }
-
-
+            
             // start the fetch request
             fetch(window.location.origin + '/predict', {
                 method: 'POST',
@@ -69,8 +51,24 @@ export default function CatchPage() {
             });
         }
 
-
-        fetchData()
+        // this is the executing part. above was just defining a function
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    request_header.append(
+                        "Geolocation",
+                        JSON.stringify({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        })
+                    )
+                }
+            ).then(
+                makeFetchRequest()
+            )
+        } else {
+            makeFetchRequest()
+        }
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
     //this disables scrolling of the page

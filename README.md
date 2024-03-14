@@ -25,7 +25,7 @@
 
 ## Backend
  - flask server for ml. takes a request and returns predictions  
- - Request should be to :3000/predict with data in the body that's bytes of image
+ - many details documented in each file & function
  
 ## Running
 I always recommend to do a venv
@@ -52,6 +52,7 @@ I always recommend to do a venv
  - gunicorn --workers 2 --bind 0.0.0.0:3030 main:app
    - i've copied the gunicorn command into run.sh
 ### Flask development server
+- for developers this is the go-to to see full-stack
  1. Activate the venv
  2. `python main.py`
 ### npm development server

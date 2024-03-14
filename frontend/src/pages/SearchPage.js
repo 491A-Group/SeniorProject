@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './HomePage.css';
 import RenderUserList from '../components/RenderUserList';
+import NavBar from '../components/NavBar';
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -45,6 +46,7 @@ export default function SearchPage() {
                 <button type="submit">Search</button>
             </form>
             <RenderUserList users={searchResults}></RenderUserList>
+            <NavBar />
         </>
     );
 }

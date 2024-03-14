@@ -31,27 +31,27 @@ export default function CatchPage() {
             )
 
 
-            // this portion handles the location
+            // this portion handles the geolocation
             // it uses the header since the body is binary image
-            let location;
+            let geolocation;
             if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        location = {
+                        geolocation = {
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude
                         }
                     }
                 )
             }
-            if (location !== undefined) {
+            if (geolocation !== undefined) {
                 request_header.append(
-                    'location', JSON.stringify(location)
+                    'geolocation', JSON.stringify(geolocation)
                 )
             }
             // DEBUG. i dont think ios allows http to access geolocation
             request_header.append(
-                'location', JSON.stringify({
+                'geolocation', JSON.stringify({
                     latitude: 33.667446550221825,
                     longitude: -117.90772365722547
                 })

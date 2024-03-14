@@ -102,7 +102,7 @@ export default function HomePage() {
                           <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
                       </div>
                       <div className="cardHeader">
-                          {/*<img src={post.icon} alt={post.name} />*/} {/* Display Car Brand Icon/Logo */}
+                         <img src={post.icon} alt={post.name} /> {/* Display Car Brand Icon/Logo */}
                           <h2>
                               {
                                   post.car_make + ' ' +

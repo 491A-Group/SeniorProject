@@ -60,8 +60,8 @@ body {
 }
 
 .main img {
-    width: 175px; /* Adjust image width as needed */
-    height: 130px; /* Adjust image height as needed */
+    width: 100%; /* Adjust image width as needed */
+    height: 100%; /* Adjust image height as needed */
     border: 2px solid white;
     border-radius: 5px;
 }

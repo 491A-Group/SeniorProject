@@ -63,9 +63,9 @@ export default function CatchPage() {
                         })
                     )
                 }
-            ).then(
+            ).then(() => {
                 makeFetchRequest()
-            )
+            })
         } else {
             makeFetchRequest()
         }

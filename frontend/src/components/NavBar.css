@@ -68,6 +68,14 @@
   border-right: 10px solid #252525;
 }
 
+.nbtn.active {
+    background-color: #983517; /* Active background color for Home and Garage pages */
+}
+  
+.nrej.active {
+    background-color: #2b4e81; /* Active background color for Camera page */
+}
+
 .btn:hover {
   background-color: #F4743B;
 }

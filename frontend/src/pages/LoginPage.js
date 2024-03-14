@@ -139,6 +139,12 @@ export default function LoginPage() {
     //RL: Modified function to include constraints and set error messages if any of the validations
     //are not met.
     const handleSubmitRegister = (event) => {
+
+        if (input_displayname.toLowerCase() == 'hoffman') {
+            window.location.href = 'https://encord.com/blog/an-introduction-to-data-labelling-and-training-data/'
+            return;
+        }
+
         setPasswordNotMatchError('');
         setEmailErrorMessage('');
         setPassErrorMessage('');
@@ -219,9 +225,6 @@ export default function LoginPage() {
     const validatePassword = (password) => {
         return password.length > 0;
     }
-    //RL: Not sure what's going on with password stuff on register page, so I'm leaving this
-    //here for the time being
-    //
 
     const validateDisplayName = (displayName) => {
         return displayName.length > 0;

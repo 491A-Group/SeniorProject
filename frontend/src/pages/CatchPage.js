@@ -5,6 +5,7 @@ import { Buffer } from 'buffer';
 import './CatchPage.css';
 import NavBar from '../components/NavBar';
 import loading from "../images/loading.gif";
+import { func } from 'prop-types';
 
 export default function CatchPage() {
     // This route needs to be passed location.state.image_source
@@ -19,13 +20,49 @@ export default function CatchPage() {
 
     //this loads the predictions from the server based on the logged in user. It gets all unselected predictions based on the image
     useEffect(() => {
-        const fetchData = async () => {
+        function fetchData() { //just define, will call later
+            let request_header = new Headers();
+            
+
+            // get the binary for the image
             const binaryData = Buffer.from(
                 location.state.image_source.slice(22),
                 'base64'
             )
+
+
+            // this portion handles the location
+            // it uses the header since the body is binary image
+            let location;
+            if(navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        location = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        }
+                    }
+                )
+            }
+            if (location !== undefined) {
+                request_header.append(
+                    'location', JSON.stringify(location)
+                )
+            }
+            // DEBUG. i dont think ios allows http to access geolocation
+            request_header.append(
+                'location', JSON.stringify({
+                    latitude: 33.667446550221825,
+                    longitude: -117.90772365722547
+                })
+            )
+
+
+
+            // start the fetch request
             fetch(window.location.origin + '/predict', {
                 method: 'POST',
+                headers: request_header,
                 body: binaryData
             })
             .then((response) => {
@@ -42,6 +79,7 @@ export default function CatchPage() {
                 console.error('Error fetching data:', error);
             });
         }
+
 
         fetchData()
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.

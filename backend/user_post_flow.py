@@ -31,7 +31,9 @@ def predict():
         (pred3.confidence, pred3.label, pred3.make, pred3.model_name, pred3.start_year, pred3.end_year, pred3.car_description)
     ]
     """
-    p = predict_image(image_bytes=request.data)
+    p = predict_image(image_bytes=request.data) # p is the prediction results object for the input image
+    # combined_list is a list of tuples (confidence, name)
+    # it's sorted by confidence by virtue of yolov8 returning like that by default
     combined_list = list(zip(
         p.boxes.conf.tolist(),
         [p.names[int(yolov8_id)] for yolov8_id in p.boxes.cls.tolist()]
@@ -40,6 +42,11 @@ def predict():
         return jsonify(combined_list), 200 # returning an empty list because there were no predictions
     #print(combined_list) # DEBUG, PARTICULARLY CHECKING IF YOLOv8 ALREADY SORTS BY CONF
     combined_list = combined_list[0:3] # take only the 3 highest
+
+
+    # location portion
+    print(request.headers)
+    
 
     with db_connection_pool.connection() as conn:
         cur = conn.cursor()
@@ -93,7 +100,8 @@ def predict():
 @login_required
 def select_prediction():
     """BRIAN:
-    :^)
+    This function requires some state to already exist that should have been prepared by /predict
+    It allows a user to elect a predicted car into a post
     """
     body = request.json
     label = body["label"]
@@ -106,8 +114,8 @@ def select_prediction():
         with conn.transaction():
             cur.execute(
                 """
-                INSERT INTO posts(user_id, car_id, datetime, picture_id)
-                SELECT user_id, car_id, datetime, picture_id
+                INSERT INTO posts(user_id, car_id, datetime, picture_id, location)
+                SELECT user_id, car_id, datetime, picture_id, location
                 FROM predictions
                 WHERE user_id=%s AND car_id=(SELECT id FROM cars WHERE label=%s)
                 ORDER BY datetime DESC

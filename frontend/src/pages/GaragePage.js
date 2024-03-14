@@ -6,6 +6,7 @@ import './GaragePage.css';
 // import AcuraLogo from "..images/CarLogos/AcuraLogo.png"; find new Acura logo cause this broken
 
 import NavBar from '../components/NavBar';
+import BackButton from '../components/BackButton';
 
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {
@@ -108,7 +109,7 @@ export default function Garage() {
             console.error('Error fetching data:', error);
         }
     }
-
+/*
     const renderBackButton = () => {
         if (location.state !== null && location.state !== undefined) {
             if (location.state.enable_back_button) {
@@ -116,10 +117,11 @@ export default function Garage() {
             } 
         }
     }
+    */
 
     return (
         <div>
-            {renderBackButton()}
+            <BackButton />
 
             <div className="garageContainer">
             <div className="userInfo">

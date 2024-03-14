@@ -62,10 +62,9 @@ export default function CatchPage() {
                             longitude: position.coords.longitude
                         })
                     )
+                    makeFetchRequest()
                 }
-            ).then(() => {
-                makeFetchRequest()
-            })
+            )
         } else {
             makeFetchRequest()
         }

@@ -33,20 +33,17 @@ export default function CatchPage() {
 
             // this portion handles the geolocation
             // it uses the header since the body is binary image
-            let geolocation;
             if(navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        geolocation = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude
-                        }
+                        request_header.append(
+                            "Geolocation",
+                            JSON.stringify({
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude
+                            })
+                        )
                     }
-                )
-            }
-            if (geolocation !== undefined) {
-                request_header.append(
-                    "Geolocation", JSON.stringify(geolocation)
                 )
             }
 

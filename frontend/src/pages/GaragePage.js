@@ -3,7 +3,6 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 import './HomePage.css';
 import './GaragePage.css';
-// import AcuraLogo from "..images/CarLogos/AcuraLogo.png"; find new Acura logo cause this broken
 
 import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
@@ -109,15 +108,14 @@ export default function Garage() {
             console.error('Error fetching data:', error);
         }
     }
-/*
+    
     const renderBackButton = () => {
         if (location.state !== null && location.state !== undefined) {
             if (location.state.enable_back_button) {
-                return <button onClick={() => {navigate(-1)}}>back</button>
+                return <BackButton />
             } 
         }
     }
-    */
 
     return (
         <div>

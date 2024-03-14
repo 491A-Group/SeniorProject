@@ -190,7 +190,18 @@ def feed():
                 c.description,
                 post.public_id,
                 post.datetime,
-                CONCAT(ST_AsText(post.location)) AS location,
+                CASE
+                    WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_us_states WHERE st_contains(geom, post.location) LIMIT 1)
+                    ELSE NULL
+                END AS state,
+                CASE
+                    WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_us_counties WHERE st_contains(geom, post.location) LIMIT 1)
+                    ELSE NULL
+                END AS county,
+                CASE
+                    WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_places WHERE st_contains(geom, post.location) LIMIT 1)
+                    ELSE NULL
+                END AS place,
                 post.likes
             FROM posts post
             JOIN users u ON u.id=post.user_id
@@ -223,12 +234,14 @@ def feed():
                 "post_uuid": uuid,
                 "post_timestamp": timestamp,
                 "post_likes": likes,
-                "post_location": location, # THIS IS IN POINT(LONG, LAT)
-            } for displayname, pfp_id, img_bin, make, model, start_year, end_year, description, uuid, timestamp, location, likes in [result[1:] for result in query_results]
+                "post_location": [state, county, place],
+            } for displayname, pfp_id, img_bin, 
+                    make, model, start_year, end_year, description,
+                    uuid, timestamp, state, county, place, likes in [result[1:] for result in query_results]
         ]
         # since conditionals in python list comprehension is tricky I drop null values here
         for post in posts_to_serve:
-            if post["post_location"] is None:
+            if post["post_location"] == [None, None, None]:
                 del post["post_location"]
         #print(posts_to_serve)
 

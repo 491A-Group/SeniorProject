@@ -103,7 +103,7 @@ export default function HomePage() {
                   <li className="post" key={index}>
                       <div>
                           <p> {post.poster_displayname}</p> {/* Displaying Poster Username */}
-                          <p> {post.post_location.join(" • ")} </p>
+                          <p> {post.post_location && post.post_location.join(" • ")} </p>
                           <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
                       </div>
                       <div className="cardHeader">

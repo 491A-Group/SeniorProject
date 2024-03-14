@@ -121,9 +121,9 @@ export default function Garage() {
 
     return (
         <div>
+            {renderBackButton()}
 
             <div className="garageContainer">
-            <BackButton />
             <div className="userInfo">
                 <div className="userProfile">
                     <img src={window.location.origin + '/pfp/' + pfpId} />

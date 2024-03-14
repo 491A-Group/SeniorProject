@@ -146,12 +146,12 @@ export default function LoginPage() {
     //are not met.
     const handleSubmitRegister = (event) => {
         setIsLoading(true);
-
-        if (input_displayname.toLowerCase() == 'hoffman') {
+        /*
+        if (input_displayname.toLowerCase() == 'iloveml') {
             window.location.href = 'https://encord.com/blog/an-introduction-to-data-labelling-and-training-data/'
             return;
         }
-
+        */
         setPasswordNotMatchError('');
         setEmailErrorMessage('');
         setPassErrorMessage('');

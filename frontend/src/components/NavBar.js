@@ -5,6 +5,7 @@ import Garage from "../images/garage.png";
 import Home from "../images/home.png";
 import camera from "../images/camera.png";
 import search from "../images/search.png";
+import puzzle from "../images/puzzle.png";
 
 export default function NavBar() {
     const location = useLocation(); // State to track current page
@@ -29,7 +30,10 @@ export default function NavBar() {
             <button onClick={() => handleNavigation("/camera")} className={`nbtn ${location.pathname === "/camera" ? "active" : ""}`}>
                 <img width="50%" src={camera} alt="Begin Identification"/>
             </button>
-            <button onClick={() => handleNavigation("/garage")} className={`nrej ${location.pathname === "/garage" ? "active" : ""}`}>
+            <button onClick={() => handleNavigation("/daily")} className={`nrej ${location.pathname === "/daily" ? "active" : ""}`}>
+                <img width="50%" src={puzzle} alt="Daily Event Page"/>
+            </button>
+            <button onClick={() => handleNavigation("/garage")} className={`nbtn ${location.pathname === "/garage" ? "active" : ""}`}>
                 <img width="50%" src={Garage} alt="Garage Page"/>
             </button>
         </div>

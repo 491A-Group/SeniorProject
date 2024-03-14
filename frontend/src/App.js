@@ -14,6 +14,7 @@ import CatchPage from './pages/CatchPage';
 import SearchPage from './pages/SearchPage';
 import RelationList from './components/RelationList';
 import FeatureRequest from './pages/FeatureRequest';
+import DailyEvent from './pages/DailyEvent';
 
 export default function App() {
     // Pass 'catch' location.state.image_source
@@ -31,6 +32,7 @@ export default function App() {
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/relations" element={<RelationList />} />
                     <Route path="/bug-report" element={<FeatureRequest />} />
+                    <Route path="/daily" element={<DailyEvent />} />
                 </Route>
             </Routes>
         </BrowserRouter>

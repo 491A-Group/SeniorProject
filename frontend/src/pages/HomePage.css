@@ -30,13 +30,6 @@ body {
     flex-direction: column;
 }
 
-.post img {
-    width: 30px;
-    height: 30px;
-    border: 2px solid white;
-    border-radius: 5px;
-}
-
 .cardHeader img {
     width: 30px;
     height: 30px;

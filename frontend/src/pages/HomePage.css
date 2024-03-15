@@ -59,12 +59,12 @@ body {
     margin-top: 10px;
 }
 
-.main img {
+/* .main img {
     width: 100%; /* Adjust image width as needed */
-    height: 100%; /* Adjust image height as needed */
-    border: 2px solid white;
-    border-radius: 5px;
-}
+    /* height: 100%; /* Adjust image height as needed */
+    /* border: 2px solid white; */
+    /* border-radius: 5px; */
+/* }  */
 
 
 .main p {
@@ -85,8 +85,8 @@ body {
 /* Styles for images related to likes */
 .likeImage img {
     /* Adjust styles for like images */
-    width: 20px; 
-    height: 20px; 
+    width: 10px; 
+    height: 10px; 
 }
 
 /* Container to space images */
@@ -125,4 +125,8 @@ body {
 .content ul {
     overflow: hidden;
     overflow-y: scroll;
+}
+
+.whiteFont {
+    color: white;
 }

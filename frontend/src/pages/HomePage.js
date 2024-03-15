@@ -118,7 +118,6 @@ export default function HomePage() {
                               }
                           </h2> {/* Display Car's Name (Year/Make/Model) */}
                       </div>
-
                       <div className="main">
                           <div className="imageContainer">
                               {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
@@ -126,7 +125,7 @@ export default function HomePage() {
                           </div>
                           <div>
                               <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
-                              <span>{post.post_likes}</span>
+                              <span className='whiteFont'>{post.post_likes}</span>
                               <p>{post.car_details}</p> {/* Display Car Details */}
                               <p>{post.post_uuid} {post.post_timestamp}</p>
                           </div>

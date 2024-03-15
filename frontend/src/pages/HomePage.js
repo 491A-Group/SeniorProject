@@ -125,7 +125,7 @@ export default function HomePage() {
                               <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
                           </div>
                           <div>
-                              <img src={heart} alt={post.post_likes} className=''/> {/* Display Number of Likes on Post */}
+                              <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
                               <span>{post.post_likes}</span>
                               <p>{post.car_details}</p> {/* Display Car Details */}
                               <p>{post.post_uuid} {post.post_timestamp}</p>

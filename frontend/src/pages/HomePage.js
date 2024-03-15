@@ -19,7 +19,25 @@ export default function HomePage() {
 
     // Jayvee
     // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
-    const [postData, setPostData] = useState([]);
+    const [postData, setPostData] = useState([])
+
+    // this below version is about appropriate for debug
+    // const [postData, setPostData] = useState([
+    //     {
+    //         poster_displayname: "?displayname",
+    //         poster_pfp: 1,
+    //         post_image: "",
+    //         car_model: "?model",
+    //         car_make: "?make",
+    //         car_details: "?details",
+    //         car_start_year: "?0",
+    //         car_end_year: "?1970",
+    //         post_uuid: "?uuid",
+    //         post_timestamp: "?time",
+    //         post_likes: -1,
+    //         post_location: ["State", "County", "Place"]
+    //     }
+    // ]);
     //Le Duong
     const [page, setPage] = useState(1); // State for tracking current page
     const [hasMore, setHasMore] = useState(true); // State for indicating whether there is more data to fetch
@@ -57,20 +75,6 @@ export default function HomePage() {
         console.error('Error fetching data', error);
       };
     
-      // Jayvee
-      // Calling the fetchData function when the component mounts.
-      //fetchData();
-    
-      //test scrolling
-      //const handleScroll = () => {
-      //  if (
-      //    window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLoading
-      //  ) return;
-      //  fetchData();
-      //};
-
-      //window.addEventListener('scroll', handleScroll);
-      //return () => window.removeEventListener('scroll', handleScroll);
     }
   
     // Jayvee
@@ -100,39 +104,41 @@ export default function HomePage() {
             loader={<h4>Loading...</h4>} // Loading indicator
             endMessage={<p>No more posts</p>} // Message when all data is fetched
         >  
-          <ul className="content">
-              {postData.map((post, index) => (    
-                  <li className="post" key={index}>
-                      <div>
-                          <p> {post.poster_displayname}</p> {/* Displaying Poster Username */}
-                          <p> {post.post_location && post.post_location.join(" • ")} </p>
-                          <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */}
-                      </div>
-                      <div className="cardHeader">
-                         <img src={post.icon} alt={post.name} /> {/* Display Car Brand Icon/Logo */}
-                          <h2>
-                              {
-                                  post.car_make + ' ' +
-                                  post.car_model + ' ' +
-                                  post.car_start_year + '-' + post.car_end_year
-                              }
-                          </h2> {/* Display Car's Name (Year/Make/Model) */}
-                      </div>
-                      <div className="main">
-                          <div className="imageContainer">
-                              {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
-                              <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
-                          </div>
-                          <div>
-                              <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
-                              <span className='whiteFont'>{post.post_likes}</span>
-                              <p>{post.car_details}</p> {/* Display Car Details */}
-                              <p>{post.post_uuid} {post.post_timestamp}</p>
-                          </div>
-                      </div>
-                  </li>
-              ))}
-          </ul>
+            <ul className="content">
+                {postData.map((post, index) => (    
+                <li className="post" key={index}>
+                    <div>
+                        <p>
+                            <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */} 
+                            {post.poster_displayname}
+                        </p> {/* Displaying Poster Username */}
+                        <p> {post.post_location && post.post_location.join(" • ")} </p>
+                    </div>
+                    <div className="cardHeader">
+                        <img src={post.make_icon} alt={post.car_make} /> {/* Display Car Brand Icon/Logo */}
+                        <h2>
+                        {
+                        post.car_make + ' ' +
+                        post.car_model + ' ' +
+                        post.car_start_year + '-' + post.car_end_year
+                        }
+                        </h2> {/* Display Car's Name (Year/Make/Model) */}
+                    </div>
+                    <div className="main">
+                        <div className="imageContainer">
+                            {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
+                            <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
+                        </div>
+                        <div>
+                            <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
+                            <span className='whiteFont'>{post.post_likes}</span>
+                            <p>{post.car_details}</p> {/* Display Car Details */}
+                            <p>{post.post_uuid} {post.post_timestamp}</p>
+                        </div>
+                    </div>
+                </li>
+                ))}
+            </ul>
         </InfiniteScroll> 
         <button onClick={() => {navigate("/")}}>Go to Test Page</button>
         </div>

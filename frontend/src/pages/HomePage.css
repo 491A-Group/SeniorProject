@@ -76,7 +76,7 @@ body {
 }
 
 /* Styles for images related to likes */
-.likeImage img {
+.likeImage {
     /* Adjust styles for like images */
     width: 10px; 
     height: 10px; 

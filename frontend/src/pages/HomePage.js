@@ -6,8 +6,10 @@ import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
 import NavBar from '../components/NavBar';
+import heart from '../images/heart.png';
 //Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
 import InfiniteScroll from 'react-infinite-scroll-component';
+
 
 
 // Jayvee
@@ -120,11 +122,11 @@ export default function HomePage() {
                       <div className="main">
                           <div className="imageContainer">
                               {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
-                              <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} /> {/* Display Car Image */}
+                              <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
                           </div>
                           <div>
+                              <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
                               <p>{post.car_details}</p> {/* Display Car Details */}
-                              <p>Likes: {post.post_likes}</p> {/* Display Number of Likes on Post */}
                               <p>{post.post_uuid} {post.post_timestamp}</p>
                           </div>
                       </div>

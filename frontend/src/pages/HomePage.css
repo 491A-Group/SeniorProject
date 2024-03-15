@@ -74,6 +74,21 @@ body {
     width: 100%;
 }
 
+/* Styles for post images */
+.postImage {
+    width: 100%; /* Adjust image width as needed */
+    height: 100%; /* Adjust image height as needed */
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+/* Styles for images related to likes */
+.likeImage img {
+    /* Adjust styles for like images */
+    width: 20px; 
+    height: 20px; 
+}
+
 /* Container to space images */
 .imageContainer {
     display: flex;

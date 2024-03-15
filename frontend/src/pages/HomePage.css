@@ -75,6 +75,10 @@ body {
     border-radius: 5px;
 }
 
+.postPfp {
+    width: 4%;
+}
+
 /* Styles for images related to likes */
 .likeImage {
     /* Adjust styles for like images */

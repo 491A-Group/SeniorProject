@@ -32,7 +32,7 @@ export default function HomePage() {
     //         car_start_year: "?0",
     //         car_end_year: "?1970",
     //         post_uuid: "?uuid",
-    //         post_timestamp: "?time",
+    //         post_timestamp: Date(),
     //         post_likes: -1,
     //         post_location: ["State", "County", "Place"]
     //     }
@@ -111,7 +111,7 @@ export default function HomePage() {
                 <li className="post" key={index}>
                     <div>
                         <p>
-                            <img src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */} 
+                            <img className="postPfp" src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */} 
                             {post.poster_displayname}
                         </p> {/* Displaying Poster Username */}
                         <p> {post.post_location && post.post_location.join(" • ")} </p>

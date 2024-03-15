@@ -20,7 +20,6 @@ export default function HomePage() {
     // Jayvee
     // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
     const [postData, setPostData] = useState([])
-
     // this below version is about appropriate for debug
     // const [postData, setPostData] = useState([
     //     {
@@ -62,13 +61,16 @@ export default function HomePage() {
         // Parsing the response data to JSON format.
         const jsonData = await response.json();
 
+        for (const element of jsonData) {
+            element.post_timestamp = new Date(element.post_timestamp)
+        }
+
         // Jayvee, Edited by Le Duong
         // Updating the 'postData' state with the fetched JSON data.
         setPostData(prevData => [...prevData, ...jsonData]); //concatenantes prevData with new data (jsonData)
         setPage(page + 1); //increments page to load new set of posts when scrolling
         setHasMore(jsonData.length > 0); //checks if there is more posts to fetch and populate on main feed
         //otherwise, hasMore will be set to false meaning no new posts can be fetched
-
       } catch (error) {
         // Jayvee
         // Catching any errors that occur during the fetch process and logging them.
@@ -130,14 +132,23 @@ export default function HomePage() {
                             <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
                         </div>
                         <div>
+                            <p>
+                                {post.post_timestamp.toLocaleString(
+                                    'default', 
+                                    { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true }
+                                )}
+                            </p>
+                            
                             <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
                             <span className='whiteFont'>{post.post_likes}</span>
                             <p>{post.car_details}</p> {/* Display Car Details */}
-                            <p>{post.post_uuid} {post.post_timestamp}</p>
+                            <p>{post.post_uuid}</p>
                         </div>
                     </div>
                 </li>
                 ))}
+
+                {/* !hasMore && <li> nothing more to show </li> */}
             </ul>
         </InfiniteScroll> 
         <button onClick={() => {navigate("/")}}>Go to Test Page</button>

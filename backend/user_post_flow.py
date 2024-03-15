@@ -232,7 +232,7 @@ def feed():
                 "car_start_year": start_year,
                 "car_end_year": end_year,
                 "post_uuid": uuid,
-                "post_timestamp": timestamp,
+                "post_timestamp": timestamp.isoformat(),
                 "post_likes": likes,
                 "post_location": [state, county, place],
             } for displayname, pfp_id, img_bin, 

@@ -1,11 +1,16 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import "./NavBar.css";
 
-import Garage from "../images/garage.png";
-import Home from "../images/home.png";
-import camera from "../images/camera.png";
-import search from "../images/search.png";
-import puzzle from "../images/puzzle.png";
+import GarageBlue from "../images/garageBlue.png";
+import HomeBlue from "../images/homeBlue.png";
+import CameraBlue from "../images/cameraBlue.png";
+import SearchBlue from "../images/searchBlue.png";
+import PuzzleBlue from "../images/puzzleBlue.png";
+import GarageOrange from "../images/garageOrange.png";
+import HomeOrange from "../images/homeOrange.png";
+import CameraOrange from "../images/cameraOrange.png";
+import SearchOrange from "../images/searchOrange.png";
+import PuzzleOrange from "../images/puzzleOrange.png";
 
 export default function NavBar() {
     const location = useLocation(); // State to track current page
@@ -16,26 +21,37 @@ export default function NavBar() {
         navigate(path); // Navigate to the selected page
     };
 
-    
-    
+    // Object to map page paths to corresponding blue and orange icons
+    const buttonIcons = {
+        "/home": { blue: HomeBlue, orange: HomeOrange },
+        "/search": { blue: SearchBlue, orange: SearchOrange },
+        "/camera": { blue: CameraBlue, orange: CameraOrange },
+        "/daily": { blue: PuzzleBlue, orange: PuzzleOrange },
+        "/garage": { blue: GarageBlue, orange: GarageOrange }
+    };
+
+    // Function to determine which icon to use based on the active state
+    const getIcon = (path) => {
+        const isActive = location.pathname === path;
+        return isActive ? buttonIcons[path].orange : buttonIcons[path].blue;
+    };
 
     return (
         <div className="navbar">
-            <button onClick={() => handleNavigation("/home")} className={`nbtn ${location.pathname === "/home" ? "active" : ""}`}>
-                <img width="60%" src={Home} alt="Home Page"/>
-            </button>
-            <button onClick={() => handleNavigation("/search")} className={`nrej ${location.pathname === "/search" ? "active" : ""}`}>
-                <img width="60%" src={search} alt="Search Page"/>
-            </button>
-            <button onClick={() => handleNavigation("/camera")} className={`nrej ${location.pathname === "/camera" ? "active" : ""}`}>
-                <img width="60%" src={camera} alt="Begin Identification"/>
-            </button>
-            <button onClick={() => handleNavigation("/daily")} className={`nrej ${location.pathname === "/daily" ? "active" : ""}`}>
-                <img width="60%" src={puzzle} alt="Daily Event Page"/>
-            </button>
-            <button onClick={() => handleNavigation("/garage")} className={`nbtn ${location.pathname === "/garage" ? "active" : ""}`}>
-                <img width="60%" src={Garage} alt="Garage Page"/>
-            </button>
+            {Object.keys(buttonIcons).map(path => (
+                <button 
+                    key={path}
+                    onClick={() => handleNavigation(path)} 
+                    className={`nbtn ${location.pathname === path ? "active" : ""}`}
+                >
+                    <img 
+                        width="60%" 
+                        src={getIcon(path)} 
+                        alt={path.substring(1)} 
+                        style={path === '/search' ? { maxWidth: '32px' } : null} // Conditional styling for the search button
+                    />
+                </button>
+            ))}
         </div>
     );
 }

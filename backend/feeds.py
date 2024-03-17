@@ -144,6 +144,54 @@ def user_feed(user=None):
                     "count": count
                 } for (manu_id, manu_name, count) in cursor.fetchall()
             ])
-    else: # headers['type'] == 'LIST'
-        return jsonify([]), 200
+    
+    # So the case of displaying Brand Tiles when Type=Manufacturer but no Specified Manufacturer is over.
+    #   The reason that one is the odd-one out is because it doesn't serve a feed. The only difference
+    #   between a Make=id feed and generic list feed is the one line of SQL WHERE make=...
+    sql_make_filter = "" if headers['Type'] == 'LIST' else " WHERE m.id=%s "
+    sql_query = """
+    SELECT 
+        post.id,
+        u.displayname,
+        u.profile_picture_id,
+        pic.img_bin,
+        m.name,
+        c.model_name,
+        c.start_year,
+        c.end_year,
+        c.description,
+        post.public_id,
+        post.datetime,
+        CASE
+            WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_us_states WHERE st_contains(geom, post.location) LIMIT 1)
+            ELSE NULL
+        END AS state,
+        CASE
+            WHEN post.location IS NOT NULL THEN (SELECT namelsad FROM postgis_us_counties WHERE st_contains(geom, post.location) LIMIT 1)
+            ELSE NULL
+        END AS county,
+        CASE
+            WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_places WHERE st_contains(geom, post.location) LIMIT 1)
+            ELSE NULL
+        END AS place,
+        post.likes
+    FROM posts post
+    JOIN users u ON u.id=post.user_id
+    JOIN pictures pic ON pic.id=post.picture_id
+    JOIN cars c ON c.id=post.car_id
+    JOIN manufacturers m ON m.id=c.make
+    """ + user_selector_sql + sql_make_filter + """
+    ORDER BY datetime DESC
+    LIMIT {CHUNK_SIZE};
+    """
+    with db_connection_pool.connection() as conn:
+        cursor = conn.execute(
+            sql_query,
+            (user,) if headers['Type'] == 'LIST' else (user, headers['Make'])
+        )
+        results = cursor.fetchall()
+        
+        return "todo but " + str(len(results)) + " results", 200
+    
+    
     return 'Server Error', 500

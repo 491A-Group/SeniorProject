@@ -18,6 +18,11 @@ import backend.follow # make sure to import this AFTER the blueprint is made to 
 
 ph = PasswordHasher()
 
+@blueprint_users_basic.route('/test_session', methods=['GET'])
+@login_required
+def test_session():
+    return 'Session seems valid', 200
+
 @blueprint_users_basic.route('/login', methods=['POST'])
 def login():
     """ BRIAN
@@ -188,14 +193,6 @@ def garage(displayname=None):
             "pfp_id": pfp,
         }
     ), 200
-
-# @blueprint_users_basic.route('/garage', methods=['GET'])
-# @login_required
-# def current_garage():
-#     """ BRIAN:
-#     Simply the garage of the user currently logged in
-#     """
-#     return garage(current_user.get_int_id())
 
 @blueprint_users_basic.route('/search_users/<query>', methods=['GET'])
 def search(query):

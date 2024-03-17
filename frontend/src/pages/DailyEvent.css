@@ -78,11 +78,12 @@
     background-color: #F4743B; /* Darker orange on hover */
 }
 
-.dailyEventPage .correct-guess {
+/* CSS for correct guess button */
+.dailyEventPage .button-container button.correct {
     background-color: #4CAF50; /* Green button */
 }
 
-/* Style for the incorrect guess */
-.dailyEventPage .incorrect-guess {
+/* CSS for incorrect guess button */
+.dailyEventPage .button-container button.incorrect {
     background-color: #FF5733; /* Red button */
 }

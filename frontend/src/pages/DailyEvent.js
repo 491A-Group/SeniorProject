@@ -55,6 +55,7 @@ export default function DailyEvent() {
                     <div className="image-container">
                         <img src={CarGuess} alt="Car" className="cropped-image" style={{ transform: `scale(${zoomScale})` }} />
                     </div>
+                    <br />
                     {/* Render the guess buttons */}
                     <div>
                         <div className="button-container">
@@ -66,7 +67,6 @@ export default function DailyEvent() {
                         {/* Render "Guesses Left" counter */}
                         <p>Guesses Left: {remainingGuesses}</p>
                         {/* Hint button */}
-                        <br />
                         <button className="hint-button" onClick={handleHint} disabled={disableGuessing}>Hint</button>
                     </div>
                     {/* Render the message */}

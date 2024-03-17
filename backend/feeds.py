@@ -148,6 +148,9 @@ def user_feed(user=None):
     # So the case of displaying Brand Tiles when Type=Manufacturer but no Specified Manufacturer is over.
     #   The reason that one is the odd-one out is because it doesn't serve a feed. The only difference
     #   between a Make=id feed and generic list feed is the one line of SQL WHERE make=...
+        
+
+    # DONT FORGET TODO SESSION FOR SEEN POSTS mimic home feed
     sql_make_filter = "" if headers['Type'] == 'LIST' else " WHERE m.id=%s "
     sql_query = """
     SELECT 

@@ -57,8 +57,6 @@ def feed():
             ORDER BY datetime DESC
             LIMIT {CHUNK_SIZE};
             """,
-            #[session.get('home_feed')]
-            #[session.get('home_feed')]
             [known_feed]
         )
         query_results = cursor.fetchall()
@@ -151,7 +149,9 @@ def user_feed(user=None):
         
 
     # DONT FORGET TODO SESSION FOR SEEN POSTS mimic home feed
-    sql_make_filter = "" if headers['Type'] == 'LIST' else " WHERE m.id=%s "
+    sql_make_filter = "" if headers['Type'] == 'LIST' else " AND m.id=%s "
+    #print(headers)
+    
     sql_query = """
     SELECT 
         post.id,
@@ -183,7 +183,7 @@ def user_feed(user=None):
     JOIN pictures pic ON pic.id=post.picture_id
     JOIN cars c ON c.id=post.car_id
     JOIN manufacturers m ON m.id=c.make
-    """ + user_selector_sql + sql_make_filter + """
+    """ + user_selector_sql + sql_make_filter + f"""
     ORDER BY datetime DESC
     LIMIT {CHUNK_SIZE};
     """
@@ -194,7 +194,35 @@ def user_feed(user=None):
         )
         results = cursor.fetchall()
         
-        return "todo but " + str(len(results)) + " results", 200
-    
+        [result[0] for result in results] # list of id's to add to session
+
+        posts_to_serve = [
+            {
+                "poster_displayname": displayname,
+                "poster_pfp": pfp_id,
+                "post_image": base64.b64encode(img_bin).decode('utf-8'),
+                "car_model": model,
+                "car_make": make,
+                "car_details": description,
+                "car_start_year": start_year,
+                "car_end_year": end_year,
+                "post_uuid": uuid,
+                "post_timestamp": timestamp.isoformat(),
+                "post_likes": likes,
+                "post_location": [state, county, place],
+            } for displayname, pfp_id, img_bin, 
+                    make, model, start_year, end_year, description,
+                    uuid, timestamp, state, county, place, likes in [result[1:] for result in results]
+        ]
+        # since conditionals in python list comprehension is tricky I drop null values here
+        for post in posts_to_serve:
+            if post["post_location"] == [None, None, None]:
+                del post["post_location"]
+        #print(posts_to_serve)
+
+        # please indicate to users when there are no more posts to show, indicated with 206 response code.
+        if len(results) < CHUNK_SIZE:
+            return jsonify(posts_to_serve), 206
+        return jsonify(posts_to_serve), 200
     
     return 'Server Error', 500

@@ -48,7 +48,7 @@ export default function NavBar() {
                         width="60%" 
                         src={getIcon(path)} 
                         alt={path.substring(1)} 
-                        style={path === '/search' ? { maxWidth: '32px' } : null} // Conditional styling for the search button
+                        style={path === '/search' ? { maxWidth: '30px' } : null} // Conditional styling for the search button
                     />
                 </button>
             ))}

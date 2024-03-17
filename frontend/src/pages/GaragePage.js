@@ -7,6 +7,8 @@ import './GaragePage.css';
 import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
 
+import heart from '../images/heart.png';
+
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {
     const navigate = useNavigate();
@@ -24,9 +26,12 @@ export default function Garage() {
     const [displayname, setDisplayname] = useState('')
     const [pfpId, setPfpId] = useState(1)
 
-    // SOMEONE PLEASE FIGURE OUT LOGIC AROUND HERE FOR grid view vs list view
-    // im saying you probably want a state so you can do conditional render
+    // -2 for manufacturerList
+    // -1 for list
+    // positive integer for manufacturer ID
+    const [viewState, setViewState] = useState(-2)
     const [manufacturerList, setManufacturerList] = useState([{id: 96, name: "", count: "",}])
+    const [postsData, setPostsData] = useState()
 
     //Brian helped work on this function to fetch data from the database
     const fetchData = async () => {
@@ -76,6 +81,51 @@ export default function Garage() {
             console.error('Error fetching data:', error);
         }
     }
+
+    useEffect(() => {
+        // updates feeds since they share the posts data state
+        //      since the manufacturer list has its own state it isn't included here.
+        //      you can change this however is cleanest to program/whatever you see fit.
+        //      i just decided to do it like this since im clueless about frontend
+        //      however the manufacturerList should be a comparatively small amount of data
+        setPostsData([]) // just clear the feed until new data is loaded. probably tinker with this
+        
+        const query_destination = window.location.origin + '/garage_feed' + (is_self ? '' : '/' + profile)
+        let request_header = new Headers();
+        
+        const fetch_feed = async () => {
+            try {
+                //console.log("about to get @: ", query_destination)
+                const response = await fetch(
+                    query_destination,
+                    {
+                        headers: request_header
+                    }
+                );
+                if (!response.ok) {
+                    console.log("network error for manufacturer list")
+                    throw new Error('Network response was not ok');
+                }
+                const jsonData = await response.json();
+                //console.log(jsonData)
+                setPostsData(jsonData)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        if (viewState == -1) {
+            request_header.append("Type", "LIST")
+            fetch_feed()
+        }
+
+        else if (viewState > 0) {
+            request_header.append("Type", "MAKE")
+            request_header.append("Make", viewState)
+            fetch_feed()
+        }
+
+    }, [viewState]);
 
     useEffect(() => {
         //GET INFORMATION ON THE PAGE WHEN THE PAGE LOADS
@@ -179,22 +229,75 @@ export default function Garage() {
             {renderFollowButton(followStatus)}
 
             <div className="carViewOptions">
-                <button className="carbtn">Grid View</button>
-                <button className="carbtn">List View</button>
+                <button className="carbtn" onClick={() => setViewState(-2)}>Grid View</button>
+                <button className="carbtn" onClick={() => setViewState(-1)}>List View</button>
             </div>
 
+            {
+                viewState == -2 &&
+                <div className="manufacturerGrid">
+                    {/* Car brand logos will be rendered here */}
+                    {manufacturerList.map((manufacturer, index) => (   
+                        <button className="manufacturerButton" onClick={() => setViewState(manufacturer.id) }>
+                            <img src={window.location.origin + "/brand/" + manufacturer.id + "/logo.svg"}/>
+                            <p>{manufacturer.name}: {manufacturer.count}</p>
+                        </button>
+                    ))}
+                </div>
+            }
 
-            {/*make this manufacturer grid conditionally rendered when there is grid view*/}
-            <div className="manufacturerGrid">
-                {/* Car brand logos will be rendered here */}
-                {manufacturerList.map((manufacturer, index) => (   
-                    <div className="manufacturerButton">
-                        <img src={window.location.origin + "/brand/" + manufacturer.id + "/logo.svg"}/>
-                        <p>{manufacturer.name}: {manufacturer.count}</p>
-                    </div>
-                ))}
-            </div>
+            
+            {
+                viewState > -2 &&
+                <div>
+                    <h2>someone please make an infinite feed component to put here</h2>
+                    
+                    {/* THIS PORTION IS REPEATED FROM MAIN FEED PLEASE MAKE A REUSABLE COMPONENT*/}
+                    {postsData.map((post, index) => (    
+                        <div className="post" key={index}>
+                            <div>
+                                <p>
+                                    <img className="postPfp" src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */} 
+                                    {post.poster_displayname}
+                                </p> {/* Displaying Poster Username */}
+                                <p> {post.post_location && post.post_location.join(" • ")} </p>
+                            </div>
+                            <div className="cardHeader">
+                                <img src={post.make_icon} alt={post.car_make} /> {/* Display Car Brand Icon/Logo */}
+                                <h2>
+                                {
+                                post.car_make + ' ' +
+                                post.car_model + ' ' +
+                                post.car_start_year + '-' + post.car_end_year
+                                }
+                                </h2> {/* Display Car's Name (Year/Make/Model) */}
+                            </div>
+                            <div className="main">
+                                <div className="imageContainer">
+                                    {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
+                                    <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
+                                </div>
+                                <div>
+                                    <p>
+                                        {post.post_timestamp.toLocaleString(
+                                            'default', 
+                                            { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true }
+                                        )}
+                                    </p>
+                                    
+                                    <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
+                                    <span className='whiteFont'>{post.post_likes}</span>
+                                    <p>{post.car_details}</p> {/* Display Car Details */}
+                                    <p>{post.post_uuid}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    {/* THIS IS WAY TOO LONG TO REPEAT LIKE THIS PLEASE MAKE A REUSABLE COMPONENT */}
 
+
+                </div>
+            }
 
             {/* Or, for list view */}
             {/* <ul className="carList">

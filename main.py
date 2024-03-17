@@ -1,8 +1,9 @@
 """
 Brian wrote this unless portions are denoted otherwise
 """
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template
 from flask_login import LoginManager
+from flask_session import Session
 import configparser
 
 # BRIAN: config.ini
@@ -20,6 +21,10 @@ app = Flask(
 # Perhaps a seed for random? Keeping this key the same often saves sessions between restarts
 app.config['SECRET_KEY'] = config["SECRET_KEY"]["key"]
 
+# sessions for feeds
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 # BRIAN: Load routes for static assets in Postgres
 from backend.static import blueprint_db_static

@@ -102,20 +102,48 @@ def feed():
     return 'Server Error', 500
 
 
+@blueprint_user_post_flow.route('/garage_feed', methods=['GET'])
 @blueprint_user_post_flow.route('/garage_feed/<user>', methods=['GET'])
 def user_feed(user=None):
     # Type is MAKE or LIST
     # list is more similar to the home feed
     # if type=make but there is no make provided then it's the list of makes and their quantities
 
-    headers = request.headers
-    if 'Type' not in headers:
-        return 'Missing header "Type"="MAKE"|"LIST"', 400
-
+    # basic user checks are done
     if user is not None and len(user) > 32:
         return 'Valid displayname provided?', 400
-
     if user is None:
         user = current_user.get_int_id()
+    user_selector_sql = " WHERE u.id = %s " if type(user) is int else " WHERE u.displayname = %s "
 
+    # logic for which type of request
+    headers = request.headers
+    if 'Type' not in headers or headers['Type'] not in ('MAKE', 'LIST'):
+        return 'Missing/invalid header "Type"="MAKE"|"LIST"', 400
+    elif headers['Type'] == 'MAKE' and 'Make' not in headers: 
+        # Generic MAKEs page; showing icons of manufacturers. 
+        # MAKE is the value for key 'Type' and Make is not a key in headers. 
+        with db_connection_pool.connection() as conn:
+            cursor = conn.execute(
+                """
+                SELECT m.id, m.name, COUNT(*)
+                FROM users u
+                JOIN posts p ON p.user_id = u.id
+                JOIN cars c ON c.id = p.car_id
+                JOIN manufacturers m ON m.id = c.make
+                """ + user_selector_sql + """
+                GROUP BY m.id
+                ORDER BY COUNT(*) DESC
+                """,
+                (user,)
+            )
+            return jsonify([
+                {
+                    "id": manu_id,
+                    "name": manu_name,
+                    "count": count
+                } for (manu_id, manu_name, count) in cursor.fetchall()
+            ])
+    else: # headers['type'] == 'LIST'
+        return jsonify([]), 200
     return 'Server Error', 500

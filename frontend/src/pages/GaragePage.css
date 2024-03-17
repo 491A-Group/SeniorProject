@@ -57,24 +57,22 @@
     grid-gap: 20px;
 }
 
-.carItem {
+.manufacturerButton {
     text-align: center;
     filter: invert(100%);
 }
 
-.carItem img {
+.manufacturerButton img {
     width: 100px;
     height: 100px;
     border-radius: 10px;
 }
 
-.carList {
+.manufacturerGrid {
     list-style: none;
     padding: 0;
-}
-
-.carList li {
-    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .carbtn {
@@ -88,9 +86,9 @@
     cursor: pointer;
     font-family: "Anta", sans-serif;
     font-size: 15px !important;
-  }
+}
 
-  .sbtn {
+.sbtn {
     width: 80%;
     padding: 10px;
     margin: 10px 0;
@@ -102,5 +100,4 @@
     font-family: "Anta", sans-serif;
     margin-right: 5%;
     margin-left: 5%;
-    
-  }
+}

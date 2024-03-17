@@ -21,7 +21,7 @@ app = Flask(
 # Perhaps a seed for random? Keeping this key the same often saves sessions between restarts
 app.config['SECRET_KEY'] = config["SECRET_KEY"]["key"]
 
-# sessions for feeds
+# sessions for feeds. filesystem is one of the lesser-performing options however for this application it will be fine
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)

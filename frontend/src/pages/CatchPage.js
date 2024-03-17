@@ -20,6 +20,7 @@ export default function CatchPage() {
     //this loads the predictions from the server based on the logged in user. It gets all unselected predictions based on the image
     useEffect(() => {
         let request_header = new Headers();
+        
         function makeFetchRequest() { //just define, will call later
             // get the binary for the image
             const binaryData = Buffer.from(

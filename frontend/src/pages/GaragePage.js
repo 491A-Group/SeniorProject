@@ -24,6 +24,10 @@ export default function Garage() {
     const [displayname, setDisplayname] = useState('')
     const [pfpId, setPfpId] = useState(1)
 
+    // SOMEONE PLEASE FIGURE OUT LOGIC AROUND HERE FOR grid view vs list view
+    // im saying you probably want a state so you can do conditional render
+    const [manufacturerList, setManufacturerList] = useState([{id: 96, name: "", count: "",}])
+
     //Brian helped work on this function to fetch data from the database
     const fetchData = async () => {
         try {
@@ -49,6 +53,30 @@ export default function Garage() {
         }
     };
 
+    const fetchManufacturerList = async () => {
+        try {
+            let request_header = new Headers();
+            request_header.append('Type', 'MAKE')
+            const query_destination = window.location.origin + '/garage_feed' + (is_self ? '' : '/' + profile)
+            //console.log("about to get @: ", query_destination)
+            const response = await fetch(
+                query_destination,
+                {
+                    headers: request_header
+                }
+            );
+            if (!response.ok) {
+                console.log("network error for manufacturer list")
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            //console.log(jsonData)
+            setManufacturerList(jsonData)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     useEffect(() => {
         //GET INFORMATION ON THE PAGE WHEN THE PAGE LOADS
         //This functions dependencies is [profile] so it runs whenever we view a new profile and that displayname 
@@ -57,6 +85,7 @@ export default function Garage() {
         //      so if stuff breaks maybe learn how this is supposed to work.
         //console.log(is_self, profile, profile===null)
         fetchData();
+        fetchManufacturerList();
     }, [profile]);
 
     function renderFollowButton(status) {
@@ -153,40 +182,20 @@ export default function Garage() {
                 <button className="carbtn">Grid View</button>
                 <button className="carbtn">List View</button>
             </div>
-            <div className="carGrid">
+
+
+            {/*make this manufacturer grid conditionally rendered when there is grid view*/}
+            <div className="manufacturerGrid">
                 {/* Car brand logos will be rendered here */}
-                {/* <div className="carItem">
-                    <img src = {AcuraLogo}/> Find new Acura Logo, cause this shit is brocken
-                </div> */}
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/50"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/2"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/3"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/4"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/5"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/6"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/70"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/28"}/>
-                </div>
-                <div className="carItem">
-                    <img src={window.location.origin + "/pfp/30"}/>
-                </div>
-                {/* Add more car items as needed */}
+                {manufacturerList.map((manufacturer, index) => (   
+                    <div className="manufacturerButton">
+                        <img src={window.location.origin + "/brand/" + manufacturer.id + "/logo.svg"}/>
+                        <p>{manufacturer.name}: {manufacturer.count}</p>
+                    </div>
+                ))}
             </div>
+
+
             {/* Or, for list view */}
             {/* <ul className="carList">
                 <li>Car Brand 1</li>

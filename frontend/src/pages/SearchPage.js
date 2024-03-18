@@ -8,11 +8,8 @@ export default function SearchPage() {
     const [searchResults, setSearchResults] = useState([]);
 
     const handleChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
-  
-    const handleSubmit = (event) => {
-        event.preventDefault();
+        const newSearchTerm = event.target.value;
+        setSearchTerm(newSearchTerm);
         try {
             fetch(window.location.origin + '/search_users/' + searchTerm)
             .then(response => {
@@ -36,7 +33,7 @@ export default function SearchPage() {
     //the main return to display the home page or main feed
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={e => e.preventDefault()}>
                 <input
                   type="text"
                   placeholder="Search Profiles"

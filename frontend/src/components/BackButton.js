@@ -10,7 +10,7 @@ export default function BackButton({ enableBackButton }){
 
     if (enableBackButton) {
         return (
-            <button className="backButton" style ={{width: '10%'}} onClick={() => navigate(-1)}>
+            <button className="backButton" onClick={() => navigate(-1)}>
                  &lt;
             </button>
         );

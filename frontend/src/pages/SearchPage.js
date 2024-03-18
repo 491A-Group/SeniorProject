@@ -39,7 +39,7 @@ export default function SearchPage() {
                   placeholder="Search Profiles"
                   value={searchTerm}
                   onChange={handleChange}
-                  style={{width: '100%'}}
+                  style={{width: '98%'}}
                 />
             </form>
             <RenderUserList users={searchResults}></RenderUserList>

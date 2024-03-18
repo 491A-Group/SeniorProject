@@ -39,8 +39,8 @@ export default function SearchPage() {
                   placeholder="Search Profiles"
                   value={searchTerm}
                   onChange={handleChange}
+                  style={{width: '100%'}}
                 />
-                <button type="submit" className = "searchButton">Search</button>
             </form>
             <RenderUserList users={searchResults}></RenderUserList>
             <NavBar />

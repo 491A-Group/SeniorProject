@@ -43,8 +43,10 @@ export default function RelationList() {
     }, [allUsers])
 
     const handleFilterChange = (event) => {
-        setFilterText(event.target.value);
-        console.log(filterText)
+        const searchText = event.target.value.toLowerCase();
+        setFilterText(searchText);
+        const filtered = allUsers.filter(user => user.displayname.toLowerCase().includes(searchText));
+        setFilteredUsers(filtered)
     };
 
     return <>
@@ -58,7 +60,7 @@ export default function RelationList() {
             type="text"
             value={filterText}
             onChange={handleFilterChange}
-            placeholder="TODO filter"
+            placeholder="Displayname"
         />
         <RenderUserList users={filteredUsers}></RenderUserList>
     </>

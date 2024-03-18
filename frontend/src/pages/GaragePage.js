@@ -144,6 +144,7 @@ export default function Garage() {
         //console.log(is_self, profile, profile===null)
         fetchData();
         fetchManufacturerList();
+        handleGridViewClick();
     }, [profile]);
 
     function renderFollowButton(status) {

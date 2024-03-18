@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import loading from "../images/loading.gif";
-import NoZoomOnTextBox from '../components/NoZoomOnTextBox';
   
 
 export default function LoginPage() {
@@ -252,7 +251,6 @@ export default function LoginPage() {
   //added error messages when user tries to login/register with invalid password
   return (
       <div className="loginpage">
-        <NoZoomOnTextBox />
         <div className="container">
             <h1 className="h1">SportsCar Spotter 🏎️ 💨</h1>
             

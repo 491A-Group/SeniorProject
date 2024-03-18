@@ -12,7 +12,7 @@ const Post = ({ post }) => {
                 <p> {post.post_location && post.post_location.join(" • ")} </p>
             </div>
             <div className="cardHeader">
-                <img src={post.make_icon} alt={post.car_make} />
+                <img src={window.location.origin+'/brand/'+post.car_make_id+'/logo.svg'} alt={post.car_make} />
                 <h2>
                     {
                         post.car_make + ' ' +

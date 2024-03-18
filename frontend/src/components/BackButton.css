@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
 .backButton {
-    position: fixed;
-    top:auto;
-    left: auto;
     background-color: #FF521B;
     color: white;
     font-family: "Anta", sans-serif;
@@ -15,5 +12,23 @@
 }
 
 .backButton:hover {
+    background-color: #F4743B;
+}
+
+ .upButton {
+    position: fixed;
+    right: 0;
+    background-color: #FF521B;
+    color: white;
+    font-family: "Anta", sans-serif;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 10%;
+    border-radius: 5px;
+
+ }
+
+ .upButton:hover {
     background-color: #F4743B;
 }

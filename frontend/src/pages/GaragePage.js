@@ -6,6 +6,7 @@ import './GaragePage.css';
 
 import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
+import UpButton from '../components/UpButton';
 import Post from '../components/Post';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -30,7 +31,7 @@ export default function Garage() {
     // -1 for list
     // positive integer for manufacturer ID
     const [viewState, setViewState] = useState(-2)
-    const [gridButtonColor, setGridButtonColor] = useState("#FF521B");
+    const [gridButtonColor, setGridButtonColor] = useState("#983517");
     const [listButtonColor, setListButtonColor] = useState("#FF521B");
     const [manufacturerList, setManufacturerList] = useState([{id: 96, name: "", count: "",}])
     const [postsData, setPostsData] = useState()
@@ -195,8 +196,14 @@ export default function Garage() {
             if (location.state.enable_back_button) {
                 return <BackButton enableBackButton={true} />
             } 
+        } 
+    };
+
+    const renderUpButton = () => {
+        if (postsData && postsData.length > 0) {
+            return <UpButton />;
         }
-    }
+    };
 
     const handleGridViewClick = () => {
         setViewState(-2);
@@ -213,6 +220,7 @@ export default function Garage() {
     return (
         <div>
             {renderBackButton()}
+            {renderUpButton()}
 
             <div className="garageContainer">
             <div className="userInfo">

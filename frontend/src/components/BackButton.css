@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
 .backButton {
+    position: fixed;
+    top:auto;
+    left: auto;
     background-color: #FF521B;
     color: white;
     font-family: "Anta", sans-serif;

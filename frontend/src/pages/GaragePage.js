@@ -128,6 +128,8 @@ export default function Garage() {
             fetch_feed()
         }
 
+        handleGridViewClick();
+
     }, [viewState]);
 
     useEffect(() => {

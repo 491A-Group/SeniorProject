@@ -26,6 +26,8 @@
     cursor: pointer;
     width: 10%;
     border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 
  }
 
@@ -34,9 +36,9 @@
 }
 
 .visible {
-    display: block;
+    opacity: 1;
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
 }

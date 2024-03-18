@@ -8,7 +8,7 @@ const UpButton = () => {
         const handleScroll = () => {
             // Check if the user has scrolled past a certain point (e.g., 100 pixels)
             const scrollPosition = window.scrollY;
-            if (scrollPosition > 100) {
+            if (scrollPosition > 300) {
                 setIsVisible(true);
             } else {
                 setIsVisible(false);

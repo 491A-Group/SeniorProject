@@ -6,6 +6,7 @@ import './GaragePage.css';
 
 import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
+import Post from '../components/Post';
 
 import heart from '../images/heart.png';
 
@@ -253,45 +254,8 @@ export default function Garage() {
                     <h2>someone please make an infinite feed component to put here</h2>
                     
                     {/* THIS PORTION IS REPEATED FROM MAIN FEED PLEASE MAKE A REUSABLE COMPONENT*/}
-                    {postsData.map((post, index) => (    
-                        <div className="post" key={index}>
-                            <div>
-                                <p>
-                                    <img className="postPfp" src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} /> {/* Displaying Poster's Profile Picture */} 
-                                    {post.poster_displayname}
-                                </p> {/* Displaying Poster Username */}
-                                <p> {post.post_location && post.post_location.join(" • ")} </p>
-                            </div>
-                            <div className="cardHeader">
-                                <img src={post.make_icon} alt={post.car_make} /> {/* Display Car Brand Icon/Logo */}
-                                <h2>
-                                {
-                                post.car_make + ' ' +
-                                post.car_model + ' ' +
-                                post.car_start_year + '-' + post.car_end_year
-                                }
-                                </h2> {/* Display Car's Name (Year/Make/Model) */}
-                            </div>
-                            <div className="main">
-                                <div className="imageContainer">
-                                    {/*<img src={post.icon} alt={post.name} />*/} {/* Redisplay Car Brand Icon/Logo */}
-                                    <img src={'data:image/jpg;base64,' + post.post_image} alt={post.car_model} className='postImage'/> {/* Display Car Image */}
-                                </div>
-                                <div>
-                                    <p>
-                                        {post.post_timestamp.toLocaleString(
-                                            'default', 
-                                            { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true }
-                                        )}
-                                    </p>
-                                    
-                                    <img src={heart} alt={post.post_likes} className='likeImage'/> {/* Display Number of Likes on Post */}
-                                    <span className='whiteFont'>{post.post_likes}</span>
-                                    <p>{post.car_details}</p> {/* Display Car Details */}
-                                    <p>{post.post_uuid}</p>
-                                </div>
-                            </div>
-                        </div>
+                    {postsData.map((post, index) => (
+                        <Post key = {index} post = {post} />
                     ))}
                     {/* THIS IS WAY TOO LONG TO REPEAT LIKE THIS PLEASE MAKE A REUSABLE COMPONENT */}
 

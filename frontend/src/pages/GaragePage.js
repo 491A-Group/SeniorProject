@@ -86,6 +86,11 @@ export default function Garage() {
     }
 
     useEffect(() => {
+        handleGridViewClick();
+      }, []);
+      
+
+    useEffect(() => {
         // updates feeds since they share the posts data state
         //      since the manufacturer list has its own state it isn't included here.
         //      you can change this however is cleanest to program/whatever you see fit.
@@ -127,8 +132,6 @@ export default function Garage() {
             request_header.append("Make", viewState)
             fetch_feed()
         }
-
-        handleGridViewClick();
 
     }, [viewState]);
 

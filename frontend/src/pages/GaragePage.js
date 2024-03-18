@@ -7,8 +7,7 @@ import './GaragePage.css';
 import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
 import Post from '../components/Post';
-
-import heart from '../images/heart.png';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {
@@ -31,6 +30,8 @@ export default function Garage() {
     // -1 for list
     // positive integer for manufacturer ID
     const [viewState, setViewState] = useState(-2)
+    const [gridButtonColor, setGridButtonColor] = useState("#FF521B");
+    const [listButtonColor, setListButtonColor] = useState("#FF521B");
     const [manufacturerList, setManufacturerList] = useState([{id: 96, name: "", count: "",}])
     const [postsData, setPostsData] = useState()
 
@@ -197,6 +198,18 @@ export default function Garage() {
         }
     }
 
+    const handleGridViewClick = () => {
+        setViewState(-2);
+        setGridButtonColor("#983517"); 
+        setListButtonColor("#FF521B"); 
+    };
+
+    const handleListViewClick = () => {
+        setViewState(-1);
+        setListButtonColor("#983517"); 
+        setGridButtonColor("#FF521B"); 
+    };
+
     return (
         <div>
             {renderBackButton()}
@@ -230,8 +243,8 @@ export default function Garage() {
             {renderFollowButton(followStatus)}
 
             <div className="carViewOptions">
-                <button className="carbtn" onClick={() => setViewState(-2)}>Grid View</button>
-                <button className="carbtn" onClick={() => setViewState(-1)}>List View</button>
+            <button className="carbtn" style={{ backgroundColor: gridButtonColor }} onClick={handleGridViewClick}> Grid View </button>
+                <button className="carbtn" style={{ backgroundColor: listButtonColor }} onClick={handleListViewClick}> List View </button>
             </div>
 
             {
@@ -251,15 +264,11 @@ export default function Garage() {
             {
                 viewState > -2 &&
                 <div>
-                    <h2>someone please make an infinite feed component to put here</h2>
-                    
                     {/* THIS PORTION IS REPEATED FROM MAIN FEED PLEASE MAKE A REUSABLE COMPONENT*/}
                     {postsData.map((post, index) => (
                         <Post key = {index} post = {post} />
                     ))}
                     {/* THIS IS WAY TOO LONG TO REPEAT LIKE THIS PLEASE MAKE A REUSABLE COMPONENT */}
-
-
                 </div>
             }
 

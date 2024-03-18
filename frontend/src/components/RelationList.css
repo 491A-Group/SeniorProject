@@ -1,0 +1,10 @@
+/* Just to change the font on RelationList for rn and maybe if we want to style the list anymore */
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+
+body,
+input,
+h2,
+table {
+    font-family: 'Anta', sans-serif;
+}

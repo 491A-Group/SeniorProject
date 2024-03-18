@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import RenderUserList from './RenderUserList';
+import BackButton from './BackButton';
 
 // BRIAN: this component takes a state thats a list of objects. each object is a user with profile picture and displayname
 //    this is to be used in at least 3 locations: search, followers, following. it's useful to keep them styled similarly
@@ -49,7 +50,7 @@ export default function RelationList() {
     return <>
         <table>
             <tr>
-                <button onClick={() => {navigate(-1)}}>back</button>
+                <BackButton enableBackButton={true}/>
                 <h2>{location.state.owner}</h2>
             </tr>
         </table>

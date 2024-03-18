@@ -127,3 +127,17 @@ body {
 .whiteFont {
     color: white;
 }
+
+.searchButton {
+    background-color: #FF521B;
+    color: white;
+    font-family: "Anta", sans-serif;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.searchButton:hover {
+    background-color: #F4743B;
+}

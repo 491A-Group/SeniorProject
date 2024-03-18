@@ -43,7 +43,7 @@ export default function SearchPage() {
                   value={searchTerm}
                   onChange={handleChange}
                 />
-                <button type="submit">Search</button>
+                <button type="submit" className = "searchButton">Search</button>
             </form>
             <RenderUserList users={searchResults}></RenderUserList>
             <NavBar />

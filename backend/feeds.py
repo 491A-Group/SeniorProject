@@ -29,6 +29,7 @@ def feed():
                 u.profile_picture_id,
                 pic.img_bin,
                 m.name,
+                m.id,
                 c.model_name,
                 c.start_year,
                 c.end_year,
@@ -76,6 +77,7 @@ def feed():
                 "post_image": base64.b64encode(img_bin).decode('utf-8'),
                 "car_model": model,
                 "car_make": make,
+                "car_make_id": make_id,
                 "car_details": description,
                 "car_start_year": start_year,
                 "car_end_year": end_year,
@@ -84,7 +86,7 @@ def feed():
                 "post_likes": likes,
                 "post_location": [state, county, place],
             } for displayname, pfp_id, img_bin, 
-                    make, model, start_year, end_year, description,
+                    make, make_id, model, start_year, end_year, description,
                     uuid, timestamp, state, county, place, likes in [result[1:] for result in query_results]
         ]
         # since conditionals in python list comprehension is tricky I drop null values here
@@ -159,6 +161,7 @@ def user_feed(user=None):
         u.profile_picture_id,
         pic.img_bin,
         m.name,
+        m.id,
         c.model_name,
         c.start_year,
         c.end_year,
@@ -203,6 +206,7 @@ def user_feed(user=None):
                 "post_image": base64.b64encode(img_bin).decode('utf-8'),
                 "car_model": model,
                 "car_make": make,
+                "car_make_id": make_id,
                 "car_details": description,
                 "car_start_year": start_year,
                 "car_end_year": end_year,
@@ -211,7 +215,7 @@ def user_feed(user=None):
                 "post_likes": likes,
                 "post_location": [state, county, place],
             } for displayname, pfp_id, img_bin, 
-                    make, model, start_year, end_year, description,
+                    make, make_id, model, start_year, end_year, description,
                     uuid, timestamp, state, county, place, likes in [result[1:] for result in results]
         ]
         # since conditionals in python list comprehension is tricky I drop null values here

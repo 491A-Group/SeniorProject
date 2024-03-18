@@ -32,3 +32,11 @@
  .upButton:hover {
     background-color: #F4743B;
 }
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

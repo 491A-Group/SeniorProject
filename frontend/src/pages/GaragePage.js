@@ -262,7 +262,7 @@ export default function Garage() {
                     {manufacturerList.map((manufacturer, index) => (   
                         <button className="manufacturerButton" onClick={() => setViewState(manufacturer.id) }>
                             <img src={window.location.origin + "/brand/" + manufacturer.id + "/logo.svg"}/>
-                            <p>{manufacturer.name}: {manufacturer.count}</p>
+                            <p style = {{color : 'white'}}>{manufacturer.name}: {manufacturer.count}</p>
                         </button>
                     ))}
                 </div>

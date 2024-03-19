@@ -107,12 +107,12 @@ export default function FeatureRequest() {
 
     return (
         <>
-        <div className = "featureRequestPage">
         <BackButton enableBackButton={true} />
+        <div className = "featureRequestPage">
             <div className = "container" >
                 <p>Please do not submit multiple requests of the same kind</p>
                 <input type="text" value={field} onChange={handleFieldUpdate} placeholder="Describe your bug or suggestion"/>
-                <button onClick={() => {handleSubmit()}}>Submit</button>
+                <button className = "Button" onClick={() => {handleSubmit()}}>Submit</button>
                 <p><span style={{ color: field.length > 500 ? 'red' : 'white' }}>{field.length}</span>/500</p>
                 {isLoading && <img src = {loading} width="25vw" />}
 

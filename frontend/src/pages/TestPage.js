@@ -81,6 +81,8 @@ export default function TestPage() {
             <button onClick={() => {navigate("/home")}}>Home Page!</button>
             <button onClick={() => {navigate("/camera")}}>Camera Page!</button>
             <button onClick={() => {navigate("/bug-report")}}>Feature Request Page!</button>
+            <button onClick={() => {navigate("/settings")}}>Settings Page!</button>
+            
             <button onClick={logout}>Log Out</button>
     
             {location && (

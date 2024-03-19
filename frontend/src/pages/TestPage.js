@@ -17,12 +17,6 @@ export default function TestPage() {
     const checkSpeed = (speed) => {
         if (speed > 1) {
             setIsDriving(true);
-<<<<<<< Updated upstream
-            if (denied < 2) {
-                setDenied(1);
-            }
-=======
->>>>>>> Stashed changes
         }
         else {
             setIsDriving(false);
@@ -74,14 +68,7 @@ export default function TestPage() {
         <div>
 
             {denied}
-            
-<<<<<<< Updated upstream
-            {denied}
-            
-            {denied == 1 && ( (
-=======
             {!denied && (isDriving && (
->>>>>>> Stashed changes
                 <div className="popup">
                     <div className="popup-inner">
                         <h2>Are you currently driving?</h2>

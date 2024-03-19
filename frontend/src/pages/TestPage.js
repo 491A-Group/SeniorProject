@@ -21,22 +21,7 @@ export default function TestPage() {
         }
     };
 
-    //Richard
-    //handle logout
-    function logout() {
-        fetch(window.location.origin + "/logout", {
-            method: 'GET'
-        })
-        .then(response => {
-            //Richard
-            //checks if the response is okay
-            if (response.ok) {
-            console.log("logout response received ", response)
-            } else {
-            console.log("logout error")
-            }
-        })
-    }
+    //LOGOUT FUNCTION MOVED TO SETTINGS PAGE
 
 
     useEffect(() => {
@@ -82,8 +67,6 @@ export default function TestPage() {
             <button onClick={() => {navigate("/camera")}}>Camera Page!</button>
             <button onClick={() => {navigate("/bug-report")}}>Feature Request Page!</button>
             <button onClick={() => {navigate("/settings")}}>Settings Page!</button>
-            
-            <button onClick={logout}>Log Out</button>
     
             {location && (
                 <>

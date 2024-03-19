@@ -67,7 +67,7 @@ export default function TestPage() {
     return (
         <div>
             
-            {denied == 1 (isDriving && (
+            {denied == 1 && ( (
                 <div className="popup">
                     <div className="popup-inner">
                         <h2>Are you currently driving?</h2>

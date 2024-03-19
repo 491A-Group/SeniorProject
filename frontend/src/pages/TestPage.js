@@ -31,6 +31,9 @@ export default function TestPage() {
 
     useEffect(() => {
         const watchUserLocation = () => {
+            if (denied== 2){
+                return;
+            }
             const options = {
                 enableHighAccuracy: true,
                 timeout: 1000, //How often we're checking their speed (1 second)
@@ -67,6 +70,8 @@ export default function TestPage() {
     return (
         <div>
 
+            {denied}
+            
             {denied}
             
             {denied == 1 && ( (

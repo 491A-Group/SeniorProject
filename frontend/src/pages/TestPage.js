@@ -42,8 +42,8 @@ export default function TestPage() {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 });
-                setSpeed(convertToFreedomUnits(position.coords.speed));
-                checkDrivingSpeed(speed);
+                const speedFreedomUnits = convertToFreedomUnits(position.coords.speed);
+                setSpeed(speedFreedomUnits, () =>  {checkDrivingSpeed(speedFreedomUnits)});
             };
 
             const error = (err) => {

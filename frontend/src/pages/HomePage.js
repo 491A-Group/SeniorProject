@@ -44,12 +44,23 @@ export default function HomePage() {
     const [hasMore, setHasMore] = useState(true); // State for indicating whether there is more data to fetch
 
 
+    // Filter state variables
+    const [modelFilter, setModelFilter] = useState("");
+    const[makeFilter, setMakeFilter] = useState("");
+    const [yearFilter, setYearFilter] = useState("");
+    const[locationFilter, setLocationFilter] = useState("");
+    
       // Jayvee
       // Async function to fetch data from the specified endpoint.
     const fetchData = async () => {
       try {
+        // Filtering parameters
+        // let apiUrl = window.location.origin + '/feed';
+        // apiUrl += '?model=${modelFilter}&make=${makeFilter}&year=${yearFilter}&location=${locationFilter}';
+
         // Jayvee
         // Fetching data from the provided API endpoint.
+        // const response = await fetch(apiUrl);
         const response = await fetch(window.location.origin + '/feed');
 
         // Jayvee
@@ -80,7 +91,36 @@ export default function HomePage() {
       };
     
     }
-  
+ 
+    // Handle model filter change
+    const handleModelFilterChange = (event) => {
+      setModelFilter(event.target.value);
+    }
+
+    // Handle make filter change
+    const handleMakeFilterChange = (event) => {
+      setMakeFilter(event.target.value);
+    }
+
+    // Handle year filter change
+    const handleYearFilterChange = (event) => {
+      setYearFilter(event.target.value);
+    }
+
+    // Handle location filter change
+    const handleLocationFilterChange = (event) => {
+      setLocationFilter(event.target.value);
+    }
+
+    // Applying filters
+    const filteredPosts = postData.filter(post => {
+      return (
+        (modelFilter === "" || post.car_model === modelFilter) &&
+        (makeFilter === "" || post.car_make === makeFilter) &&
+        (yearFilter === "" || (post.car_start_year <= yearFilter && post.car_end_year >= yearFilter)) &&
+        (locationFilter === "" || post.post_location.includes(locationFilter))
+      );
+    });
     // Jayvee
     // useEffect hook to perform side effects like data fetching when the component mounts.
     useEffect(() => {
@@ -98,7 +138,7 @@ export default function HomePage() {
         <div className="searchPad">
           <img src={Filter} alt="Filter" /> {/* Filter icon */}
           <p> Filters:</p>
-          
+         
           <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button> {/* Search Button */}
         </div>
         <InfiniteScroll

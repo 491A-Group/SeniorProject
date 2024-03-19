@@ -10,8 +10,13 @@ export default function SearchPage() {
     const handleChange = (event) => {
         const newSearchTerm = event.target.value;
         setSearchTerm(newSearchTerm);
+        //console.log(newSearchTerm.length, 'newSearchTerm', newSearchTerm)
+        if (newSearchTerm.length === 0) {
+            setSearchResults([])
+            return
+        }
         try {
-            fetch(window.location.origin + '/search_users/' + searchTerm)
+            fetch(window.location.origin + '/search_users/' + newSearchTerm)
             .then(response => {
                 if (response.ok) {
                     return response.json();

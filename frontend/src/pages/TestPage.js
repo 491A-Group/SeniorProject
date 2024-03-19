@@ -8,7 +8,7 @@ export default function TestPage() {
     const [speed, setSpeed] = useState(null);
     const [isDriving, setIsDriving] = useState(false);
 
-    const [denied, setDenied] = useState(0);
+    const [denied, setDenied] = useState(false);
 
     const convertToFreedomUnits = (speed) => {
         return speed * 2.23694;
@@ -17,9 +17,12 @@ export default function TestPage() {
     const checkSpeed = (speed) => {
         if (speed > 1) {
             setIsDriving(true);
+<<<<<<< Updated upstream
             if (denied < 2) {
                 setDenied(1);
             }
+=======
+>>>>>>> Stashed changes
         }
         else {
             setIsDriving(false);
@@ -72,14 +75,18 @@ export default function TestPage() {
 
             {denied}
             
+<<<<<<< Updated upstream
             {denied}
             
             {denied == 1 && ( (
+=======
+            {!denied && (isDriving && (
+>>>>>>> Stashed changes
                 <div className="popup">
                     <div className="popup-inner">
                         <h2>Are you currently driving?</h2>
                         <p>Please confirm that you are not driving and accept full responsibility for anything that may occur.</p>
-                        <button onClick={() => {setDenied(2)}}>I Agree</button>
+                        <button onClick={() => {setDenied(true)}}>I Agree</button>
                     </div>
                 </div>
             ))}

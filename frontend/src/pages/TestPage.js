@@ -6,10 +6,20 @@ export default function TestPage() {
     const navigate = useNavigate();
     const [location, setLocation] = useState(null);
     const [speed, setSpeed] = useState(null);
+    const [isDriving, setIsDriving] = useState(false);
 
     const convertToFreedomUnits = (speed) => {
         return speed * 2.23694;
     }
+
+    const checkSpeed = (speed) => {
+        if (speed > 1) {
+            setIsDriving(true);
+        }
+        else {
+            setIsDriving(false);
+        }
+    };
 
     //Richard
     //handle logout
@@ -43,7 +53,8 @@ export default function TestPage() {
                     longitude: position.coords.longitude
                 });
                 const speedFreedomUnits = convertToFreedomUnits(position.coords.speed);
-                setSpeed(speedFreedomUnits, () =>  {checkDrivingSpeed(speedFreedomUnits)});
+                setSpeed(speedFreedomUnits);
+                checkSpeed(speedFreedomUnits);
             };
 
             const error = (err) => {
@@ -58,16 +69,8 @@ export default function TestPage() {
         watchUserLocation();
     }, []); 
 
-    const checkDrivingSpeed = (speed) => {
-        if (speed > 1) {
-            if (window.confirm('Are you currently driving? Please confirm that you are a passenger.')) {
-                console.log("User confirmed that they are a passenger")
-            }
-            else {
-                console.log("User said no for some reason.")
-            }
-        }
-    };
+
+
 
     //Richard
     //render buttons that all call the changePage function 
@@ -79,22 +82,25 @@ export default function TestPage() {
             <button onClick={() => {navigate("/camera")}}>Camera Page!</button>
             <button onClick={() => {navigate("/bug-report")}}>Feature Request Page!</button>
             <button onClick={logout}>Log Out</button>
-
+    
             {location && (
                 <>
-                <p>Latitude: {location.latitude}</p>
-                <p>longitude: {location.longitude}</p>
-                <br />
-                <span style = {{color: 'white'}}>Speed: {speed ? speed.toFixed(2) : '0'} mph</span>
-                
-                
+                    <p>Latitude: {location.latitude}</p>
+                    <p>Longitude: {location.longitude}</p>
+                    <br />
+                    <span style={{ color: 'white' }}>Speed: {speed ? speed.toFixed(2) : '0'} mph</span>
                 </>
-                
-
             )}
-
-
+    
+            {isDriving && (
+                <div className="popup">
+                    <div className="popup-inner">
+                        <h2>Are you currently driving?</h2>
+                        <p>Please confirm that you are not driving and accept full responsibility for anything that may occur.</p>
+                        <button>I Agree</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
-
-};
+}    

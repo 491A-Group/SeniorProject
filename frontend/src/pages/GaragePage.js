@@ -36,10 +36,6 @@ export default function Garage() {
     const [manufacturerList, setManufacturerList] = useState([{id: 96, name: "", count: "",}])
     const [postsData, setPostsData] = useState()
 
-    // states for tracking page and data fetch
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-
     //Brian helped work on this function to fetch data from the database
     const fetchData = async () => {
         try {
@@ -60,11 +56,6 @@ export default function Garage() {
             setCatches(jsonData["catches"])
             setDisplayname(jsonData["displayname"])
             setPfpId(jsonData["pfp_id"])
-
-            //Updating 'postsData' with jsonData
-            setPostsData(prevPosts => [...prevPosts, ...jsonData.posts]);
-            setPage(page + 1);
-            setHasMore(jsonData.posts.length > 0);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -266,7 +257,7 @@ export default function Garage() {
             {renderFollowButton(followStatus)}
 
             <div className="carViewOptions">
-                <button className="carbtn" style={{ backgroundColor: gridButtonColor }} onClick={handleGridViewClick}> Grid View </button>
+            <button className="carbtn" style={{ backgroundColor: gridButtonColor }} onClick={handleGridViewClick}> Grid View </button>
                 <button className="carbtn" style={{ backgroundColor: listButtonColor }} onClick={handleListViewClick}> List View </button>
             </div>
 
@@ -286,19 +277,13 @@ export default function Garage() {
             
             {
                 viewState > -2 &&
-                <InfiniteScroll
-                    dataLength={postsData.length}
-                    next={fetchData}
-                    hasMore={hasMore}
-                    loader={<h4>loading...</h4>}
-                    endMessage={<p>No more posts</p>}
-                >
+                <div>
                     {/* THIS PORTION IS REPEATED FROM MAIN FEED PLEASE MAKE A REUSABLE COMPONENT*/}
                     {postsData.map((post, index) => (
                         <Post key = {index} post = {post} />
                     ))}
                     {/* THIS IS WAY TOO LONG TO REPEAT LIKE THIS PLEASE MAKE A REUSABLE COMPONENT */}
-                </InfiniteScroll>
+                </div>
             }
 
             {/* Or, for list view */}

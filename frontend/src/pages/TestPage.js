@@ -1,10 +1,15 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from 'react'; //brian test
+import React, { useState, useEffect } from 'react'; //brian test
 //Testpage done by Richard unless noted otherwise
 
 export default function TestPage() {
     const navigate = useNavigate();
     const [location, setLocation] = useState(null);
+    const [speed, setSpeed] = useState(null);
+
+    const convertToFreedomUnits = (speed) => {
+        return speed * 2.23694;
+    }
 
     //Richard
     //handle logout
@@ -24,21 +29,43 @@ export default function TestPage() {
     }
 
 
+    useEffect(() => {
+        const watchUserLocation = () => {
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 1000, //How often we're checking their speed (1 second)
+                maximumAge: 0
+            };
 
-    const getLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setLocation({
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude
-                    });
-                }, (error) => {
-                    console.error('Error getting geolocation:', error);
-                }
-            );
-        } else {
-            console.error('Geolocation is not supported by this browser.');
+            const success = (position) =>{
+                setLocation({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                });
+                setSpeed(convertToFreedomUnits(position.coords.speed));
+                checkDrivingSpeed(speed);
+            };
+
+            const error = (err) => {
+                console.error('Error obtaining geolocation: ', err);
+            };
+
+            const id = navigator.geolocation.watchPosition(success, error, options);
+
+            return () => navigator.geolocation.clearWatch(id);
+        };
+        
+        watchUserLocation();
+    }, []); 
+
+    const checkDrivingSpeed = (speed) => {
+        if (speed > 1) {
+            if (window.confirm('Are you currently driving? Please confirm that you are a passenger.')) {
+                console.log("User confirmed that they are a passenger")
+            }
+            else {
+                console.log("User said no for some reason.")
+            }
         }
     };
 
@@ -53,10 +80,17 @@ export default function TestPage() {
             <button onClick={() => {navigate("/bug-report")}}>Feature Request Page!</button>
             <button onClick={logout}>Log Out</button>
 
-            {/*brian test */}
-            <br/><br/><button onClick={getLocation}>Get Location</button>
             {location && (
-                <p>Latitude: {location.latitude}, Longitude: {location.longitude}</p>
+                <>
+                <p>Latitude: {location.latitude}</p>
+                <p>longitude: {location.longitude}</p>
+                <br />
+                <span style = {{color: 'white'}}>Speed: {speed ? speed.toFixed(2) : '0'} mph</span>
+                
+                
+                </>
+                
+
             )}
 
 

@@ -8,6 +8,8 @@ export default function TestPage() {
     const [speed, setSpeed] = useState(null);
     const [isDriving, setIsDriving] = useState(false);
 
+    const [denied, setDenied] = useState(0);
+
     const convertToFreedomUnits = (speed) => {
         return speed * 2.23694;
     }
@@ -15,6 +17,9 @@ export default function TestPage() {
     const checkSpeed = (speed) => {
         if (speed > 1) {
             setIsDriving(true);
+            if (denied != 2) {
+                setDenied(1);
+            }
         }
         else {
             setIsDriving(false);
@@ -61,15 +66,16 @@ export default function TestPage() {
     //render buttons that all call the changePage function 
     return (
         <div>
-            {isDriving && (
+            
+            {denied == 1 && (isDriving && (
                 <div className="popup">
                     <div className="popup-inner">
                         <h2>Are you currently driving?</h2>
                         <p>Please confirm that you are not driving and accept full responsibility for anything that may occur.</p>
-                        <button>I Agree</button>
+                        <button onClick={setDenied(2)}>I Agree</button>
                     </div>
                 </div>
-            )}
+            ))}
         </div>
     );
 }    

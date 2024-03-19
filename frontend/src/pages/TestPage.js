@@ -66,6 +66,8 @@ export default function TestPage() {
     //render buttons that all call the changePage function 
     return (
         <div>
+
+            {denied}
             
             {denied == 1 && ( (
                 <div className="popup">

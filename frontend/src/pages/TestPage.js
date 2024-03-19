@@ -61,22 +61,6 @@ export default function TestPage() {
     //render buttons that all call the changePage function 
     return (
         <div>
-            <button onClick={() => {navigate("/login")}}>Login Page!</button>
-            <button onClick={() => {navigate("/garage")}}>Garage Page!</button>
-            <button onClick={() => {navigate("/home")}}>Home Page!</button>
-            <button onClick={() => {navigate("/camera")}}>Camera Page!</button>
-            <button onClick={() => {navigate("/bug-report")}}>Feature Request Page!</button>
-            <button onClick={() => {navigate("/settings")}}>Settings Page!</button>
-    
-            {location && (
-                <>
-                    <p>Latitude: {location.latitude}</p>
-                    <p>Longitude: {location.longitude}</p>
-                    <br />
-                    <span style={{ color: 'white' }}>Speed: {speed ? speed.toFixed(2) : '0'} mph</span>
-                </>
-            )}
-    
             {isDriving && (
                 <div className="popup">
                     <div className="popup-inner">

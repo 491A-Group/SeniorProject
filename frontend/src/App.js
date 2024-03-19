@@ -20,11 +20,13 @@ import SettingsPage from './pages/SettingsPage';
 export default function App() {
     // Pass 'catch' location.state.image_source
     // Pass 'relations' location.state.owner and location.state.users
+
+    
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/"> {/* can put an element here https://www.w3schools.com/react/react_router.asp */}
-                    <Route index element={<TestPage />} />
+                    <Route index element={<LoginPage />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/garage/:profile?" element={<GaragePage />} />

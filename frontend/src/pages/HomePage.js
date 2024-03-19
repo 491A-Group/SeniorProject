@@ -8,6 +8,7 @@ import Filter  from "../images/filter.png";
 import NavBar from '../components/NavBar';
 import Post from '../components/Post';
 import heart from '../images/heart.png';
+import TestPage from './TestPage';
 //Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -91,6 +92,7 @@ export default function HomePage() {
     //the main return to display the home page or main feed
     return (
       <div className="homeContainer">
+        <TestPage/>
         <div>
           <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}
         <div className="searchPad">

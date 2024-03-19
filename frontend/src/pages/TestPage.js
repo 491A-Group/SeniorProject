@@ -72,7 +72,7 @@ export default function TestPage() {
                     <div className="popup-inner">
                         <h2>Are you currently driving?</h2>
                         <p>Please confirm that you are not driving and accept full responsibility for anything that may occur.</p>
-                        <button onClick={setDenied(2)}>I Agree</button>
+                        <button onClick={() => {setDenied(2)}}>I Agree</button>
                     </div>
                 </div>
             ))}

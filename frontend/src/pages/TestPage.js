@@ -17,7 +17,7 @@ export default function TestPage() {
     const checkSpeed = (speed) => {
         if (speed > 1) {
             setIsDriving(true);
-            if (denied != 2) {
+            if (denied < 2) {
                 setDenied(1);
             }
         }

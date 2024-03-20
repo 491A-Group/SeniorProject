@@ -60,6 +60,7 @@
 .manufacturerButton {
     text-align: center;
     filter: invert(100%);
+    color: black;
 }
 
 .manufacturerButton img {
@@ -72,8 +73,7 @@
     list-style: none;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
-    color: black;
+    flex-wrap: wrap; 
 }
 
 .carbtn {

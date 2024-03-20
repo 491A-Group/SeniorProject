@@ -16,6 +16,7 @@ import RelationList from './components/RelationList';
 import FeatureRequest from './pages/FeatureRequest';
 import DailyEvent from './pages/DailyEvent';
 import SettingsPage from './pages/SettingsPage';
+import NoZoom from './components/NoZoom';
 
 export default function App() {
     // Pass 'catch' location.state.image_source
@@ -23,6 +24,8 @@ export default function App() {
 
     
     return (
+        <>
+        <NoZoom />
         <BrowserRouter>
             <Routes>
                 <Route path="/"> {/* can put an element here https://www.w3schools.com/react/react_router.asp */}
@@ -31,7 +34,7 @@ export default function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/garage/:profile?" element={<GaragePage />} />
                     <Route path="/camera" element={<CameraPage />} />
-                    <Route path="/catch" element={<CatchPage />} /> 
+                    <Route path="/catch" element={<CatchPage />} />
                     <Route path="/search" element={<SearchPage />} />
                     <Route path="/relations" element={<RelationList />} />
                     <Route path="/bug-report" element={<FeatureRequest />} />
@@ -40,6 +43,7 @@ export default function App() {
                 </Route>
             </Routes>
         </BrowserRouter>
+    </>
     );
 }
 

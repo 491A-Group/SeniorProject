@@ -60,7 +60,7 @@
 .manufacturerButton {
     text-align: center;
     filter: invert(100%);
-    color: black;
+    color: white;
 }
 
 .manufacturerButton img {

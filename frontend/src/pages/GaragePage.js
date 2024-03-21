@@ -226,7 +226,6 @@ export default function Garage() {
     return (
         <div>
             {renderBackButton()}
-            {renderUpButton()}
 
             <div className="garageContainer">
             <div className="userInfo">
@@ -297,6 +296,7 @@ export default function Garage() {
             <button onClick={() => {navigate('/');}}>Go to Test Page</button>
             <br/><br/><br/><p><br/><br/><br/></p><br/><br/><br/>
         </div>
+        {renderUpButton()}
         <NavBar/>
         </div>
         

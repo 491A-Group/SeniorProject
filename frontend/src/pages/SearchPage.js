@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 import RenderUserList from '../components/RenderUserList';
 import NavBar from '../components/NavBar';
@@ -6,6 +6,10 @@ import NavBar from '../components/NavBar';
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+
+    useEffect(() => {
+        document.body.style.overflowX = 'hidden';
+    }, []);
 
     const handleChange = (event) => {
         const newSearchTerm = event.target.value;

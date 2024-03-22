@@ -7,7 +7,7 @@ export default function BackButton({ enableBackButton }){
 
     //Forced width for button cause I can't figure out why the FeatureRequestPage.css is overriding it and I'm too lazy to work on it further tonight.
     
-
+    
     if (enableBackButton) {
         return (
             <button className="backButton" onClick={() => navigate(-1)}>

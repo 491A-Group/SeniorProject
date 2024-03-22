@@ -160,3 +160,60 @@ def select_prediction():
             )
         return 'Created post', 201
     return 'Server Error', 500
+
+@blueprint_user_post_flow.route('/post/<uuid>/like', methods=['POST', 'DELETE'])
+@login_required
+def like_post(uuid):
+    """BRIAN:
+    This function likes or unlikes a post
+
+    /post/<uuid>/like
+
+    POST or DELETE indicates to like or unlike
+    """
+    # Interpret input
+
+    # Handle the like counter on the post. 
+    #   'likes = likes + 1' or
+    #   'likes = likes - 1'
+    junction_update = (
+        """
+        DELETE FROM likes
+        WHERE user_id=%s AND post_id=(
+            SELECT p.id -- 1 is just my user_id, that is also a placeholder
+            FROM posts p
+            WHERE p.public_id=%s
+        )
+        RETURNING post_id;
+        """
+        if request.method == 'DELETE' else
+        """
+        INSERT INTO likes(user_id, post_id)
+        SELECT %s, p.id
+        FROM posts p
+        WHERE p.public_id=%s
+        RETURNING likes.post_id;
+        """
+    ) # THE PUBLIC ID IS THE UUID GIVEN
+    post_like_update = "UPDATE posts SET likes = likes " + ('-' if request.method == 'DELETE' else '+') + " 1 WHERE id=%s;"
+
+    with db_connection_pool.connection() as conn:
+        cur = conn.cursor()
+        with conn.transaction():
+            cur.execute(
+                junction_update,
+                (current_user.get_int_id(), uuid)
+            )
+            query_result=cur.fetchone()
+            if query_result is None:
+                return 'Post not found', 404
+            post_id=query_result[0]
+            cur.execute(
+                post_like_update,
+                (post_id,)
+            )
+            if request.method == 'DELETE':
+                return 'Liked', 201
+            elif request.method == 'POST':
+                return 'Unliked', 204
+    return 'Server Error. Is UUID correct? Is the endpoint being spammed?', 500

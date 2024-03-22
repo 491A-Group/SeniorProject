@@ -1,7 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import heart from '../images/heart.png';
 
 const Post = ({ post }) => {
+
+    const [likeStatus, setLikeStatus] = useState('')
+
+    // combine set_unlike and set_like and just toggle the method {post||delete} and visual indicator for like based
+    //      on if it's liking or unliking
+    const set_unlike = async function() {
+        try {
+            const unlikeResponse = await fetch(window.location.origin + '/post/' + post.post_uuid + '/like', {
+                method: 'DELETE',
+            });
+            setLikeStatus(unlikeResponse.status + unlikeResponse.statusText)
+        } catch (error) {
+            console.error('Error: Unlike request failed', error);
+        }
+    }
+    const set_like = async function() {
+        try {
+            const likeResponse = await fetch(window.location.origin + '/post/' + post.post_uuid + '/like', {
+                method: 'POST',
+            });
+            setLikeStatus(likeResponse.status + likeResponse.statusText)
+        } catch (error) {
+            console.error('Error: Unlike request failed', error);
+        }
+    }
+
     return (
         <div className="post">
             <div>
@@ -35,7 +61,12 @@ const Post = ({ post }) => {
                     <img src={heart} alt={post.post_likes} className='likeImage'/>
                     <span className='whiteFont'>{post.post_likes}</span>
                     <p>{post.car_details}</p>
-                    <p>{post.post_uuid}</p>
+
+                    {/* fix this stuff. to work with like button. its gonna be broken for a while until the feed also informs if a post is liked */}
+                    <button onClick={() => (set_like())}>like</button>
+                    <button onClick={() => (set_unlike())}>unlike</button>
+                    <p>like status: {likeStatus}</p>
+
                 </div>
             </div>
         </div>

@@ -18,7 +18,7 @@ export default function LoginPage() {
         if (successfulLogIn) {
             const timeout = setTimeout(() => {
                 navigate("/home");
-            }, 1000);
+            }, 200);
 
             return () => clearTimeout(timeout);
         }

@@ -24,6 +24,30 @@ export default function LoginPage() {
         }
     }, [successfulLogIn]); //dependency array, used to prevent re-running effect after every render
   
+    //Brian Stevenson
+    //Allow logged-in users to skip having to login again
+    useEffect(() => {
+        const fetchExistingSession = async () => {
+            try {
+              const response = await fetch(window.location.origin + '/test_session');
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              
+              if (response.status == 200) {
+                setSuccessfulLogIn(true)
+              } else {
+                console.log(response.status, response.statusText)
+              }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+          };
+      
+          fetchExistingSession();
+    }, [])
+
+
     //Le Duong
     //These states have the strings of user input in the forms. 
     //The Login and Register portions share these states so switching between them doesn't clear fields

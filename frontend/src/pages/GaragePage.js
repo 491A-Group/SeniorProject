@@ -8,7 +8,6 @@ import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
 import UpButton from '../components/UpButton';
 import Post from '../components/Post';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {

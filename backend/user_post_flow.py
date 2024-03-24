@@ -7,10 +7,11 @@ This file is for API endpoints - BACKEND
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from backend.db_queries import db_connection_pool
+from psycopg import errors
 import json
 
 blueprint_user_post_flow =  Blueprint("blueprint_user_post_flow", __name__)
-import backend.feeds
+import backend.feeds # this registers the endpoints that use the above blueprint
 
 from backend.model import predict_image
 
@@ -200,10 +201,14 @@ def like_post(uuid):
     with db_connection_pool.connection() as conn:
         cur = conn.cursor()
         with conn.transaction():
-            cur.execute(
-                junction_update,
-                (current_user.get_int_id(), uuid)
-            )
+
+            try:
+                cur.execute(
+                    junction_update,
+                    (current_user.get_int_id(), uuid)
+                )
+            except errors.UniqueViolation as e:
+                return 'Already liked', 409
             query_result=cur.fetchone()
             if query_result is None:
                 return 'Post not found', 404

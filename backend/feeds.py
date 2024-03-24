@@ -1,13 +1,12 @@
 from flask import request, session, jsonify
 from flask_login import current_user, login_required
 from backend.db_queries import db_connection_pool
-#from backend.user import session_feeds
+
 import base64
 
 from backend.user_post_flow import blueprint_user_post_flow
 
 CHUNK_SIZE = 5 # CONST. originally 5, can increase/decrease to load more pictures at once. currently, a small pool of posts doesn't warrant a larger CHUNK_SIZE
-    #print("existing session feed", session_feeds[current_user.get_int_id()])
 
 @blueprint_user_post_flow.route('/feed', methods=['GET'])
 @login_required
@@ -48,7 +47,11 @@ def feed():
                     WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_places WHERE st_contains(geom, post.location) LIMIT 1)
                     ELSE NULL
                 END AS place,
-                post.likes
+                post.likes,
+                CASE
+                    WHEN EXISTS (SELECT 1 FROM likes WHERE post_id = post.id AND user_id = %s) THEN TRUE
+                    ELSE FALSE
+                END AS liked
             FROM posts post
             JOIN users u ON u.id=post.user_id
             JOIN pictures pic ON pic.id=post.picture_id
@@ -58,15 +61,12 @@ def feed():
             ORDER BY datetime DESC
             LIMIT {CHUNK_SIZE};
             """,
-            [known_feed]
+            (current_user.get_int_id(), known_feed)
         )
         query_results = cursor.fetchall()
-        #session_feeds[current_user.get_int_id()].extend([result[0] for result in query_results]) # add post id's to session_feed
         known_feed.extend([result[0] for result in query_results])
         session['home_feed'] = known_feed
 
-        #print("this requests' ids:", [result[0] for result in query_results])
-        #print("user session_feeds after update:", session_feeds[current_user.get_int_id()], "\n")
         
         # dank list comprehension where every element is a dictionary from comprehension but those are actually made from elements from a 
         #       list comprehension because the original list of tuples included post.id which is private info.
@@ -85,9 +85,10 @@ def feed():
                 "post_timestamp": timestamp.isoformat(),
                 "post_likes": likes,
                 "post_location": [state, county, place],
+                "post_liked_by_current_user": liked,
             } for displayname, pfp_id, img_bin, 
                     make, make_id, model, start_year, end_year, description,
-                    uuid, timestamp, state, county, place, likes in [result[1:] for result in query_results]
+                    uuid, timestamp, state, county, place, likes, liked in [result[1:] for result in query_results]
         ]
         # since conditionals in python list comprehension is tricky I drop null values here
         for post in posts_to_serve:
@@ -180,7 +181,11 @@ def user_feed(user=None):
             WHEN post.location IS NOT NULL THEN (SELECT name FROM postgis_places WHERE st_contains(geom, post.location) LIMIT 1)
             ELSE NULL
         END AS place,
-        post.likes
+        post.likes,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM likes WHERE post_id = post.id AND user_id = %s) THEN TRUE
+            ELSE FALSE
+        END AS liked
     FROM posts post
     JOIN users u ON u.id=post.user_id
     JOIN pictures pic ON pic.id=post.picture_id
@@ -193,7 +198,14 @@ def user_feed(user=None):
     with db_connection_pool.connection() as conn:
         cursor = conn.execute(
             sql_query,
-            (user,) if headers['Type'] == 'LIST' else (user, headers['Make'])
+            tuple(
+                # This doesn't ALWAYS need make so this is a way to conditionally have that in the tuple
+                item for item in (
+                    current_user.get_int_id(),
+                    user,
+                    headers['Make'] if headers['Type']=='MAKE' else None
+                ) if item
+            )
         )
         results = cursor.fetchall()
         
@@ -214,9 +226,10 @@ def user_feed(user=None):
                 "post_timestamp": timestamp.isoformat(),
                 "post_likes": likes,
                 "post_location": [state, county, place],
+                "post_liked_by_current_user": liked,
             } for displayname, pfp_id, img_bin, 
                     make, make_id, model, start_year, end_year, description,
-                    uuid, timestamp, state, county, place, likes in [result[1:] for result in results]
+                    uuid, timestamp, state, county, place, likes, liked in [result[1:] for result in results]
         ]
         # since conditionals in python list comprehension is tricky I drop null values here
         for post in posts_to_serve:

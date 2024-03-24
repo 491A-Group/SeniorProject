@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import heart from '../images/heart.png';
 
 const Post = ({ post }) => {
+    //console.log(post)
 
     const [likeStatus, setLikeStatus] = useState('')
 
@@ -65,7 +66,7 @@ const Post = ({ post }) => {
                     {/* fix this stuff. to work with like button. its gonna be broken for a while until the feed also informs if a post is liked */}
                     <button onClick={() => (set_like())}>like</button>
                     <button onClick={() => (set_unlike())}>unlike</button>
-                    <p>like status: {likeStatus}</p>
+                    <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p>
 
                 </div>
             </div>

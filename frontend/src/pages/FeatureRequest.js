@@ -107,7 +107,7 @@ export default function FeatureRequest() {
 
     return (
         <>
-        <BackButton enableBackButton={true} value = {1} />
+        <BackButton enableBackButton={true}/>
         <div className = "featureRequestPage">
             <div className = "container" >
                 <p>Please do not submit multiple requests of the same kind</p>

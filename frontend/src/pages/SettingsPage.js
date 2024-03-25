@@ -24,7 +24,7 @@ const SettingsPage = () => {
 
     return (
         <>
-        <BackButton enableBackButton={true} value = {1} /><div className="featureRequestPage">
+        <BackButton enableBackButton={true}/><div className="featureRequestPage">
             <div className="container">
                 <h1 className="h1">Settings</h1>
                 <button onClick={() => {navigate('/bug-report');}}>Feature Request/Bug Reporting</button>

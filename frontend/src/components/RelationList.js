@@ -50,7 +50,7 @@ export default function RelationList() {
     };
 
     return <>
-    <BackButton enableBackButton={true} value = {1}/>
+    <BackButton enableBackButton={true}/>
         <table>
             <tr>
                 <h2>{location.state.owner}</h2>

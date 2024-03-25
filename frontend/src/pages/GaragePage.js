@@ -199,7 +199,7 @@ export default function Garage() {
     const renderBackButton = () => {
         if (location.state !== null && location.state !== undefined) {
             if (location.state.enable_back_button) {
-                return <BackButton enableBackButton={true} />
+                return <BackButton enableBackButton={true} value = {2} />
             } 
         } 
     };

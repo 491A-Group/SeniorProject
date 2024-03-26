@@ -231,10 +231,7 @@ def user_feed(user=None):
                     make, make_id, model, start_year, end_year, description,
                     uuid, timestamp, state, county, place, likes, liked in [result[1:] for result in results]
         ]
-        # since conditionals in python list comprehension is tricky I drop null values here
-        for post in posts_to_serve:
-            if post["post_location"] == [None, None, None]:
-                del post["post_location"]
+
         #print(posts_to_serve)
 
         # please indicate to users when there are no more posts to show, indicated with 206 response code.

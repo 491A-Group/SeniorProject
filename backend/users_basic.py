@@ -55,6 +55,7 @@ def login():
                 ph.verify(hash, raw_password)
                 login_user(User(id))
                 session['home_feed'] = []
+                session['user_feed'] = (None, [])
                 print("\nuser " + str(id) + " successfully logged in\n")
                 return "Log In Success", 202
             except Exception as e:

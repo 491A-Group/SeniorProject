@@ -17,8 +17,8 @@
 
  .upButton {
     position: fixed;
-    right: 0;
-    bottom: 50px;
+    right: 0%;
+    top: 80%;
     background-color: #FF521B;
     color: white;
     font-family: "Anta", sans-serif;
@@ -27,10 +27,9 @@
     cursor: pointer;
     width: 10%;
     border-radius: 5px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease;
     z-index: 999;
-
  }
 
  .upButton:hover {

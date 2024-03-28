@@ -10,6 +10,7 @@ import Post from '../components/Post';
 import UpButton from '../components/UpButton';
 import heart from '../images/heart.png';
 import TestPage from './TestPage';
+import Logo from '../images/genericLogo.png';
 //Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -144,6 +145,7 @@ export default function HomePage() {
       <div className="homeContainer">
         <TestPage/>
         <div>
+          <img src={Logo} alt="Logo" style={{ marginRight: '10px'}} />
           <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}
         <div className="searchPad">
           <img src={Filter} alt="Filter" /> {/* Filter icon */}

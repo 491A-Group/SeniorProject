@@ -8,6 +8,11 @@ body {
   height: 100vh;
 }
 
+/* .homeContainer img {
+    width: 25px;
+    height: 25px;
+} */
+
 .content {
     background-color: #36454F;
     padding: 3%;

@@ -292,7 +292,6 @@ export default function Garage() {
                 // Add more list items as needed
             </ul> */}
             
-            <button onClick={() => {navigate('/');}}>Go to Test Page</button>
             <br/><br/><br/><p><br/><br/><br/></p><br/><br/><br/>
         </div>
         {renderUpButton()}

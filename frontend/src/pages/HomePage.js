@@ -165,7 +165,6 @@ export default function HomePage() {
                 ))}
             </ul>
         </InfiniteScroll> 
-        <button onClick={() => {navigate("/")}}>Go to Test Page</button>
         </div>
         {renderUpButton()}
         <NavBar/>

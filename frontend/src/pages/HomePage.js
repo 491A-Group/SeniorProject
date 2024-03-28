@@ -7,6 +7,7 @@ import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
 import NavBar from '../components/NavBar';
 import Post from '../components/Post';
+import UpButton from '../components/UpButton';
 import heart from '../images/heart.png';
 import TestPage from './TestPage';
 //Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
@@ -22,6 +23,7 @@ export default function HomePage() {
     // Jayvee
     // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
     const [postData, setPostData] = useState([])
+    const [postsData, setPostsData] = useState()
     // this below version is about appropriate for debug
     // const [postData, setPostData] = useState([
     //     {
@@ -73,6 +75,7 @@ export default function HomePage() {
         // Jayvee
         // Parsing the response data to JSON format.
         const jsonData = await response.json();
+        setPostsData(jsonData)
 
         for (const element of jsonData) {
             element.post_timestamp = new Date(element.post_timestamp)
@@ -112,6 +115,12 @@ export default function HomePage() {
       setLocationFilter(event.target.value);
     }
 
+  const renderUpButton = () => {
+    if (postsData && postsData.length > 0) {
+        return <UpButton />;
+    }
+  };
+
     // Applying filters
     const filteredPosts = postData.filter(post => {
       return (
@@ -124,6 +133,7 @@ export default function HomePage() {
     // Jayvee
     // useEffect hook to perform side effects like data fetching when the component mounts.
     useEffect(() => {
+      setPostsData([]) // just clear the feed until new data is loaded. probably tinker with this
       fetchData(); // Fetch initial data on component mount
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 
@@ -157,6 +167,7 @@ export default function HomePage() {
         </InfiniteScroll> 
         <button onClick={() => {navigate("/")}}>Go to Test Page</button>
         </div>
+        {renderUpButton()}
         <NavBar/>
       </div>
       

@@ -145,7 +145,7 @@ export default function HomePage() {
       <div className="homeContainer">
         <TestPage/>
         <div>
-          <img src={Logo} alt="Logo" style={{ marginRight: '10px'}} />
+          {/* <img src={Logo} alt="Logo" style={{ marginRight: '10px'}} /> */}
           <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}
         <div className="searchPad">
           <img src={Filter} alt="Filter" /> {/* Filter icon */}

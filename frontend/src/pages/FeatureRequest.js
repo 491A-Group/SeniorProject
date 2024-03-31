@@ -44,7 +44,7 @@ export default function FeatureRequest() {
         }
 
         if (isYapping(field)) {
-            setYappingMessage('Dawg, I ain\'t reading allat. 5000 characters or less.');
+            setYappingMessage('Dawg, I ain\'t reading allat. 500 characters or less.');
             setIsLoading(false);
             return;
         }

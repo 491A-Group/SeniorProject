@@ -54,8 +54,9 @@ def login():
                 # unfortunately, it does NOT return a boolean, but just throws an exception
                 ph.verify(hash, raw_password)
                 login_user(User(id))
-                session['home_feed'] = []
-                session['user_feed'] = (None, [])
+                session['last_feed'] = ('home', []) 
+                    # above is the form for home feed session.
+                    # otherwise is ('garage', [], last_user, last_make). make can even be None to indicate list view
                 print("\nuser " + str(id) + " successfully logged in\n")
                 return "Log In Success", 202
             except Exception as e:

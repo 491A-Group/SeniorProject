@@ -24,50 +24,87 @@ def feed(user=None):
             -if Type=MAKE but there is no Make header provided then it's the list of makes and their quantities
             -if Type=MAKE AND Make=BMW then show list but only filtering BMW's
     """
-    print(request.url_rule) # match what known_feed to use to not see duplicate posts
-
-
-    # headers are used in the garage endpoint
-    headers = request.headers
-    # basic user checks are done
+    # Throw away malicious requests
     if user is not None and len(user) > 32:
         return 'Valid displayname provided?', 400
-    if user is None:
-        user = current_user.get_int_id()
-    user_selector_sql = " WHERE u.id = %s " if type(user) is int else " WHERE u.displayname = %s "
+    
+    # Determine what to do if we're looking at home feed vs a garage page
+    home_or_garage = "garage" if request.url_rule.rule.startswith("/garage_feed") else "home"
+    
+    make_filter = "" # falsy
+    user_selector_sql = ""
 
-    # This first chunk is for garage_feed Type=MAKE but no Make header so no feed 
-    if ('Type' in headers) and (headers['Type'] == 'MAKE') and ('Make' not in headers): 
-        # The case of displaying Brand Tiles when Type=Manufacturer but no Specified Manufacturer is over.
-        #   The reason that one is the odd-one out is because it doesn't serve a feed. 
-        # Generic MAKEs page; showing icons of manufacturers. 
-        # MAKE is the value for key 'Type' and Make is not a key in headers. 
-        with db_connection_pool.connection() as conn:
-            cursor = conn.execute(
-                """
-                SELECT m.id, m.name, COUNT(*)
-                FROM users u
-                JOIN posts p ON p.user_id = u.id
-                JOIN cars c ON c.id = p.car_id
-                JOIN manufacturers m ON m.id = c.make
-                """ + user_selector_sql + """
-                GROUP BY m.id
-                ORDER BY COUNT(*) DESC
-                """,
-                (user,)
-            )
-            return jsonify([
-                {
-                    "id": manu_id,
-                    "name": manu_name,
-                    "count": count
-                } for (manu_id, manu_name, count) in cursor.fetchall()
-            ])
+    known_session = session.get('last_feed')
+    print('known session:', known_session)
+    if home_or_garage == "home":
+        known_feed = []
+        if known_session[0] == 'home':
+            known_feed = known_session[1]
+        print('home feed:', known_feed)
+    elif home_or_garage == "garage":
+        # headers are used in the garage endpoint
+        headers = request.headers
+
+        user_selector_sql += " u.id = %s " if user is None else " u.displayname = %s "
+        if user is None:
+            user = current_user.get_int_id()
+
+        # This first chunk is for garage_feed Type=MAKE but no Make header so no feed 
+        if (headers['Type'] == 'MAKE') and ('Make' not in headers): 
+            # The case of displaying Brand Tiles when Type=Manufacturer but no Specified Manufacturer is over.
+            #   The reason that one is the odd-one out is because it doesn't serve a feed.
+            # Generic MAKEs page; showing icons of manufacturers. 
+            # MAKE is the value for key 'Type' and Make is not a key in headers. 
+            with db_connection_pool.connection() as conn:
+                cursor = conn.execute(
+                    """
+                    SELECT m.id, m.name, COUNT(*)
+                    FROM users u
+                    JOIN posts p ON p.user_id = u.id
+                    JOIN cars c ON c.id = p.car_id
+                    JOIN manufacturers m ON m.id = c.make
+                    WHERE """ + user_selector_sql + """
+                    GROUP BY m.id
+                    ORDER BY COUNT(*) DESC
+                    """,
+                    (user,)
+                )
+                return jsonify([
+                    {
+                        "id": manu_id,
+                        "name": manu_name,
+                        "count": count
+                    } for (manu_id, manu_name, count) in cursor.fetchall()
+                ])
+        # above this line is the case we're viewing a list of manufacturers on a garage page
+        else:
+        # so below we set up garage feeds
+            user_selector_sql = " AND" + user_selector_sql
+
+        # The only difference between a Make=id feed and generic list feed is the one line of SQL 'WHERE make=%s'
+        # Make filter embedded inside every select statement
+        if "Make" in headers:
+            make_filter = " AND m.id=%s " 
+        
+        if known_session[0] == 'garage': # Recall: we know we are about to visit a garage. Now determine if we already have a session in this same garage
+            # last visited was garage
+            _, known_feed, last_user, last_make = known_session
+            
+            if( (user != last_user) or
+                ("Make" in headers and last_make != headers["Make"]) or
+                ("Make" not in headers and last_make != None)
+            ):
+                known_feed = []
+                print('feed change detected')
+        else:
+            # last visited feed was home
+            known_feed = []
+            print('home to garage change detected')
+            
+
+    # above this line was the setup 'if statement'
 
 
-    # The only difference between a Make=id feed and generic list feed is the one line of SQL 'WHERE make=%s'
-    # Make filter embedded inside every select statement
-    make_filter = " AND m.id=%s " if "Make" in headers else " "
     # This select statement starts every possible statement in this file
     sql_select = """
     SELECT 
@@ -106,31 +143,36 @@ def feed(user=None):
     JOIN cars c ON c.id=post.car_id
     JOIN manufacturers m ON m.id=c.make
     WHERE post.id != ALL(%s)
-    """ + make_filter + f"""
+    """ + make_filter + user_selector_sql + f"""
     ORDER BY datetime DESC
     LIMIT {CHUNK_SIZE};
     """
-
-    known_feed = session.get("home_feed")
 
     # parameters like prepared statements that fit the '%s' placeholders
     # these could be made on the fly in the execute statement however in this complicated case this may look cleaner
     sql_parameters = [
         current_user.get_int_id(),  # SELECT liked case 
-        known_feed                 # WHERE pod.id != ALL(%s)
+        known_feed,                 # WHERE pod.id != ALL(%s)
+        headers["Make"] if make_filter else None,
+        user if user_selector_sql else None,
     ]
 
-    if "Make" in headers:
-        sql_parameters.append(headers["Make"])
+    # if "Make" in headers:
+    #     sql_parameters.append(headers["Make"])
 
     with db_connection_pool.connection() as conn:
+        print(sql_parameters)
         cursor = conn.execute(
             sql_select,
-            tuple(sql_parameters)
+            tuple(item for item in sql_parameters if item is not None)
         )
         query_results = cursor.fetchall()
         known_feed.extend([result[0] for result in query_results])
-        session['home_feed'] = known_feed
+        
+        if home_or_garage == "home":
+            session['last_feed'] = ('home', known_feed)
+        elif home_or_garage == "garage":
+            session['last_feed'] = ('garage', known_feed, user, headers['Make'] if 'Make' in headers else None)
 
         # dank list comprehension where every element is a dictionary from comprehension but those are actually made from elements from a 
         #       list comprehension because the original list of tuples included post.id which is private info.

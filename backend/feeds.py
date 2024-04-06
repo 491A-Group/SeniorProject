@@ -106,6 +106,7 @@ def feed(user=None):
 
 
     # This select statement starts every possible statement in this file
+    # BRIAN: The sql state, county, place attributes are string labels given the post's coordinates.
     sql_select = """
     SELECT 
         post.id,
@@ -196,7 +197,8 @@ def feed(user=None):
                     make, make_id, model, start_year, end_year, description,
                     uuid, timestamp, state, county, place, likes, liked in [result[1:] for result in query_results]
         ]
-        # since conditionals in python list comprehension is tricky I drop null values here
+        # BRIAN: since conditionals in python list comprehension is tricky I drop null values here
+        # This removes empty post locations, which consist of state, county, place. This field commonly needs to be removed for posts without location services. 
         for post in posts_to_serve:
             if post["post_location"] == [None, None, None]:
                 del post["post_location"]

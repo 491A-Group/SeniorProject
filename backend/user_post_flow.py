@@ -201,7 +201,7 @@ def like_post(uuid):
     with db_connection_pool.connection() as conn:
         cur = conn.cursor()
         with conn.transaction():
-
+            # This first request updates the junction table. Do this first to catch duplicate-likes
             try:
                 cur.execute(
                     junction_update,
@@ -213,6 +213,7 @@ def like_post(uuid):
             if query_result is None:
                 return 'Post not found', 404
             post_id=query_result[0]
+            # This second request increments the post like column. 
             cur.execute(
                 post_like_update,
                 (post_id,)

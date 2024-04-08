@@ -99,7 +99,7 @@ def register():
         if query_result is not None:
             conn.commit()
             login_user(User(query_result[0]))
-            session[str(current_user.id) + '_last_feed'] = ('home', [])
+            session[str(query_result[0]) + '_last_feed'] = ('home', [])
             return 'Registration Success', 201
         return 'Registration Failed', 409
     return 'Server Error', 500

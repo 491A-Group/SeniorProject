@@ -54,7 +54,7 @@ def login():
                 # unfortunately, it does NOT return a boolean, but just throws an exception
                 ph.verify(hash, raw_password)
                 login_user(User(id))
-                session['last_feed'] = ('home', []) 
+                session[str(id) + '_last_feed'] = ('home', []) 
                     # above is the form for home feed session.
                     # otherwise is ('garage', [], last_user, last_make). make can even be None to indicate list view
                 print("\nuser " + str(id) + " successfully logged in\n")
@@ -99,6 +99,7 @@ def register():
         if query_result is not None:
             conn.commit()
             login_user(User(query_result[0]))
+            session[str(current_user.id) + '_last_feed'] = ('home', [])
             return 'Registration Success', 201
         return 'Registration Failed', 409
     return 'Server Error', 500

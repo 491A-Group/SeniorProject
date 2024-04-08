@@ -34,7 +34,7 @@ def feed(user=None):
     make_filter = "" # falsy
     user_selector_sql = ""
 
-    known_session = session.get('last_feed')
+    known_session = session.get(str(current_user.id) + '_last_feed')
     print('known session:', known_session)
     if home_or_garage == "home":
         known_feed = []
@@ -171,9 +171,9 @@ def feed(user=None):
         known_feed.extend([result[0] for result in query_results])
         
         if home_or_garage == "home":
-            session['last_feed'] = ('home', known_feed)
+            session[str(current_user.id) + '_last_feed'] = ('home', known_feed)
         elif home_or_garage == "garage":
-            session['last_feed'] = ('garage', known_feed, user, headers['Make'] if 'Make' in headers else None)
+            session[str(current_user.id) + '_last_feed'] = ('garage', known_feed, user, headers['Make'] if 'Make' in headers else None)
 
         # dank list comprehension where every element is a dictionary from comprehension but those are actually made from elements from a 
         #       list comprehension because the original list of tuples included post.id which is private info.

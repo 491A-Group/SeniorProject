@@ -23,13 +23,19 @@ export default function TestPage() {
         }
     };
 
+    useEffect(() => {
+        if (isDriving) {
+            handleDrivingCheck();
+        }
+    }, [isDriving]);
+
     //LOGOUT FUNCTION MOVED TO SETTINGS PAGE
 
 
     useEffect(() => {
         const watchUserLocation = () => {
-            if (denied== 2){
-                return;
+            if (denied){
+                return; //stop watching a user's location if they've already denied the pop up
             }
             const options = {
                 enableHighAccuracy: true,
@@ -57,26 +63,23 @@ export default function TestPage() {
         };
         
         watchUserLocation();
-    }, []); 
+    }, [denied]); 
+
+    const handleDrivingCheck = () => {
+        if(denied){
+            return;
+        }
+        else{
+            setDenied(true);
+            window.alert("Are you currently driving? \n\nPlease know that we strongly reccomend that you not utilize the application while driving and that by closing this popup you are accepting responsibility for any consequences that may occur.");
+        }
+        
+      };
 
 
 
 
     //Richard
     //render buttons that all call the changePage function 
-    return (
-        <div>
-
-            {denied}
-            {!denied && (isDriving && (
-                <div className="popup">
-                    <div className="popup-inner">
-                        <h2>Are you currently driving?</h2>
-                        <p>Please confirm that you are not driving and accept full responsibility for anything that may occur.</p>
-                        <button onClick={() => {setDenied(true)}}>I Agree</button>
-                    </div>
-                </div>
-            ))}
-        </div>
-    );
+    return;
 }    

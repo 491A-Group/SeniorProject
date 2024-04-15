@@ -80,7 +80,7 @@ const Post = ({ post }) => {
                         )}
                     </p>
                     <div style = {{display: 'flex'}}>
-                        <button onClick={toggleLike} style={{width: '10%', height: '100%', maxWidth: '10%', background: 'none', border: 'none'}}>
+                        <button onClick={toggleLike} style={{width: '10%', height: '100%', maxWidth: '10%', background: 'none', border: 'none', textAlign: 'left'}}>
                             <img src={heart} alt={post.post_likes} className='likeImage' style={{ width: '50%', height: '100%'}}/>  
                         </button>
                         <span className='whiteFont'>{post.post_likes}</span>

@@ -83,13 +83,14 @@ const Post = ({ post }) => {
                         <img src={heart} alt={post.post_likes} className='likeImage' style={{ width: '100%', height: 'auto'}}/>  
                     </button>
                     <span className='whiteFont'>{post.post_likes}</span>
+                    <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p>
+
                     <p>{post.car_details}</p>
 
                     {/* fix this stuff. to work with like button. its gonna be broken for a while until the feed also informs if a post is liked */}
                     {/* <button onClick={() => (set_like())}>like</button>
                     <button onClick={() => (set_unlike())}>unlike</button> */}
-                    <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p>
-
+                    {/* <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p> */}
                 </div>
             </div>
         </div>

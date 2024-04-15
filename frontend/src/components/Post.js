@@ -79,12 +79,13 @@ const Post = ({ post }) => {
                             { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true }
                         )}
                     </p>
-                    <button onClick={toggleLike} style={{marginRight: '90%', background: 'none', border: 'none'}}>
-                        <img src={heart} alt={post.post_likes} className='likeImage' style={{ width: '100%', height: 'auto'}}/>  
-                    </button>
-                    <span className='whiteFont'>{post.post_likes}</span>
+                    <div style = {{display: 'flex'}}>
+                        <button onClick={toggleLike} style={{width: '10%', height: '100%', maxWidth: '10%', background: 'none', border: 'none'}}>
+                            <img src={heart} alt={post.post_likes} className='likeImage' style={{ width: '50%', height: '100%'}}/>  
+                        </button>
+                        <span className='whiteFont'>{post.post_likes}</span>
+                    </div>
                     <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p>
-
                     <p>{post.car_details}</p>
 
                     {/* fix this stuff. to work with like button. its gonna be broken for a while until the feed also informs if a post is liked */}

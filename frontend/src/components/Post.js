@@ -79,7 +79,7 @@ const Post = ({ post }) => {
                             { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: '2-digit', hour12: true }
                         )}
                     </p>
-                    <button onClick={toggleLike} style={{marginRight: '94%', background: 'none', border: 'none'}}>
+                    <button onClick={toggleLike} style={{marginRight: '90%', background: 'none', border: 'none'}}>
                         <img src={heart} alt={post.post_likes} className='likeImage' style={{ width: '100%', height: 'auto'}}/>  
                     </button>
                     <span className='whiteFont'>{post.post_likes}</span>

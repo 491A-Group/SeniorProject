@@ -29,6 +29,7 @@ const SettingsPage = () => {
                 <h1 className="h1">Settings</h1>
                 <button onClick={() => {navigate('/bug-report');}}>Feature Request/Bug Reporting</button>
                 <button>todo Change Profile Picture</button>
+                <button onClick={() => {navigate('/debug');}}>Debug</button>
                 <button onClick={logout}>Logout</button>
             </div>
         </div></>

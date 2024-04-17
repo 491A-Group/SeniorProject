@@ -16,6 +16,7 @@ import RelationList from './components/RelationList';
 import FeatureRequest from './pages/FeatureRequest';
 import DailyEvent from './pages/DailyEvent';
 import SettingsPage from './pages/SettingsPage';
+import SettingsDebugPage from './pages/SettingsDebugPage';
 import NoZoom from './components/NoZoom';
 
 export default function App() {
@@ -40,6 +41,8 @@ export default function App() {
                     <Route path="/bug-report" element={<FeatureRequest />} />
                     <Route path="/daily" element={<DailyEvent />} />
                     <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/debug" element={<SettingsDebugPage />} />
+                    
                 </Route>
             </Routes>
         </BrowserRouter>

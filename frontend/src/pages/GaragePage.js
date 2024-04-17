@@ -257,6 +257,9 @@ export default function Garage() {
             <div className="carViewOptions">
             <button className="carbtn" style={{ backgroundColor: gridButtonColor }} onClick={handleGridViewClick}> Grid View </button>
                 <button className="carbtn" style={{ backgroundColor: listButtonColor }} onClick={handleListViewClick}> List View </button>
+                {/* 
+                <button className = "carbtn" style ={{backgroundColor: listButtonColor}} onClick={() => {navigate('/settings');}}>Settings!</button> 
+                */} 
             </div>
 
             {

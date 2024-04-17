@@ -8,7 +8,6 @@ import Filter  from "../images/filter.png";
 import NavBar from '../components/NavBar';
 import Post from '../components/Post';
 import UpButton from '../components/UpButton';
-import heart from '../images/heart.png';
 import TestPage from './TestPage';
 import Logo from '../images/genericLogo.png';
 //Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
@@ -162,8 +161,11 @@ export default function HomePage() {
             endMessage={<p>No more posts</p>} // Message when all data is fetched
         >  
             <ul className="content">
-                {postData.map((post, index) => (    
-                        <Post key={index} post={post} /> // Render the Post component for each post
+                {postData.map((post, index) => (   
+                      <React.Fragment key={index}>
+                        <Post post={post} /> // Render the Post component for each post
+                        {index !== postData.length - 1 && <hr />} {/*Adds line separating each post */}
+                      </React.Fragment>
                 ))}
             </ul>
         </InfiniteScroll> 

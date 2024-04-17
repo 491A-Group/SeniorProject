@@ -4,7 +4,7 @@ import TestPage from './TestPage';
 import './FeatureRequest.css';
 import BackButton from '../components/BackButton';
 
-const SettingsDebugPage = () => {
+const SettingsResetUserInfo = () => {
     const navigate = useNavigate();
 
     
@@ -12,10 +12,10 @@ const SettingsDebugPage = () => {
         <>
             <BackButton enableBackButton={true} />
             <div className='container'>
-            <TestPage showDebugInfo = {true}/>
+            <h1 classname = "h1">Reset DisplayName/Password</h1>
             </div>
         </>
     );
 }    
 
-export default SettingsDebugPage;
+export default SettingsResetUserInfo;

@@ -4,18 +4,18 @@ import TestPage from './TestPage';
 import './FeatureRequest.css';
 import BackButton from '../components/BackButton';
 
-const SettingsDebugPage = () => {
+const SettingsPFP = () => {
     const navigate = useNavigate();
 
     
     return (
         <>
             <BackButton enableBackButton={true} />
-            <div className='container'>
-            <TestPage showDebugInfo = {true}/>
+            <div className="container">
+                <h1 classname = "h1">Change Profile Picture</h1>
             </div>
         </>
     );
 }    
 
-export default SettingsDebugPage;
+export default SettingsPFP;

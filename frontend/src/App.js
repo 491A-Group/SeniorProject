@@ -17,6 +17,8 @@ import FeatureRequest from './pages/FeatureRequest';
 import DailyEvent from './pages/DailyEvent';
 import SettingsPage from './pages/SettingsPage';
 import SettingsDebugPage from './pages/SettingsDebugPage';
+import ProfilePicSwap from './pages/SettingsPFP';
+import ResetUserInfo from './pages/SettingsResetUserInfo';
 import NoZoom from './components/NoZoom';
 
 export default function App() {
@@ -42,6 +44,8 @@ export default function App() {
                     <Route path="/daily" element={<DailyEvent />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/debug" element={<SettingsDebugPage />} />
+                    <Route path="/pfp" element={<ProfilePicSwap />} />
+                    <Route path="/reset-user-info" element={<ResetUserInfo />} />
                     
                 </Route>
             </Routes>

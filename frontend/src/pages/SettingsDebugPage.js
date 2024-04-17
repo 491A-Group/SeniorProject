@@ -28,7 +28,7 @@ const SettingsDebugPage = () => {
             <div className="featureRequestPage">
                 <div className="container">
                     <h1 className="h1">Debug</h1>
-                    {location && (
+                    {location ? (
                         <div>
                             <p>
                                 Latitude: {location.latitude}, Longitude: {location.longitude}
@@ -43,6 +43,8 @@ const SettingsDebugPage = () => {
                             </p>
                             <button onClick={resetDenied}>Reset Denied</button>
                         </div>
+                    ) : (
+                        <p>No GPS information is available.</p>
                     )}
                 </div>
             </div>

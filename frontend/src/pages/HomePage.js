@@ -143,7 +143,7 @@ export default function HomePage() {
     //the main return to display the home page or main feed
     return (
       <div className="homeContainer">
-        <TestPage/>
+        <TestPage setDebugInfo = {false}/>
         <div>
           {/* <img src={Logo} alt="Logo" style={{ marginRight: '10px'}} /> */}
           <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}

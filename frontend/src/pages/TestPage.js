@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react'; //brian test
 //Testpage done by Richard unless noted otherwise
 
-export default function TestPage() {
+export default function TestPage({showDebugInfo}) {
     const navigate = useNavigate();
     const [location, setLocation] = useState(null);
     const [speed, setSpeed] = useState(null);
@@ -76,10 +76,31 @@ export default function TestPage() {
         
       };
 
+    const resetDenied = () => {
+        setDenied(false);
+    }
 
 
 
     //Richard
     //render buttons that all call the changePage function 
-    return;
-}    
+    return (
+        <>
+            {showDebugInfo && (
+                <div className="debug-info">
+                    <h1>Debug</h1>
+                    {location ? (
+                        <div>
+                            <p>Latitude: {location.latitude}, Longitude: {location.longitude}</p>
+                            {speed && <p>Speed: {speed} mph</p>}
+                            <p>Denied: {denied.toString()}</p>
+                            <button onClick={resetDenied}>Reset Denied</button>
+                        </div>
+                    ) : (
+                        <p>No GPS information available.</p>
+                    )}
+                </div>
+            )}
+        </>
+    );
+};

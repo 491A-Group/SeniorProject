@@ -10,6 +10,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from backend.user import User
 from backend.db_queries import db_connection_pool
 
+import psycopg # for errors
 from argon2 import PasswordHasher
 from datetime import datetime
 
@@ -67,41 +68,60 @@ def login():
 def register():
     """ BRIAN
     Takes in a form and responds so React can act accordingly
-    TODO FIX THIS FUNCTION THAT CURRENTLY DOES NO ERROR CHECKING
-
-    AS OF NOW THIS FUNCTION DOES NOT CHECK FOR VALID INPUTS
-        NOR
-    GRACEFULLY FAIL IF IT VIOLATES SQL RULES
-
-    TODO FIX EXCEPTIONS IE DUPLICATE EMAIL, DUPLICATE DISPLAYNAME
     """
     displayname = request.form["displayname"]
     email = request.form["email"]
     raw_password = request.form["password"]
 
+    if not displayname:
+        return 'displayname empty', 422
+    if not raw_password:
+        return 'password empty', 422
+    if len(email) < 5 or '@' not in email or '.' not in email:
+        return 'email invalid', 422
+
     with db_connection_pool.connection() as conn:
-        cursor = conn.execute(
-            """
-            INSERT INTO users (email, displayname, password)
-            VALUES (%s, %s, %s)
-            RETURNING id;
-            """,
-            (
-                email,
-                displayname,
-                ph.hash(raw_password)
+        cursor = None
+        try:
+            cursor = conn.execute(
+                """
+                INSERT INTO users (email, displayname, password)
+                VALUES (%s, %s, %s)
+                RETURNING id;
+                """,
+                (
+                    email,
+                    displayname,
+                    ph.hash(raw_password)
+                )
             )
-        )
-        # Since the query says 'returning id;' this fetchone() returns a tuple that represents a row.
-        # BRIAN: This row has exactly one column that is the id
-        query_result = cursor.fetchone()
-        #print("SIGNUP QUERY RESULT: ", query_result)
-        if query_result is not None:
-            conn.commit()
-            login_user(User(query_result[0]))
-            session[str(query_result[0]) + '_last_feed'] = ('home', [])
-            return 'Registration Success', 201
-        return 'Registration Failed', 409
+            # Since the query says 'returning id;' this fetchone() returns a tuple that represents a row.
+            # BRIAN: This row has exactly one column that is the id
+            query_result = cursor.fetchone()
+            #print("SIGNUP QUERY RESULT: ", query_result)
+            if query_result is not None:
+                conn.commit()
+                login_user(User(query_result[0]))
+                session[str(query_result[0]) + '_last_feed'] = ('home', [])
+                return 'Registration Success', 201
+            return 'Registration Failed', 409
+        except psycopg.errors.UniqueViolation as e:
+            #print('unique error!', e, '\n\n!!!!!!', e.__dict__)
+            e = str(e).split('\n')[0] # get the first line of the error typically
+            """
+            duplicate key value violates unique constraint "users_email_pk"
+            DETAIL:  Key (email)=(brian1@gmail.com) already exists.
+            """
+            #print('!!' + e + '!!')
+            if e.endswith('"users_email_pk"'):
+                print('returning 409, email in use:', email)
+                return 'email exists', 409
+            if e.endswith('"users_displayname_pk"'):
+                print('returning 409, displayname in use:', displayname)
+                return 'username taken', 409
+        except Exception as e:
+            print('Sign up error!')
+            print(e)
     return 'Server Error', 500
 
 

@@ -11,7 +11,7 @@ from backend.user import User
 from backend.db_queries import db_connection_pool
 
 import psycopg # for errors
-from argon2 import PasswordHasher
+from argon2 import PasswordHasher, exceptions
 from datetime import datetime
 
 blueprint_users_basic = Blueprint("blueprint_users_basic", __name__)
@@ -75,13 +75,15 @@ def register():
 
     if not displayname:
         return 'displayname empty', 422
+    if len(displayname) > 32:
+        return 'displayname 32 character max', 422
     if not raw_password:
         return 'password empty', 422
-    if len(email) < 5 or '@' not in email or '.' not in email:
+    if len(email) < 5 or '@' not in email or '.' not in email or len(email) > 320:
         return 'email invalid', 422
 
+
     with db_connection_pool.connection() as conn:
-        cursor = None
         try:
             cursor = conn.execute(
                 """
@@ -125,7 +127,6 @@ def register():
     return 'Server Error', 500
 
 
-# TODO declare rest methods
 @blueprint_users_basic.route('/logout')
 @login_required
 def logout():
@@ -273,4 +274,117 @@ def suggest_or_report_bug():
             (current_user.get_int_id(), message)
         )
         return 'Success', 200
+    return 'Server error', 500
+
+
+"""
+SETTINGS PORTION
+Brian did this in the final sprint
+"""
+@blueprint_users_basic.route('/settings/displayname', methods=['POST'])
+@login_required
+def change_displayname():
+    r = request.json
+    if 'displayname' not in r:
+        return 'missing displayname in json body', 422
+    if 'password' not in r:
+        return 'missing password in json body', 422
+    displayname = r['displayname']
+    raw_pass = r['password']
+    if not displayname:
+        return 'displayname empty', 422
+    if len(displayname) > 32:
+        return 'displayname 32 character max', 422
+
+    with db_connection_pool.connection() as conn:
+        cursor = conn.execute(
+            """
+            SELECT password
+            FROM users
+            WHERE id=%s;
+            """,
+            (current_user.get_int_id(),)
+        )
+        hash_pass = cursor.fetchone()[0]
+        
+        try:
+            ph.verify(hash_pass, raw_pass)
+        except exceptions.VerifyMismatchError as e:
+            return "Password Incorrect", 401
+        except Exception as e:
+            print('change_displayname password hasher error', e, type(e))
+            return 'Server error', 500
+
+        # auth passed; continue to update username
+        try:
+            cursor = conn.execute(
+                """
+                UPDATE users
+                SET displayname=%s
+                WHERE id=%s;
+                """,
+                (
+                    displayname,
+                    current_user.get_int_id()
+                )
+            )
+            return 'displayname changed', 200
+        except psycopg.errors.UniqueViolation as e:
+            return 'taken already', 409
+        except Exception as e:
+            print('change displayname UPDATE statement error!', displayname)
+            return 'Server error', 500
+            
+    return 'Server error', 500
+
+
+@blueprint_users_basic.route('/settings/password', methods=['POST'])
+@login_required
+def change_password():
+    r = request.json
+    if 'new_password' not in r:
+        return 'missing new_password in json body', 422
+    if 'old_password' not in r:
+        return 'missing old_password in json body', 422
+    new_password = r['new_password']
+    old_password = r['old_password']
+    if not new_password:
+        return 'new password seems empty?', 422
+
+    with db_connection_pool.connection() as conn:
+        cursor = conn.execute(
+            """
+            SELECT password
+            FROM users
+            WHERE id=%s;
+            """,
+            (current_user.get_int_id(),)
+        )
+        hash_pass = cursor.fetchone()[0]
+        
+        try:
+            ph.verify(hash_pass, old_password)
+        except exceptions.VerifyMismatchError as e:
+            return "Password Incorrect", 401
+        except Exception as e:
+            print('change_password password hasher error', e, type(e))
+            return 'Server error', 500
+
+        # auth passed; continue to update password
+        try:
+            cursor = conn.execute(
+                """
+                UPDATE users
+                SET password=%s
+                WHERE id=%s;
+                """,
+                (
+                    ph.hash(new_password),
+                    current_user.get_int_id()
+                )
+            )
+            return 'password changed', 200
+        except Exception as e:
+            print('change password error!')
+            return 'Server error', 500
     return 'Server error', 500

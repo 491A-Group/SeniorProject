@@ -6,6 +6,7 @@ const Post = ({ post }) => {
 
     const [likeStatus, setLikeStatus] = useState('')
     const [isLiked, setIsLiked] = useState(post.post_liked_by_current_user)
+    const [likeCount, setLikeCount] = useState(post.post_likes);
 
     // combine set_unlike and set_like and just toggle the method {post||delete} and visual indicator for like based
     //      on if it's liking or unliking
@@ -39,6 +40,7 @@ const Post = ({ post }) => {
             if (response.ok) {
                 setLikeStatus(response.status + response.statusText);
                 setIsLiked(!isLiked);
+                setLikeCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
             }
             else {
                 console.error('Error: Like/Unlike request failed');
@@ -81,17 +83,11 @@ const Post = ({ post }) => {
                     </p>
                     <div style = {{display: 'flex'}}>
                         <button onClick={toggleLike} style={{width: '10%', height: '100%', maxWidth: '10%', background: 'none', border: 'none', textAlign: 'left'}}>
-                            <img src={heart} alt={post.post_likes} className='likeImage' style={{ width: '100%', height: '100%'}}/>  
+                            <img src={heart} alt={isLiked ? 'Unlike' : 'Like'} className='likeImage' style={{ width: '100%', height: '100%'}}/>  
                         </button>
-                        <span className='whiteFont'>{post.post_likes}</span>
+                        <span className='whiteFont'>{likeCount}</span>
                     </div>
-                    <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p>
                     <p>{post.car_details}</p>
-
-                    {/* fix this stuff. to work with like button. its gonna be broken for a while until the feed also informs if a post is liked */}
-                    {/* <button onClick={() => (set_like())}>like</button>
-                    <button onClick={() => (set_unlike())}>unlike</button> */}
-                    {/* <p>like status: {post.post_liked_by_current_user.toString()} {likeStatus}</p> */}
                 </div>
             </div>
         </div>

@@ -10,6 +10,7 @@ import Post from '../components/Post';
 import UpButton from '../components/UpButton';
 import TestPage from './TestPage';
 import Logo from '../images/genericLogo.png';
+import heart from '../images/heart.png';
 //Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
 import InfiniteScroll from 'react-infinite-scroll-component';
 

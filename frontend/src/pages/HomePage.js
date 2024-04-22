@@ -163,7 +163,7 @@ export default function HomePage() {
             <ul className="content">
                 {postData.map((post, index) => (   
                       <React.Fragment key={index}>
-                        <Post post={post} /> // Render the Post component for each post
+                         <Post post={post} />
                         {index !== postData.length - 1 && <hr />} {/*Adds line separating each post */}
                       </React.Fragment>
                 ))}

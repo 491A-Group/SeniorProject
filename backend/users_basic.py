@@ -388,3 +388,75 @@ def change_password():
             print('change password error!')
             return 'Server error', 500
     return 'Server error', 500
+
+
+# BRIAN: setting up a read-only cache for
+#   profile pictures. This block of codes only runs once when this module is first loaded
+print('loading pfp caches...')
+import threading
+#pfp_cache_by_id = {}
+pfp_cache_by_manu_name = {} 
+pfp_cache_by_manu_id = {}
+pfp_cache_lock = threading.Lock()
+with pfp_cache_lock:
+    results = None
+    with db_connection_pool.connection() as conn:
+        cursor = conn.execute(
+            """
+            SELECT p.id, p.img, m.id, m.name
+            FROM profile_pictures p
+            LEFT JOIN manufacturers m ON m.id = p.manufacturer_id
+            ORDER BY p.id
+            """
+        )
+        results = cursor.fetchall()
+        if not results:
+            print("\n\n!!Error fetching profile pictures upon startup!!\n")
+    for result in results:
+        pfp_id, svg, make_id, make_name = result
+        if make_id is None:
+            make_id = -1
+            make_name = 'Other'
+        else:
+            # db gives all caps. make it regular caps
+            make_name = [word.capitalize() for word in make_name.split()]
+            make_name = ' '.join(make_name)
+
+        if make_name not in pfp_cache_by_manu_name:
+            # each make is a list of tuples. each tuple is form ()
+            #       instead of a list, it could be a set however I wanted the
+            #       default profile picture to always show up first
+            # efficiency can be ignored; this is only ran once on server startup
+            pfp_cache_by_manu_name[make_name] = []
+            pfp_cache_by_manu_id[make_id] = []
+            
+        result = (pfp_id, svg, make_id, make_name)
+        
+        pfp_cache_by_manu_name[make_name].append(result)
+        pfp_cache_by_manu_id[make_id].append(result)
+# c = 1
+# for name, set in pfp_cache_by_manu_name.items():
+#     for pfp in list:
+#         print(c, pfp[0], pfp[1])
+#         c+=1
+# print(c, 'count pfps')
+# just memoizing this to return later
+pfp_groups = {manu_name: len(pfp_list) for manu_name, pfp_list in pfp_cache_by_manu_name.items()}
+print(pfp_groups)
+print('done loading pfp caches')
+
+@blueprint_users_basic.route('/settings/pfp', methods=['GET', 'POST'])
+@blueprint_users_basic.route('/settings/pfp/<manufacturer>', methods=['GET'])
+@login_required
+def pfp_get(manufacturer=None):
+    if manufacturer:
+        if len(manufacturer) > 64:
+            return 'Invalid manufacturer', 404
+        try:
+            manufacturer = int(manufacturer)
+        except:
+            return 'Invalid manufacturer', 404
+        return pfp_cache_by_manu_id[manufacturer]
+    # else, /settings/pfp
+    return pfp_groups, 200
+

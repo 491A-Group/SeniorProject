@@ -4,7 +4,6 @@ Brian wrote this unless portions are denoted otherwise
 from psycopg_pool import ConnectionPool
 import configparser
 
-
 # BRIAN: Argon2 One Way Hashing for securing passwords
 # ph = PasswordHasher()
 

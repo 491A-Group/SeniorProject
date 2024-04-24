@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import heart from '../images/heart.png';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ post }) => {
     //console.log(post)
-
-    const [likeStatus, setLikeStatus] = useState('')
-    const [isLiked, setIsLiked] = useState(post.post_liked_by_current_user)
+    const navigate = useNavigate();
+    const [likeStatus, setLikeStatus] = useState('');
+    const [isLiked, setIsLiked] = useState(post.post_liked_by_current_user);
     const [likeCount, setLikeCount] = useState(post.post_likes);
 
     // combine set_unlike and set_like and just toggle the method {post||delete} and visual indicator for like based
@@ -54,7 +55,7 @@ const Post = ({ post }) => {
     return (
         <div className="post">
             <div>
-                <p>
+                <p onClick={() => navigate('/garage/' + post.poster_displayname,  {state: {enable_back_button: true}})}>
                     <img className="postPfp" src={window.location.origin + '/pfp/' + post.poster_pfp} alt={post.poster_displayname} />
                     {post.poster_displayname}
                 </p>

@@ -19,12 +19,12 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 // Jayvee
 // Overall Main/Home page
 export default function HomePage() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     // Jayvee
     // Initializing a state variable 'postData' using useState hook with an empty array as initial state.
-    const [postData, setPostData] = useState([])
-    const [postsData, setPostsData] = useState()
+    const [postData, setPostData] = useState([]);
+    const [postsData, setPostsData] = useState();
     // this below version is about appropriate for debug
     // const [postData, setPostData] = useState([
     //     {
@@ -69,17 +69,17 @@ export default function HomePage() {
         // Jayvee
         // Checking if the response is okay, if not, logging a network error and throwing an error.
         if (!response.ok) {
-          console.log("network error")
+          console.log("network error");
           throw new Error('Failed to fetch data');
         }
 
         // Jayvee
         // Parsing the response data to JSON format.
         const jsonData = await response.json();
-        setPostsData(jsonData)
+        setPostsData(jsonData);
 
         for (const element of jsonData) {
-            element.post_timestamp = new Date(element.post_timestamp)
+            element.post_timestamp = new Date(element.post_timestamp);
         }
 
         // Jayvee, Edited by Le Duong
@@ -134,7 +134,7 @@ export default function HomePage() {
     // Jayvee
     // useEffect hook to perform side effects like data fetching when the component mounts.
     useEffect(() => {
-      setPostsData([]) // just clear the feed until new data is loaded. probably tinker with this
+      setPostsData([]); // just clear the feed until new data is loaded. probably tinker with this
       fetchData(); // Fetch initial data on component mount
     }, []); // Empty dependency array ensures that this effect runs only once after the initial render.
 

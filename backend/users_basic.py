@@ -390,73 +390,56 @@ def change_password():
     return 'Server error', 500
 
 
-# BRIAN: setting up a read-only cache for
-#   profile pictures. This block of codes only runs once when this module is first loaded
-print('loading pfp caches...')
-import threading
-#pfp_cache_by_id = {}
-pfp_cache_by_manu_name = {} 
-pfp_cache_by_manu_id = {}
-pfp_cache_lock = threading.Lock()
-with pfp_cache_lock:
-    results = None
-    with db_connection_pool.connection() as conn:
-        cursor = conn.execute(
-            """
-            SELECT p.id, p.img, m.id, m.name
-            FROM profile_pictures p
-            LEFT JOIN manufacturers m ON m.id = p.manufacturer_id
-            ORDER BY p.id
-            """
-        )
-        results = cursor.fetchall()
-        if not results:
-            print("\n\n!!Error fetching profile pictures upon startup!!\n")
-    for result in results:
-        pfp_id, svg, make_id, make_name = result
-        if make_id is None:
-            make_id = -1
-            make_name = 'Other'
-        else:
-            # db gives all caps. make it regular caps
-            make_name = [word.capitalize() for word in make_name.split()]
-            make_name = ' '.join(make_name)
-
-        if make_name not in pfp_cache_by_manu_name:
-            # each make is a list of tuples. each tuple is form ()
-            #       instead of a list, it could be a set however I wanted the
-            #       default profile picture to always show up first
-            # efficiency can be ignored; this is only ran once on server startup
-            pfp_cache_by_manu_name[make_name] = []
-            pfp_cache_by_manu_id[make_id] = []
-            
-        result = (pfp_id, svg, make_id, make_name)
-        
-        pfp_cache_by_manu_name[make_name].append(result)
-        pfp_cache_by_manu_id[make_id].append(result)
-# c = 1
-# for name, set in pfp_cache_by_manu_name.items():
-#     for pfp in list:
-#         print(c, pfp[0], pfp[1])
-#         c+=1
-# print(c, 'count pfps')
-# just memoizing this to return later
-pfp_groups = {manu_name: len(pfp_list) for manu_name, pfp_list in pfp_cache_by_manu_name.items()}
-print(pfp_groups)
-print('done loading pfp caches')
-
+from backend.static import pfp_cache_by_manu_id, pfp_groups
 @blueprint_users_basic.route('/settings/pfp', methods=['GET', 'POST'])
-@blueprint_users_basic.route('/settings/pfp/<manufacturer>', methods=['GET'])
+@blueprint_users_basic.route('/settings/pfp/<manufacturer_id>', methods=['GET'])
 @login_required
-def pfp_get(manufacturer=None):
-    if manufacturer:
-        if len(manufacturer) > 64:
+def pfp_get(manufacturer_id=None):
+    if request.method == 'POST':
+        print('yes, receiving post')
+
+        try:
+            print('jd', request.json)
+            data = request.json
+            print('pfp id', data["pfp"])
+            pfp_id = data["pfp"]
+            if (type(pfp_id) != int) and len(pfp_id) > 9:
+                return 'incorrect pfp id?', 400
+            pfp_id = int(pfp_id)
+        except Exception as e:
+            print(e)
+            return 'json body error. expecting json body has "pfp": id', 400
+        
+        with db_connection_pool.connection() as conn:
+            try:
+                cursor = conn.execute(
+                    """
+                    UPDATE users
+                    SET profile_picture_id=%s
+                    WHERE id=%s;
+                    """,
+                    (
+                        pfp_id,
+                        current_user.get_int_id()
+                    )
+                )
+            except exceptions.ForeignKeyViolation as e:
+                print('ForeignKeyViolation detected!:', pfp_id)
+                print(e)
+                return 'profile picture not found', 404 
+            except Exception as e:
+                return 'unknown server error, please leave a bug report', 501
+
+    if manufacturer_id:
+        if len(manufacturer_id) > 64:
             return 'Invalid manufacturer', 404
         try:
-            manufacturer = int(manufacturer)
+            manufacturer_id = int(manufacturer_id)
         except:
             return 'Invalid manufacturer', 404
-        return pfp_cache_by_manu_id[manufacturer]
+        if manufacturer_id in pfp_cache_by_manu_id:
+            return pfp_cache_by_manu_id[manufacturer_id]
+        return 'Invalid manufacturer', 404
     # else, /settings/pfp
-    return pfp_groups, 200
+    return pfp_groups
 

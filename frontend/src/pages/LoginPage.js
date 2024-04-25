@@ -226,21 +226,31 @@ export default function LoginPage() {
             method: 'POST',
             body: signup_form
         })
-        .then (response => {
+        .then(response => {
             if (response.ok) {
                 setSuccessfulLogIn(true);
-                console.log("signup response received ", response)
-            } else if (response.status == 'email exists') {
-                setEmailErrorMessage('Email is already in use.');
-                setIsLoading(false);
-            } else if (response.status == 'username taken') {
-                setDisplayNameErrorMessage('Displayname is already in use.');
-                setIsLoading(false);
+                console.log("signup response received ", response);
             } else {
-                setIsLoading(false);
-                console.log("signup error")
+                response.json().then(data => {
+                    if (data.error === 'email exists') {
+                        setEmailErrorMessage('Email is already in use.');
+                    } else if (data.error === 'username taken') {
+                        setDisplayNameErrorMessage('Displayname is already in use.');
+                    } else {
+                        // Handle other errors
+                        console.log("signup error");
+                    }
+                }).catch(error => {
+                    console.error('Error parsing response JSON:', error);
+                }).finally(() => {
+                    setIsLoading(false);
+                });
             }
         })
+        .catch(error => {
+            console.error('Error during registration:', error);
+            setIsLoading(false);
+        });
     }
     
     // Le Duong 

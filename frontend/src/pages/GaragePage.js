@@ -8,6 +8,8 @@ import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
 import UpButton from '../components/UpButton';
 import Post from '../components/Post';
+//Le Duong, installed react infinite scroll dependency in frontend node_modules folder, might need to install locally
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 //This function handles all garage pages, a user viewing their own or anyone else's page
 export default function Garage() {
@@ -34,6 +36,9 @@ export default function Garage() {
     const [listButtonColor, setListButtonColor] = useState("#FF521B");
     const [manufacturerList, setManufacturerList] = useState([{id: 96, name: "", count: "",}])
     const [postsData, setPostsData] = useState()
+    //Le Duong
+    const [page, setPage] = useState(1); // State for tracking current page
+    const [hasMore, setHasMore] = useState(true); // State for indicating whether there is more data to fetch
 
     //Brian helped work on this function to fetch data from the database
     const fetchData = async () => {
@@ -47,6 +52,7 @@ export default function Garage() {
             }
             const jsonData = await response.json();
             //console.log(jsonData)
+            
             
             //The following 5 lines put the data from the Fetch response into React states
             setFollowers(jsonData["followers"])
@@ -116,6 +122,13 @@ export default function Garage() {
                 const jsonData = await response.json();
                 //console.log(jsonData)
                 setPostsData(jsonData)
+                
+                // Jayvee, Edited by Le Duong
+                // Updating the 'postData' state with the fetched JSON data.
+                setPostData(prevData => [...prevData, ...jsonData]); //concatenantes prevData with new data (jsonData)
+                setPage(page + 1); //increments page to load new set of posts when scrolling
+                setHasMore(jsonData.length > 0); //checks if there is more posts to fetch and populate on main feed
+                //otherwise, hasMore will be set to false meaning no new posts can be fetched
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

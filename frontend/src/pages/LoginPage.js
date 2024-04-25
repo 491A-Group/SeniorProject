@@ -230,8 +230,11 @@ export default function LoginPage() {
             if (response.ok) {
                 setSuccessfulLogIn(true);
                 console.log("signup response received ", response)
-            } else if (response.status == 409) {
-                setEmailErrorMessage('Register failed. Email/displayname is already in use.');
+            } else if (response.status == 'email exists') {
+                setEmailErrorMessage('Email is already in use.');
+                setIsLoading(false);
+            } else if (response.status == 'username taken') {
+                setDisplayNameErrorMessage('Displayname is already in use.');
                 setIsLoading(false);
             } else {
                 setIsLoading(false);

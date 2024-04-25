@@ -125,7 +125,7 @@ export default function Garage() {
                 
                 // Jayvee, Edited by Le Duong
                 // Updating the 'postData' state with the fetched JSON data.
-                setPostData(prevData => [...prevData, ...jsonData]); //concatenantes prevData with new data (jsonData)
+                setPostsData(prevData => [...prevData, ...jsonData]); //concatenantes prevData with new data (jsonData)
                 setPage(page + 1); //increments page to load new set of posts when scrolling
                 setHasMore(jsonData.length > 0); //checks if there is more posts to fetch and populate on main feed
                 //otherwise, hasMore will be set to false meaning no new posts can be fetched

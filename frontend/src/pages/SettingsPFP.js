@@ -1,3 +1,9 @@
+//BRIAN:
+//I wrote this first version of this file. It makes 3 boxes in the view.
+//  The first box lets you see all the manufacturers and how many profile pictures there are for them
+//  The second box lets you see all the pfp for a manufacturer
+//  The final box lets you post a pfp id to change your profile picture
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TestPage from './TestPage';

@@ -1,3 +1,8 @@
+//BRIAN
+//wrote the first big revision of this file rendering 2 boxes
+//  The first box allows you to change your username
+//  The second box allows you to change your password
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TestPage from './TestPage';

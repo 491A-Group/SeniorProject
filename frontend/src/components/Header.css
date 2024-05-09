@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+.header {
+  display: flex;
+  position: fixed; /* fixed at top of page */
+  top: 0%;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0px 10px 0px;
+  background-color: #36454F;
+  color: white;
+  font-family: "Anta", sans-serif;
+  text-align: center;
+  z-index: 1000; /* Ensures the header stays above all other content */
+  height: 50px; /* Define a specific height */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px; /* Adjust the size as needed */
+}
+
+.settings-btn {
+  padding: 7px 7px 5px 7px;
+  background-color: #FF521B;
+  border: none;
+  border-radius: 4px;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 3%;
+  align-items: center;
+}
+
+.settings-btn:hover {
+  background-color: #F4743B;
+}
+
+.settings { 
+  height: 20px;
+}

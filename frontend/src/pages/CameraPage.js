@@ -6,6 +6,7 @@ import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
 import Circle from "../images/circle-100.png";
+
 import NavBar from '../components/NavBar';
 
 //cameron
@@ -53,7 +54,7 @@ export default function CameraPage() {
     //spawns a webcam
     //main menu button on the bottom
     return (
-        <div className="camerapage">
+      <div className="camerapage">
             <h1 className="h1">Sportscar Spotter</h1>
             <Webcam className="Camera" ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={vc}/>
             <button onClick={capture} className="inc"><img width="100vw" src={Circle}/></button>

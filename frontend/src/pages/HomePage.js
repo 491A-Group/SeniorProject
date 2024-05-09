@@ -6,6 +6,7 @@ import './HomePage.css';
 import Search from "../images/search.png";
 import Filter  from "../images/filter.png";
 import NavBar from '../components/NavBar';
+import Header from '../components/header';
 import Post from '../components/Post';
 import UpButton from '../components/UpButton';
 import TestPage from './TestPage';
@@ -144,15 +145,7 @@ export default function HomePage() {
     return (
       <div className="homeContainer">
         <TestPage setDebugInfo = {false}/>
-        <div>
-          {/* <img src={Logo} alt="Logo" style={{ marginRight: '10px'}} /> */}
-          <h1 style={{color: 'red'}}>Sportscar Spotter</h1> {/* HomePage Title */}
-        <div className="searchPad">
-          <img src={Filter} alt="Filter" /> {/* Filter icon */}
-          <p> Filters:</p>
-         
-          <button onClick={() => {navigate('/search')}}><img src={Search} alt="Search"/></button> {/* Search Button */}
-        </div>
+        <Header/>
         <InfiniteScroll
             //Le Duong
             dataLength={postData.length} // Number of items
@@ -160,6 +153,7 @@ export default function HomePage() {
             hasMore={hasMore} // Indicate whether there is more data to fetch
             loader={<h4>Loading...</h4>} // Loading indicator
             endMessage={<p>No more posts</p>} // Message when all data is fetched
+            style={{ marginTop: '60px' }}
         >  
             <ul className="content">
                 {postData.map((post, index) => (   
@@ -170,10 +164,8 @@ export default function HomePage() {
                 ))}
             </ul>
         </InfiniteScroll> 
-        </div>
         {renderUpButton()}
         <NavBar/>
       </div>
-      
     );
   }

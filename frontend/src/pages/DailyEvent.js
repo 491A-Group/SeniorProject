@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
+import Header from '../components/header';
 import CarGuess from '../images/Acuralegend.jpg';
 import "./DailyEvent.css";
 
@@ -49,6 +50,7 @@ export default function DailyEvent() {
     return (
         <>
             <div className="dailyEventPage">
+                <Header/>
                 <div className="container">
                     <h1>Daily Event: Guess the Car</h1>
                     {/* Render the image */}

@@ -30,7 +30,6 @@ const SettingsPage = () => {
                 <button onClick={() => {navigate('/bug-report');}}>Feature Request/Bug Reporting</button>
                 <button onClick={() => {navigate('/pfp');}}>Change Profile Picture</button>
                 <button onClick={() => {navigate('/reset-user-info');}}>Reset DisplayName/Password</button>
-                <button onClick={() => {navigate('/debug');}}>Debug</button>
                 <button onClick={logout}>Logout</button>
             </div>
         </div></>

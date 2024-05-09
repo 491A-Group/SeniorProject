@@ -162,8 +162,8 @@ export default function Garage() {
 
     function renderFollowButton(status) {
         switch(String(status)) {
-            case "self":
-                return <button className="sbtn" onClick={() => {navigate("/settings")}}>Settings & Profile</button>
+            // case "self":
+            //     return <button className="sbtn" onClick={() => {navigate("/settings")}}>Settings & Profile</button>
             case "following":
                 return <div>
                     <button onClick={() => {unfollow()}}>

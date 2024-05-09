@@ -1,3 +1,9 @@
+"""Brian wrote this file
+    It makes endpoints for the frontend to get posts to display
+
+    The backend solely tracks the users' sessions to try to not immediately show duplicates in the same view
+"""
+
 from flask import request, session, jsonify
 from flask_login import current_user, login_required
 from backend.db_queries import db_connection_pool

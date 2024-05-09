@@ -4,6 +4,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import './HomePage.css';
 import './GaragePage.css';
 
+import Header from '../components/header';
 import NavBar from '../components/NavBar';
 import BackButton from '../components/BackButton';
 import UpButton from '../components/UpButton';
@@ -236,9 +237,9 @@ export default function Garage() {
     };
 
     return (
-        <div>
+      <div>
+            <Header/>
             {renderBackButton()}
-
             <div className="garageContainer">
             <div className="userInfo">
                 <div className="userProfile">

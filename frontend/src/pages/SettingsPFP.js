@@ -4,7 +4,8 @@
 //  The second box lets you see all the pfp for a manufacturer
 //  The final box lets you post a pfp id to change your profile picture
 
-import React, { useState } from 'react';
+import './SettingsPFP.css';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TestPage from './TestPage';
 import './FeatureRequest.css';
@@ -43,29 +44,29 @@ const SettingsPFP = () => {
 
         so this is just a way to play around but get rid of all this following code for input fields
     */
-    const [manufactureInput, setManufactureInput] = useState('')
-    const [pfpIdInput, setPfpIdInput] = useState('') // backend endpoint might be able to handle string OR int
-    const handleManuChange = (event) => {
-        setManufactureInput(event.target.value);
-    };
-    const handlePfpChange = (event) => {
-        setPfpIdInput(event.target.value);
-    };
 
-
-    /*some of the following code is actually remotely salvageable*/
+    /*following function and effect load manufacturers on opening the page*/ 
     async function get_pfp_groups_request() {
         const response = await fetch(window.location.origin + '/settings/pfp')
         setPfpGroups(await response.json())
     }
-    async function get_manufacturer_pfps() {
+    useEffect(() => {
+        get_pfp_groups_request()
+    }, [])
+
+    /*some of the following code is actually remotely salvageable*/
+
+    async function get_manufacturer_pfps(manufactureInput) {
+        console.log("startedgmpfp")
         const response = await fetch(window.location.origin + '/settings/pfp/' + manufactureInput)
-        setBrandPfpIds(await response.json())
+        const ids =  await response.json()
+        console.log("gmpfp", ids)
+        setBrandPfpIds(ids)
         //maybe fix this function to handle bad responses:
         //response may return like 'Invalid manufacturer', 404
         // truthfully you should only be sending valid manufacturer id's anyways
     }
-    async function submit_new_pfp() {
+    async function submit_new_pfp(pfpIdInput) {
         const response = await fetch(
             window.location.origin + '/settings/pfp',
             {
@@ -86,49 +87,29 @@ const SettingsPFP = () => {
                 <h1 classname = "h1">Change Profile Picture</h1>
             </div>
 
-
-
-            <div className="container">
-                <h1 classname = "h1">entry request example</h1>
-                <button onClick={get_pfp_groups_request}>get pfp groups</button>
-                <p>
-                    {Object.keys(pfpGroups).map((key) => (
-                        <li key={key}>
-                            {key}:<br/>
-                            id {pfpGroups[key][0]}<br/>
-                            quantity {pfpGroups[key][1]}
-                        </li>
-                    ))}
-                </p>
+            <div>
+                <h1>Groups</h1>
+                {Object.keys(pfpGroups).map((key) => (
+                    <>
+                        <button className="pfpGroupRow" onClick={() => get_manufacturer_pfps(pfpGroups[key][0]) }>
+                            <img src={window.location.origin + "/brand/" + pfpGroups[key][0] + "/logo.svg"} alt={key}/>
+                            {key}: {pfpGroups[key][1]}
+                        </button>
+                        <br/>
+                    </>
+                ))}
             </div>
-            <div className="container">
-                <h1 classname = "h1">manufacture request example</h1>
 
-                <input 
-                    type="text"
-                    value={manufactureInput}
-                    onChange={handleManuChange}
-                    placeholder="manufacture id"
-                />
-                <button onClick={get_manufacturer_pfps}>get manufacture pfp list</button>
-
+            <div>
+                <h1>Select PFP</h1>
                 <p>
                     {brandPfpIds.map((pfp_id, index) => (
-                        <p>{pfp_id}</p>
+                        <button className="pfpButton" onClick={()=>submit_new_pfp(pfp_id)}>
+                            <p>{pfp_id}</p>
+                            <img src={window.location.origin + "/pfp/" + pfp_id}/>
+                        </button>
                     ))}
                 </p>
-            </div>
-            <div className="container">
-                <h1 classname = "h1">post pfp example</h1>
-
-                <input 
-                    type="text"
-                    value={pfpIdInput}
-                    onChange={handlePfpChange}
-                    placeholder="pfp id"
-                />
-                <button onClick={submit_new_pfp}>post new pfp</button>
-
             </div>
         </>
     );

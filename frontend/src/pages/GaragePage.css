@@ -60,7 +60,11 @@
 .manufacturerButton {
     text-align: center;
     filter: invert(100%);
-    color: white;
+}
+
+.manufacturerButton p {
+    color: black;
+    /*put black for text to appear white since its inverted. for the MANU: COUNT ie ACURA: 2*/
 }
 
 .manufacturerButton img {

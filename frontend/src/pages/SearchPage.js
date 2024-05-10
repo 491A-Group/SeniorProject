@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './HomePage.css';
 import RenderUserList from '../components/RenderUserList';
 import NavBar from '../components/NavBar';
+import Header from '../components/header';
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -42,7 +43,8 @@ export default function SearchPage() {
     //the main return to display the home page or main feed
     return (
         <>
-            <form onSubmit={e => e.preventDefault()}>
+            <Header/>
+            <form style={{ marginTop: '70px' }} onSubmit={e => e.preventDefault()}>
                 <input
                   type="text"
                   placeholder="Search Profiles"

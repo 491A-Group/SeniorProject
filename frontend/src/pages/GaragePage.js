@@ -162,17 +162,17 @@ export default function Garage() {
 
     function renderFollowButton(status) {
         switch(String(status)) {
-            case "self":
-                return <button className="sbtn" onClick={() => {navigate("/settings")}}>Settings & Profile</button>
+            //case "self":
+                //return <button className="sbtn" onClick={() => {navigate("/settings")}}>Settings & Profile</button>
             case "following":
                 return <div>
-                    <button onClick={() => {unfollow()}}>
+                    <button onClick={() => {unfollow()}} className='followBtn'>
                         Unfollow
                     </button>
                 </div>
             case "stranger":
                 return <div>
-                    <button onClick={() => {follow()}}>
+                    <button onClick={() => {follow()}} className='followBtn'>
                         Follow
                     </button>
                 </div>
@@ -235,12 +235,18 @@ export default function Garage() {
         setListButtonColor("#983517"); 
         setGridButtonColor("#FF521B"); 
     };
+  
+    const renderHeader = () => {
+      if (is_self) {
+        return <Header />;
+      }
+    };
 
     return (
       <div>
-            <Header/>
+            {renderHeader()}
             {renderBackButton()}
-            <div className="garageContainer">
+            <div className="garageContainer" style={{ marginTop: is_self ? '60px' : '0px' }}>
             <div className="userInfo">
                 <div className="userProfile">
                     <img src={window.location.origin + '/pfp/' + pfpId} />

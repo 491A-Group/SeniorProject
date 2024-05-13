@@ -65,6 +65,7 @@ export default function TestPage({showDebugInfo}) {
         watchUserLocation();
     }, [denied]); 
 
+    //alerts if the user is moving too fast and has not denied the prompt
     const handleDrivingCheck = () => {
         if(denied){
             return;

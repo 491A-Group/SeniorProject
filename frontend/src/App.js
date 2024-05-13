@@ -21,16 +21,17 @@ import ProfilePicSwap from './pages/SettingsPFP';
 import ResetUserInfo from './pages/SettingsResetUserInfo';
 import NoZoom from './components/NoZoom';
 
-export default function App() {
-    // Pass 'catch' location.state.image_source
-    // Pass 'relations' location.state.owner and location.state.users
 
-    
+//the main return of the app
+export default function App() {
+
+    //build the app visually
     return (
         <>
         <NoZoom />
         <BrowserRouter>
             <Routes>
+                {/*Create paths for all the pages on the site */}
                 <Route path="/"> {/* can put an element here https://www.w3schools.com/react/react_router.asp */}
                     <Route index element={<LoginPage />} />
                     <Route path="/home" element={<HomePage />} />
@@ -54,5 +55,7 @@ export default function App() {
     );
 }
 
+
+//this is what renders EVERYTHING
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);

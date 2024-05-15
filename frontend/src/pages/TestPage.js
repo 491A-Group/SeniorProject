@@ -15,7 +15,7 @@ export default function TestPage({showDebugInfo}) {
     }
 
     const checkSpeed = (speed) => {
-        if (speed > 7) {
+        if (speed > 2) {
             setIsDriving(true);
         }
         else {

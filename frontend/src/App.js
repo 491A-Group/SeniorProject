@@ -3,6 +3,7 @@
 import './App.css';
 import React from 'react';
 import ReactDOM from "react-dom/client";
+import {MobileView, BrowserView} from "react-device-detect";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import TestPage from './pages/TestPage';
@@ -28,31 +29,35 @@ export default function App() {
     //build the app visually
     return (
         <>
-        <NoZoom />
-        <BrowserRouter>
-            <Routes>
-                {/*Create paths for all the pages on the site */}
-                <Route path="/"> {/* can put an element here https://www.w3schools.com/react/react_router.asp */}
-                    <Route index element={<LoginPage />} />
-                    <Route path="/home" element={<HomePage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/garage/:profile?" element={<GaragePage />} />
-                    <Route path="/camera" element={<CameraPage />} />
-                    <Route path="/catch" element={<CatchPage />} />
-                    <Route path="/search" element={<SearchPage />} />
-                    <Route path="/relations" element={<RelationList />} />
-                    <Route path="/bug-report" element={<FeatureRequest />} />
-                    <Route path="/daily" element={<DailyEvent />} />
-                    <Route path="/settings" element={<SettingsPage />} />
-                    <Route path="/debug" element={<SettingsDebugPage />} />
-                    <Route path="/pfp" element={<ProfilePicSwap />} />
-                    <Route path="/reset-user-info" element={<ResetUserInfo />} />
-                    
-                </Route>
-            </Routes>
-        </BrowserRouter>
+    <MobileView>
+      <NoZoom />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            {/*Create paths for all the pages on the site */}
+            <Route index element={<LoginPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/garage/:profile?" element={<GaragePage />} />
+            <Route path="/camera" element={<CameraPage />} />
+            <Route path="/catch" element={<CatchPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/relations" element={<RelationList />} />
+            <Route path="/bug-report" element={<FeatureRequest />} />
+            <Route path="/daily" element={<DailyEvent />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/debug" element={<SettingsDebugPage />} />
+            <Route path="/pfp" element={<ProfilePicSwap />} />
+            <Route path="/reset-user-info" element={<ResetUserInfo />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </MobileView>
+
+    <BrowserView><h1>Hello, to use our app, please access this website through a mobile device.</h1></BrowserView>
+
     </>
-    );
+  );
 }
 
 

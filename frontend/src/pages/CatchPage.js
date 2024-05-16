@@ -10,6 +10,7 @@ export default function CatchPage() {
     // This route needs to be passed location.state.image_source
     const navigate = useNavigate();
     const location = useLocation();
+    const contentRef = useRef(null);
 
     //predictions array for use later
     const [predictions, setPredictions] = useState(null);

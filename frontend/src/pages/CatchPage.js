@@ -108,7 +108,17 @@ export default function CatchPage() {
             navigate("/garage")
         })
     }
-
+    
+    // Dynamically set the height of the container based on the content
+    useEffect(() => {
+      if (contentRef.current) {
+          const contentHeight = contentRef.current.clientHeight;
+          const windowHeight = window.innerHeight;
+          const containerHeight = Math.max(contentHeight, windowHeight - 50); // Adjust 50 for navbar height
+          contentRef.current.style.height = `${containerHeight}px`;
+      }
+    }, [predictions]);
+  
     //the main return to display the home page or main feed
     //this is the entire display of CatchPage
     return (

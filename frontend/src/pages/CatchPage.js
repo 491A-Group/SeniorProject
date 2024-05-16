@@ -132,7 +132,7 @@ export default function CatchPage() {
                             {   <div>
                                     <div className="blist">
                                         <button className="btn" onClick={() => selectPrediction(predictions[predID]["label"])}>Select</button>
-                                        <button className="rej" onClick={() => nextCar()}>X</button>
+                                        <button className="rej" onClick={() => {navigate("/")}}>X</button>
                                     </div>
                                     <h2>
                                         {

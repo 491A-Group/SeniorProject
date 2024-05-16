@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
 
+.catchpage-container { 
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure the container fills the entire viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
 .catchpage {
   background-color: #2b373f;
   margin: 0;
@@ -8,6 +15,7 @@
   font-family: "Anta", sans-serif;
   width: 100%;
   text-align: center;
+  flex: 1; /* Allow the content to expand to fill the available space */
 }
 
 

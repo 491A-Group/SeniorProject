@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Buffer } from 'buffer';
 
@@ -6,11 +6,11 @@ import './CatchPage.css';
 import NavBar from '../components/NavBar';
 import loading from "../images/loading.gif";
 
+
 export default function CatchPage() {
     // This route needs to be passed location.state.image_source
     const navigate = useNavigate();
     const location = useLocation();
-    const contentRef = useRef(null);
 
     //predictions array for use later
     const [predictions, setPredictions] = useState(null);
@@ -109,21 +109,11 @@ export default function CatchPage() {
             navigate("/garage")
         })
     }
-    
-    // Dynamically set the height of the container based on the content
-    useEffect(() => {
-      if (contentRef.current) {
-          const contentHeight = contentRef.current.clientHeight;
-          const windowHeight = window.innerHeight;
-          const containerHeight = Math.max(contentHeight, windowHeight - 50); // Adjust 50 for navbar height
-          contentRef.current.style.height = `${containerHeight}px`;
-      }
-    }, [predictions]);
-  
+
     //the main return to display the home page or main feed
     //this is the entire display of CatchPage
     return (
-        <div width="100%">
+        <div className="catchpage-container" width="100%">
             <div className="catchpage">
             <h1>Predictions</h1>
             
@@ -161,9 +151,9 @@ export default function CatchPage() {
                     
                 )
                         }
-            <button className="inc" onClick={() => {navigate("/")}}>Prediction Incorrect?</button>
+              <button className="inc" onClick={() => {navigate("/")}}>Prediction Incorrect?</button>
             
-        </div>
+            </div>
         <NavBar/>
         </div>
         

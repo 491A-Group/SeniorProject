@@ -13,7 +13,7 @@
   text-align: center;
   flex: 1; /* Allow the content to expand to fill the available space */
   overflow-y: scroll; /* Enable vertical scrolling */
-  height: calc(100vh - 20px); /* Adjust the height as needed */
+  height: calc(100vh); /* Adjust the height as needed */
 }
 
 .container {

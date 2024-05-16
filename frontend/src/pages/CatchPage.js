@@ -5,7 +5,7 @@ import { Buffer } from 'buffer';
 import './CatchPage.css';
 import NavBar from '../components/NavBar';
 import loading from "../images/loading.gif";
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 export default function CatchPage() {
     // This route needs to be passed location.state.image_source

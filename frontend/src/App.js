@@ -21,6 +21,7 @@ import SettingsDebugPage from './pages/SettingsDebugPage';
 import ProfilePicSwap from './pages/SettingsPFP';
 import ResetUserInfo from './pages/SettingsResetUserInfo';
 import NoZoom from './components/NoZoom';
+import QRCode from './images/QRCode.png';
 
 
 //the main return of the app
@@ -54,7 +55,11 @@ export default function App() {
       </BrowserRouter>
     </MobileView>
 
-    <BrowserView><h1>Hello, to use our app, please access this website through a mobile device.</h1></BrowserView>
+    <BrowserView style={{ textAlign: 'center' }}>
+    <h1 style={{ fontSize: '2em', marginBottom: '20px' }}>Hello, to use our app, please access this website through a mobile device.</h1>
+    <br />
+    <img src={QRCode} alt="QR Code" style={{ display: 'block', margin: '0 auto', maxWidth: '200%', height: 'auto' }} />
+    </BrowserView>
 
     </>
   );

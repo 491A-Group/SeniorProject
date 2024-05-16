@@ -7,7 +7,6 @@
 .catchpage {
   background-color: #2b373f;
   margin: 0;
-  height: 100%;
   position: fixed;
   font-family: "Anta", sans-serif;
   width: 100%;
@@ -16,7 +15,6 @@
   overflow-y: scroll; /* Enable vertical scrolling */
   height: calc(100vh - 20px); /* Adjust the height as needed */
 }
-
 
 .container {
   width: 80%;

@@ -6,7 +6,7 @@ import './CameraPage.css';
 import React from 'react';
 import Webcam from 'react-webcam';
 import Circle from "../images/circle-100.png";
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 import NavBar from '../components/NavBar';
 
 //cameron
@@ -23,12 +23,13 @@ export default function CameraPage() {
     }
     //cameron
     //THIS FUNCTION FORCES THE PAGE TO NOT SCROLL AT ALL
-    useEffect(() => {
+    /*useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
             document.body.style.overflow = "scroll"
         };
     }, []);
+    */
 
     //cameron
     //webcam reference and imageSrc Reference to be seen later
